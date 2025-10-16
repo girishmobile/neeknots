@@ -144,7 +144,7 @@ class LoginProvider with ChangeNotifier {
       notifyListeners();
       if (_userData?.isNotEmpty == true) {
         String otp = generateOtp();
-        // await sendOtpEmail(email: email, userID: userData?['uid'], otp: otp);
+         await sendOtpEmail(email: email, userID: userData?['uid'], otp: otp);
         final FirebaseFirestore _firestore = FirebaseFirestore.instance;
         print('OTP sent successfully!');
         await _firestore.collection("stores").doc(userData?['uid']).update({

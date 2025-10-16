@@ -221,7 +221,7 @@ class _SettingPageState extends State<SettingPage> {
                   ],
                 ),
                 SizedBox(height: 8),
-                _commonView(
+                /*_commonView(
                   onTap: () {
                     Navigator.push(
                       context,
@@ -234,7 +234,7 @@ class _SettingPageState extends State<SettingPage> {
                   provider: themeProvider,
                   text: "Edit Information",
                   image: icInfo,
-                ),
+                ),*/
               ],
             ),
 
