@@ -166,26 +166,7 @@ commonHeadingView({String? title, required bool isPayment}) {
             fontWeight: FontWeight.w600,
           ),
         ),
-        /*isPayment
-            ? Container(
-                decoration: commonBoxDecoration(color: colorBorder),
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                child: Row(
-                  children: [
-                    commonText(
-                      text: "Payment Status : ",
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    commonText(
-                      text: "Paid",
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ],
-                ),
-              )
-            : SizedBox.shrink(),*/
+
       ],
     ),
   );

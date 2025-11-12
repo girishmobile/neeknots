@@ -70,19 +70,19 @@ class LoginScreen extends StatelessWidget {
                                   onPressSignUp: TapGestureRecognizer()
                                     ..onTap = () {
                                       hideKeyboard(context);
-                                     /* context
+                                     context
                                           .read<LoginProvider>()
                                           .resetState();
                                       navigatorKey.currentState?.pushNamed(
                                         RouteName.signupScreen,
-                                      );*/
-                                      Navigator.push(
+                                      );
+                                     /* Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               AdminHomePage(),
                                         ),
-                                      );
+                                      );*/
                                     },
 
                                   onPressed: () async {

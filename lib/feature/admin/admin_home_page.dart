@@ -37,12 +37,21 @@ class AdminHomePage extends StatefulWidget {
 }
 
 class _AdminHomePageState extends State<AdminHomePage> {
-  @override
+  /*@override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       init();
+    });
+  }
+*/@override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(milliseconds: 200), () {
+        init();
+      });
     });
   }
 
@@ -55,12 +64,12 @@ class _AdminHomePageState extends State<AdminHomePage> {
     await adminProvider.getAllStoreName(); // wait until data loads
     // ✅ Auto-select first store and fetch data
     if (adminProvider.allStoreNameModel?.stores?.isNotEmpty == true) {
-      adminProvider.setSelectedStore(0); // set first store as selected
-
+      adminProvider.setSelectedStore(0);
       await adminProvider.countByAllStoreName(
         storeRoom: adminProvider.allStoreNameModel?.stores?[0].storeName ?? '',
       );
     }
+    setState(() {}); // 🟢 ensure UI rebuilds after async load
   }
 
   // 🔹 Detail page for selected section (e.g., Orders, Products)

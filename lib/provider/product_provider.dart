@@ -595,6 +595,8 @@ class ProductProvider with ChangeNotifier {
   }) async {
     _setLoading(true);
     try {
+      print('======${params}');
+      print('======${imageID}');
       await callApi(
         body: params,
         method: HttpMethod.POST,

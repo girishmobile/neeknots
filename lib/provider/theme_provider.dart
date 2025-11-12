@@ -4,10 +4,10 @@ import '../core/hive/theme_cache.dart';
 
 class ThemeProvider with ChangeNotifier {
   bool _isDark = false;
-  bool _isNotification = false;
+
 
   bool get isDark => _isDark;
-
+  bool _isNotification = false;
   bool get isNotification => _isNotification;
 
   ThemeProvider() {
