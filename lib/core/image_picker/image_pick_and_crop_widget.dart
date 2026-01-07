@@ -111,7 +111,6 @@ class CommonImagePicker {
       }
     }
 
-    print('==permissionGranted===${permissionGranted}');
     if (!permissionGranted) {
       debugPrint("Permissions not granted");
       return null;

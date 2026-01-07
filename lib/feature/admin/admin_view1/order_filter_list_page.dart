@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:neeknots/core/component/context_extension.dart';
+import 'package:neeknots/main.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/color/color_utils.dart';
@@ -66,13 +67,13 @@ class _StoreCollectionTabState extends State<OrderFilterListPage> {
 
         if (message != null) {
           ScaffoldMessenger.of(
-            context,
+            navigatorKey.currentContext!,
           ).showSnackBar(SnackBar(content: Text(message)));
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(
+          ScaffoldMessenger.of(  navigatorKey.currentContext!).showSnackBar(
             const SnackBar(content: Text("Filter added successfully!")),
           );
-          Navigator.pop(context);
+          Navigator.pop(  navigatorKey.currentContext!);
         }
       },
       contentView: StatefulBuilder(
@@ -99,7 +100,7 @@ class _StoreCollectionTabState extends State<OrderFilterListPage> {
 
                       value: status,
                       onChanged: (value) {
-                        setState(() => status = value ?? false);
+                        setState(() => status = value );
                       },
                     ),
                   ],
@@ -214,7 +215,7 @@ class _StoreCollectionTabState extends State<OrderFilterListPage> {
                                               onPressed: () async {
                                                 Navigator.pop(context);
                                                 await context.read<AdminDashboardProvider>().deleteOrderFilter(uid: item["id"],storeName: widget.storeName);
-                                                ScaffoldMessenger.of(context).showSnackBar(
+                                                ScaffoldMessenger.of(  navigatorKey.currentContext!).showSnackBar(
                                                   SnackBar(content: Text("Deleted \"${item["title"]}\"")),
                                                 );
                                               },
@@ -250,7 +251,7 @@ class _StoreCollectionTabState extends State<OrderFilterListPage> {
 
                             onPressed: () async {
                               await provider.updateAllStatusesToFirebase(storeName: widget.storeName);
-                              ScaffoldMessenger.of(context).showSnackBar(
+                              ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
                                 SnackBar(
                                   content: commonText(
                                     text: "Statuses updated!",

@@ -76,7 +76,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
         sound: true,
       );
       if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-        print('User granted permission');
         // 🔹 Step 2: For iOS, wait for APNs token before calling getToken()
         String? apnsToken;
         if (Platform.isIOS) {
@@ -92,7 +91,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         // 🔹 Step 3: Now safely get FCM token
         String? fcmToken = await messaging.getToken();
 
-        debugPrint('🔥 FCM Token: $fcmToken');
+       // debugPrint('🔥 FCM Token: $fcmToken');
         // 🔹 Step 4: Save token to backend
         final authService = AuthService();
         await authService.updateFcm(userID: id ?? '', fcmToken: fcmToken ?? '');

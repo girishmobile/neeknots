@@ -4,16 +4,15 @@ import 'package:neeknots/core/component/component.dart';
 import 'package:neeknots/core/component/context_extension.dart';
 import 'package:neeknots/core/string/string_utils.dart';
 import 'package:neeknots/feature/order_details/order_common_widget.dart';
-import 'package:neeknots/main.dart';
+
 import 'package:neeknots/provider/order_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/component/date_utils.dart';
 import '../../models/customer_model.dart';
-import '../../provider/customer_provider.dart';
 
-customerDetailsInfo({required Customer customer}) {
-  final provider = Provider.of<CustomerProvider>(navigatorKey.currentContext!);
+Widget customerDetailsInfo({required Customer customer}) {
+
   return Container(
     decoration: commonBoxDecoration(borderColor: colorBorder, borderRadius: 8),
     margin: EdgeInsets.only(left: 16, right: 16, top: 16),
@@ -31,7 +30,7 @@ customerDetailsInfo({required Customer customer}) {
                 title: "Name",
                 value: "${customer.firstName} ${customer.lastName}",
               ),
-              _buildRow(title: "email", value: "${customer.email}"),
+              _buildRow(title: "email", value: customer.email??'-'),
               _buildRow(
                 title: "Customer Since",
                 value: timeAgo(customer.createdAt ?? DateTime.now().toString()),
@@ -87,7 +86,7 @@ customerDetailsInfo({required Customer customer}) {
   );
 }
 
-customerOrderDetailsInfo({required Customer customer}) {
+Widget customerOrderDetailsInfo({required Customer customer}) {
   return Container(
     decoration: commonBoxDecoration(borderColor: colorBorder, borderRadius: 8),
     margin: const EdgeInsets.all(16),
@@ -117,7 +116,7 @@ customerOrderDetailsInfo({required Customer customer}) {
   );
 }
 
-customerProductInfo({required Customer customer}) {
+Widget customerProductInfo({required Customer customer}) {
   return Consumer<OrdersProvider>(
     builder: (context, provider, child) {
       return Container(
@@ -144,7 +143,7 @@ customerProductInfo({required Customer customer}) {
                       spacing: 20,
                       children: [
                         commonText(
-                          text: '${customer.lastOrderName}',
+                          text: customer.lastOrderName??"",
                           fontWeight: FontWeight.w600,
                         ),
                         Container(
@@ -219,7 +218,7 @@ customerProductInfo({required Customer customer}) {
                     children: [
                       commonText(
                         text:
-                            "$rupeeIcon${provider.orderDetailsModel?.orderData?.currentTotalPrice}",
+                            "$rupeeIcon${provider.orderDetailsModel?.orderData?.currentTotalPrice??"0"}",
                         color: Colors.blueAccent,
                         fontWeight: FontWeight.w600,
                       ),

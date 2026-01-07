@@ -37,7 +37,7 @@ class _CustomerOrderPageState extends State<CustomerOrderPage> {
   @override
   Widget build(BuildContext context) {
     return commonScaffold(
-      appBar: commonAppBar(title: "Customer Orders", context: context),
+      appBar: commonAppBar(title: "Customer Orders", context: context,centerTitle: true),
       body: commonAppBackground(
         child: Consumer<OrdersProvider>(
           builder: (context, provider, child) {

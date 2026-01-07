@@ -175,7 +175,7 @@ class ProductProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  List<File> _imageFiles = [];
+  final List<File> _imageFiles = [];
 
   List<File> get imageFiles => _imageFiles;
 
@@ -256,21 +256,20 @@ class ProductProvider with ChangeNotifier {
 
             _lastId = newItems.last.id;
             _currentPage++;
-            debugPrint("📄 Loaded page: $_currentPage");
-            debugPrint("📦 Total items loaded: ${_products.length}");
+
           } else {
             // No new items → stop pagination
             _hasMore = false;
-            debugPrint("✅ All products loaded, stopping pagination.");
+
           }
         } else {
           _hasMore = false;
-          debugPrint("✅ No more products returned from API.");
+
         }
         // stop fetching if we have loaded all 278
         if (_products.length >= 278) {
           _hasMore = false;
-          debugPrint("✅ Loaded all 278 products.");
+       //   debugPrint("✅ Loaded all 278 products.");
         }
 
         notifyListeners();
@@ -422,7 +421,7 @@ class ProductProvider with ChangeNotifier {
         _authService.productCollection,
       );
       // 🔹 2. Add new filter
-      final docRef = await productCollection.add({
+      final _ = await productCollection.add({
         "name": name,
         "image": image,
         "product_id": productID,
@@ -497,7 +496,8 @@ class ProductProvider with ChangeNotifier {
     }
 
     catch(e){
-      print("e$e");
+      debugPrint(e.toString());
+
     }
 
   }
@@ -508,7 +508,6 @@ class ProductProvider with ChangeNotifier {
     required String storeName, // you must pass the store name or store docId
     required String title,
   }) async {
-    print('--uid----${uid}');
     try{
 
       /*final productCollection = await _authService.getStoreSubCollection(
@@ -528,11 +527,10 @@ class ProductProvider with ChangeNotifier {
       print("✅ Product $uid approved successfully");*/
       await productCollection.delete();
       //   await getAllPendingRequest();
-      print("❌ Product $uid disapproved and deleted successfully");
     }
 
     catch(e){
-      print("e$e");
+      debugPrint(e.toString());
     }
 
   }

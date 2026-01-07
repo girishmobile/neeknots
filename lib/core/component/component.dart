@@ -813,7 +813,7 @@ Container commonAppBackground({required Widget child}) {
   );
 }
 
-commonHeadingText({
+Widget commonHeadingText({
   String? text,
   Color? color,
   FontWeight? fontWeight,
@@ -827,7 +827,7 @@ commonHeadingText({
   );
 }
 
-commonTitleText({String? text}) {
+Widget commonTitleText({String? text}) {
   return commonText(
     text: text ?? '',
     fontWeight: FontWeight.w600,
@@ -835,7 +835,7 @@ commonTitleText({String? text}) {
   );
 }
 
-commonSubTitleText({String? text}) {
+Widget commonSubTitleText({String? text}) {
   return commonText(
     text: text ?? '',
     fontWeight: FontWeight.w500,
@@ -843,7 +843,7 @@ commonSubTitleText({String? text}) {
   );
 }
 
-commonDescriptionText({String? text, TextAlign? textAlign}) {
+Widget commonDescriptionText({String? text, TextAlign? textAlign}) {
   return commonText(
     text: text ?? '',
     textAlign: textAlign,
@@ -852,7 +852,7 @@ commonDescriptionText({String? text, TextAlign? textAlign}) {
   );
 }
 
-commonPrefixIcon({
+Widget commonPrefixIcon({
   required String image,
   double? width,
   double? height,
@@ -1148,7 +1148,7 @@ Widget commonNetworkImage(
   );
 }
 
-commonBoxView({required Widget contentView, required String title}) {
+Widget commonBoxView({required Widget contentView, required String title}) {
   return Container(
     decoration: commonBoxDecoration(borderColor: colorBorder, borderRadius: 8),
     margin: const EdgeInsets.all(0),
@@ -1167,7 +1167,7 @@ commonBoxView({required Widget contentView, required String title}) {
   );
 }
 
-commonErrorBoxView({required String text, Color? colorText}) {
+Widget commonErrorBoxView({required String text, Color? colorText}) {
   return Container(
     decoration: commonBoxDecoration(
       borderColor: colorBorder,
@@ -1243,7 +1243,7 @@ Future<String?> fetchCustomerImage({required int customerID}) async {
   }
 }
 
-commonRefreshIndicator({
+Widget commonRefreshIndicator({
   required final Future<void> Function() onRefresh,
   required final Widget child,
 }) {
@@ -1264,9 +1264,7 @@ Widget commonTextRich({
   TextStyle? textStyle2,
   GestureRecognizer? onTap,
 }) {
-  final themeProvider = Provider.of<ThemeProvider>(
-    navigatorKey.currentContext!,
-  );
+
   return Text.rich(
     textAlign: textAlign ?? TextAlign.center,
     TextSpan(

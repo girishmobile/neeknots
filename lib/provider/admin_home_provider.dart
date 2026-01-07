@@ -5,7 +5,7 @@ import '../feature/admin/admin_home_page.dart';
 class AdminHomeProvider extends ChangeNotifier {
   int _selectedStoreIndex = 0;
   String? _selectedSection;
-  List<AdminUserModel> _users = [
+  final List<AdminUserModel> _users = [
     AdminUserModel(
       name: "Girish Chauhan",
       email: "girish@redefinesolution.com",

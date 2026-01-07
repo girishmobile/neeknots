@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+
 import 'package:flutter/material.dart';
 import 'package:neeknots/core/hive/app_config_cache.dart';
 
@@ -13,7 +13,6 @@ import '../../routes/app_routes.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final FirebaseStorage _storage = FirebaseStorage.instance;
   final contactUsCollection="contact_us";
   final orderFilterCollection="order_filter";
   final productCollection="product";
@@ -64,12 +63,12 @@ class AuthService {
       final docRef = _firestore.collection(storesCollection).doc();
       String uid = docRef.id;
 
-      String photoUrl = "";
+ /*     String photoUrl = "";
       if (photo != null) {
         final ref = _storage.ref().child("store_photos").child("$uid.jpg");
         await ref.putFile(photo);
         photoUrl = await ref.getDownloadURL();
-      }
+      }*/
 
       // Get FCM token
       String? fcmToken = await FirebaseMessaging.instance.getToken();
@@ -182,9 +181,7 @@ class AuthService {
   Future<void> deleteUser({required String uid}) async {
     try {
       await _firestore.collection(storesCollection).doc(uid).delete();
-      print("User deleted successfully ✅");
     } catch (e) {
-      print("Error deleting user: $e");
       rethrow;
     }
   }
@@ -200,7 +197,7 @@ class AuthService {
       await authService.deleteUser(uid: uid);
 
       // 1️⃣ Show success message
-      ScaffoldMessenger.of(context).showSnackBar(
+      ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
         SnackBar(
           content: Text("Your account has been deleted successfully."),
           backgroundColor: Colors.green,
@@ -218,7 +215,7 @@ class AuthService {
       );
     } catch (e) {
       // Show error message
-      ScaffoldMessenger.of(context).showSnackBar(
+      ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
         SnackBar(
           content: Text("Failed to delete account: $e"),
           backgroundColor: Colors.red,
@@ -345,7 +342,6 @@ class AuthService {
       };
 
       await docRef.set(userData);
-      print("✅ Contact form saved successfully!");
     } catch (e) {
       throw Exception("Signup failed: $e");
     }
@@ -364,7 +360,6 @@ class AuthService {
         return data;
       }).toList();
 
-      print('Fetched ${allContacts.length} contact(s) from all stores');
       return allContacts; // ✅ return the list
     } catch (e) {
       throw Exception("Failed to fetch contacts: $e");
@@ -384,7 +379,6 @@ class AuthService {
       final snapshot = await aggregateQuery.get();
 
       final count = snapshot.count; // ✅ now it's defined
-      print('Unseen contacts: $count');
       return count;
     } catch (e) {
       debugPrint("❌ Failed to fetch unseen count: $e");
@@ -425,7 +419,6 @@ class AuthService {
         return data;
       }).toList();
 
-      print('Fetched ${allContacts.length} contact(s) from all stores');
       return allContacts; // ✅ return the list
     } catch (e) {
       throw Exception("Failed to fetch contacts: $e");

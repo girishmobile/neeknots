@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:neeknots/core/color/color_utils.dart';
 import 'package:neeknots/core/component/CommonSwitch.dart';
 import 'package:neeknots/provider/admin_dashboard_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../core/component/phone_number_field.dart';
 import '../core/component/component.dart';
-import '../core/component/responsive.dart';
 import '../core/image/image_utils.dart';
 import '../core/validation/validation.dart';
 import '../main.dart';
@@ -49,7 +47,6 @@ class _State extends State<CommonAdminWidget> {
 
   @override
   Widget build(BuildContext context) {
-    var isMobile = Responsive.isMobile(context);
     return Consumer<AdminDashboardProvider>(
       builder: (context,provider,child) {
         return Stack(
@@ -212,7 +209,7 @@ class _State extends State<CommonAdminWidget> {
     );
   }
 }
-notificationWidget({ String ? value,void Function()? onTap}) {
+Widget notificationWidget({ String ? value,void Function()? onTap}) {
   return commonInkWell(
     onTap: onTap??() {
       navigatorKey.currentState?.pushNamed(RouteName.notificationScreen);

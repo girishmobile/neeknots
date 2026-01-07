@@ -82,7 +82,6 @@ Future callDeleteMethod({
     request.body = json.encode(params);
   }
 
-  print('==DeleteUrl==${url}');
   final streamedResponse = await request.send();
   final response = await http.Response.fromStream(streamedResponse);
 
@@ -97,7 +96,6 @@ Future callGETMethod({
 }) async {
   final uri = Uri.parse(url).replace(queryParameters: queryParams);
 
-  debugPrint('==getUrl==$url');
   final response = await http.get(
     uri,
     headers: await ApiConfig.getCommonHeaders(),

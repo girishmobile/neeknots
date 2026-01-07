@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:neeknots/core/component/price_input_format.dart';
 import 'package:neeknots/core/image/image_utils.dart';
 import 'package:neeknots/core/string/string_utils.dart';
-import 'package:neeknots/models/product_model.dart' hide Images, Variants;
+
 import 'package:neeknots/provider/product_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +14,7 @@ import '../../main.dart';
 import '../../models/product_details_model.dart';
 import '../../provider/theme_provider.dart';
 
-commonBannerView({
+Widget commonBannerView({
   required ProductProvider provider,
   required List<Images> images,
   void Function()? onTap,
@@ -156,7 +156,7 @@ commonBannerView({
 }
 //:39910815269055
 
-_addImageButton({required ThemeProvider themeProvider, VoidCallback? onTap}) {
+Widget _addImageButton({required ThemeProvider themeProvider, VoidCallback? onTap}) {
   return Align(
     alignment: Alignment.centerRight,
     child: Row(
@@ -188,7 +188,7 @@ _addImageButton({required ThemeProvider themeProvider, VoidCallback? onTap}) {
   );
 }
 
-commonFormView({required ProductProvider provider}) {
+Widget commonFormView({required ProductProvider provider}) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -257,7 +257,7 @@ commonFormView({required ProductProvider provider}) {
   );
 }
 
-commonOtherVariants({
+Widget commonOtherVariants({
   required ProductProvider provider,
   required ProductDetailsModel products,
 }) {
@@ -331,7 +331,7 @@ commonOtherVariants({
   );
 }
 
-commonVariants({
+Widget commonVariants({
   required ProductProvider provider,
   required ProductDetailsModel products,
 }) {
@@ -416,7 +416,7 @@ commonVariants({
   );
 }
 
-updateVariant({
+Widget updateVariant({
   required ProductProvider provider,
   required List<Variants> variants,
 }) {
@@ -445,7 +445,7 @@ updateVariant({
                 child: commonListTile(
                   textColor: themeProvider.isDark ? Colors.white : colorLogo,
                   contentPadding: EdgeInsetsGeometry.zero,
-                  leadingIcon: commonNetworkImage(data?.imageUrl ?? ''),
+                  leadingIcon: commonNetworkImage(data.imageUrl ?? ''),
                   subtitleView: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
@@ -523,7 +523,7 @@ Widget customTextField({
   );
 }
 
-_commonHeading({String? text}) {
+Widget _commonHeading({String? text}) {
   return commonText(
     text: text ?? "Product Description",
     fontWeight: FontWeight.w600,

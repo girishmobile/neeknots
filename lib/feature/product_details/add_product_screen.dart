@@ -125,7 +125,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     );
   }
 
-  commonInputBoxView({
+  Widget commonInputBoxView({
     List<TextInputFormatter>? inputFormatter,
     String? title,
     int? maxLine,
@@ -153,7 +153,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     );
   }
 
-  uploadImageView({String? title, int? maxLine}) {
+  Widget uploadImageView({String? title, int? maxLine}) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Consumer2<ProductProvider, ImagePickerProvider>(
       builder: (context, provider, imageProvider, child) {
@@ -305,7 +305,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     );
   }
 
-  dropDownView({
+  Widget dropDownView({
     required String title,
     required String selectedValue,
     required List<String> items,

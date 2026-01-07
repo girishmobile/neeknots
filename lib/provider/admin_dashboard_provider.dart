@@ -505,7 +505,6 @@ class AdminDashboardProvider with ChangeNotifier {
         return data;
       }).toList();
 
-      print('=====${dataList.length}');
       if (collectionName == _authService.productCollection) {
         _allPendingRequest = dataList;
         notifyListeners();
@@ -592,7 +591,7 @@ class AdminDashboardProvider with ChangeNotifier {
 
   int _selectedIndex = 0;
   String? _selectedSection;
-  List<AdminUserModel> _users = [
+  final List<AdminUserModel> _users = [
     AdminUserModel(
       name: "Girish Chauhan",
       email: "girish@redefinesolution.com",

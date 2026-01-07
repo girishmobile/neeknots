@@ -1,12 +1,11 @@
 import 'dart:async';
-import 'dart:io';
+
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:neeknots/admin/admin_dashboad.dart';
+
 import 'package:neeknots/core/component/component.dart';
 import 'package:neeknots/core/image/image_utils.dart';
-import 'package:neeknots/feature/admin/admin_login_page.dart';
 import 'package:neeknots/main.dart';
 import 'package:neeknots/provider/theme_provider.dart';
 import 'package:neeknots/routes/app_routes.dart';
@@ -131,7 +130,7 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  redirectToIntro() {
+  void redirectToIntro() {
     Timer(const Duration(seconds: 5), () async {
       navigatorKey.currentState?.pushNamedAndRemoveUntil(
         RouteName.loginScreen,

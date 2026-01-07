@@ -340,7 +340,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     );
   }
 
-  _commonText({
+  Widget _commonText({
     String? title,
     String? value,
     FontWeight? fontWeight,

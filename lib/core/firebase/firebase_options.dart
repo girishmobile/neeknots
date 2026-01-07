@@ -33,7 +33,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDuiduBnXasIFR_vb4G3bU4Nm96A9tQIaQ',
-    appId: '1:1027672009884:android:519b3c6e8f4fbce73a9159',
+    appId: '1:1027672009884:android:65b8dd84d5c704943a9159',
     messagingSenderId: '1027672009884',
     projectId: 'neeknots-a8758',
     storageBucket: 'neeknots-a8758.firebasestorage.app',

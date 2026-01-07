@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:neeknots/core/color/color_utils.dart';
-import 'package:neeknots/core/component/CustomTabBar.dart';
+import 'package:neeknots/core/component/custom_tab_bar.dart';
 import 'package:neeknots/core/component/component.dart';
 import 'package:neeknots/core/image/image_utils.dart';
 import 'package:neeknots/provider/product_provider.dart';

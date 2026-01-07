@@ -99,10 +99,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     } catch (e) {
       String errorMessage = e.toString().split(": ").last;
 
-      print('${e}');
       showCommonDialog(
         title: "Error",
-        context: context,
+        context: navigatorKey.currentContext!,
         confirmText: "Close",
         showCancel: false,
         content: errorMessage,
@@ -114,7 +113,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   void initState() {
     super.initState();
     Future.microtask(() {
-      Provider.of<LoginProvider>(context, listen: false).startResendTimer();
+      Provider.of<LoginProvider>(navigatorKey.currentContext!, listen: false).startResendTimer();
     });
   }
 
@@ -212,10 +211,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                                           alpha: 0.2,
                                         ),
                                         onCompleted: (code) {
-                                          print("Entered OTP: $code");
                                         },
                                         onChanged: (val) {
-                                          print("Changed: $val");
                                         },
                                       ),
                                     ),
@@ -278,7 +275,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                                             );
                                             // await provider.resendOtp(userId: widget.userData['uid'],email: "pathansameerahmed@gmail.com");
                                             ScaffoldMessenger.of(
-                                              context,
+                                              navigatorKey.currentContext!,
                                             ).showSnackBar(
                                               const SnackBar(
                                                 content: Text(

@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:neeknots/admin/admin_dashboad.dart';
+
 import 'package:neeknots/core/color/color_utils.dart';
 import 'package:neeknots/core/component/component.dart';
 import 'package:neeknots/core/image/image_utils.dart';
@@ -18,7 +18,7 @@ import '../../../main.dart';
 import '../../../provider/customer_provider.dart';
 import '../../../provider/order_provider.dart';
 import '../../../provider/product_provider.dart';
-import '../../admin/admin_home_page.dart';
+
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -178,12 +178,12 @@ class _SettingPageState extends State<SettingPage> {
                           confirmText: "Yes",
                           onPressed: () async {
                             await AppConfigCache.clearAll();
-                            context.read<DashboardProvider>().resetTab();
-                            context.read<ProductProvider>().reset();
-                            context.read<OrdersProvider>().resetData();
-                            context.read<CustomerProvider>().reset();
-                            context.read<ProfileProvider>().resetState();
-                            context.read<LoginProvider>().resetState();
+                            navigatorKey.currentContext!.read<DashboardProvider>().resetTab();
+                            navigatorKey.currentContext!.read<ProductProvider>().reset();
+                            navigatorKey.currentContext!.read<OrdersProvider>().resetData();
+                            navigatorKey.currentContext!.read<CustomerProvider>().reset();
+                            navigatorKey.currentContext!.read<ProfileProvider>().resetState();
+                            navigatorKey.currentContext!.read<LoginProvider>().resetState();
                             await AppConfigCache.clearConfig();
                             navigatorKey.currentState?.pushNamedAndRemoveUntil(
                               RouteName.loginScreen,
@@ -221,7 +221,7 @@ class _SettingPageState extends State<SettingPage> {
                   ],
                 ),
                 SizedBox(height: 8),
-                /*_commonView(
+               /* _commonView(
                   onTap: () {
                     Navigator.push(
                       context,
@@ -234,7 +234,7 @@ class _SettingPageState extends State<SettingPage> {
                   provider: themeProvider,
                   text: "Edit Information",
                   image: icInfo,
-                ),*/
+                )*/
               ],
             ),
 
@@ -245,7 +245,7 @@ class _SettingPageState extends State<SettingPage> {
     );
   }
 
-  _commonView({
+  Widget _commonView({
     String? text,
     Widget? trailing,
     String? image,

@@ -194,7 +194,7 @@ class _TotalOrderScreenState extends State<TotalOrderScreen> {
     );
   }
 
-  _commonDashboardView({
+  Widget _commonDashboardView({
     Color? color,
     required ThemeProvider provider,
     required String icon,

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:neeknots/core/component/order_page.dart';
+
 import 'package:provider/provider.dart';
 
 import '../../../core/component/component.dart';
@@ -45,7 +45,7 @@ class _CommonOrderViewState extends State<CommonOrderView> {
 
   void init() {
     Future.microtask(
-      () => Provider.of<OrdersProvider>(context, listen: false).getOrderList(
+      () => Provider.of<OrdersProvider>(navigatorKey.currentContext!, listen: false).getOrderList(
         status: widget.status,
         createdMinDate: widget.createdMinDate,
         createdMaxDate: widget.createdMaxDate,
@@ -55,7 +55,7 @@ class _CommonOrderViewState extends State<CommonOrderView> {
       ),
     );
     Future.microtask(
-          () => Provider.of<OrdersProvider>(context, listen: false).getAllFilterOrderList(),
+          () => Provider.of<OrdersProvider>(navigatorKey.currentContext!, listen: false).getAllFilterOrderList(),
     );
   }
 

@@ -1,20 +1,13 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:neeknots/admin/admin_dashboad.dart';
 import 'package:neeknots/core/color/color_utils.dart';
 import 'package:neeknots/core/component/component.dart';
 import 'package:neeknots/core/image/image_utils.dart';
 import 'package:neeknots/core/validation/validation.dart';
-import 'package:neeknots/feature/admin/admin_home_page.dart';
-import 'package:neeknots/main.dart';
 import 'package:neeknots/provider/login_provider.dart';
-import 'package:neeknots/provider/theme_provider.dart';
 import 'package:neeknots/routes/app_routes.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/component/responsive.dart';
-import '../auth/login_widget.dart';
-import 'admin_home_sameer.dart';
 
 class AdminLoginPage extends StatelessWidget {
   const AdminLoginPage({super.key});
@@ -116,7 +109,6 @@ class AdminLoginPage extends StatelessWidget {
                                   ),
                                   suffixIcon: GestureDetector(
                                     onTap: () {
-                                      print("Toggle");
                                       provider.togglePassword();
                                     },
                                     child: Icon(

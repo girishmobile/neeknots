@@ -604,8 +604,7 @@ Widget commonTopProductListView({void Function()? onTap}) {
                       imageMargin: EdgeInsetsGeometry.only(left: 10),
 
                       width:
-                          provider.products != null &&
-                              provider.products.length == 1
+                          provider.products.length == 1
                           ? MediaQuery.sizeOf(context).width - 30
                           : MediaQuery.sizeOf(context).width - 80,
                       image: data.image?.src ?? '',
@@ -692,8 +691,7 @@ Widget commonTopOrderListView({void Function()? onTap}) {
                       margin: EdgeInsetsGeometry.only(right: 10),
 
                       width:
-                          provider.filterOrderList != null &&
-                              provider.filterOrderList.length == 1
+                          provider.filterOrderList.length == 1
                           ? MediaQuery.sizeOf(context).width - 30
                           : MediaQuery.sizeOf(context).width - 80,
                       onTap: () {

@@ -1,12 +1,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:neeknots/core/component/component.dart';
+import 'package:neeknots/main.dart';
 
 import 'package:neeknots/provider/order_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/color/color_utils.dart';
-import '../../../core/component/CustomTabBar.dart';
+import '../../../core/component/custom_tab_bar.dart';
 import '../../feature/dashboard/order_widget/common_order_view.dart';
 
 
@@ -35,7 +36,7 @@ class _OrdersPageState extends State<OrderPageScreen>  with TickerProviderStateM
     final provider = Provider.of<OrdersProvider>(context, listen: false);
     //_tabController = TabController(length: 8, vsync: this);
    Future.microtask(
-      () => Provider.of<OrdersProvider>(context, listen: false).getAllFilterOrderList(),
+      () => Provider.of<OrdersProvider>(navigatorKey.currentContext!, listen: false).getAllFilterOrderList(),
     );
     if (provider.activeFilters.isNotEmpty) {
       _initTabController(provider.activeFilters.length);
@@ -50,9 +51,7 @@ class _OrdersPageState extends State<OrderPageScreen>  with TickerProviderStateM
   }
   @override
   Widget build(BuildContext context) {
-    final now = DateTime.now().toUtc();
-    final todayStart = "${now.toIso8601String().split("T")[0]}T00:00:00Z";
-    final todayEnd = "${now.toIso8601String().split("T")[0]}T23:59:59Z";
+
     return commonScaffold(
       appBar: commonAppBar(title: "Order Demo", context: context),
       body: Consumer<OrdersProvider>(

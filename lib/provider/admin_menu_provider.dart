@@ -19,7 +19,7 @@ class AdminMenuProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Widget _currentPage = const AllStorePage(); // Default page
+  final Widget _currentPage = const AllStorePage(); // Default page
   Widget get currentPage => _currentPage;
   int _selectedIndex = 0;
   int get selectedIndex => _selectedIndex;

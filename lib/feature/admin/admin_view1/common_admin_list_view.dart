@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 
 import '../../../core/component/animated_counter.dart';
 import '../../../core/component/responsive.dart';
-import '../../../provider/admin_home_provider.dart';
 
 class CommonAdminListView extends StatefulWidget {
    const CommonAdminListView({super.key,required this.storeName});
@@ -154,6 +153,6 @@ class _CommonAdminListViewState extends State<CommonAdminListView> {
           ],
         );
       }
-    );;
+    );
   }
 }

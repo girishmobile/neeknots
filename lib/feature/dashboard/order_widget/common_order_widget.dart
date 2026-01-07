@@ -5,7 +5,7 @@ import 'package:neeknots/core/string/string_utils.dart';
 import 'package:neeknots/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
 
-commonOrderView({
+Widget commonOrderView({
   required String image,
   String? date,
   String? orderID,
@@ -113,7 +113,7 @@ commonOrderView({
   );
 }
 
-commonOrderItemView({
+Widget commonOrderItemView({
   String? text,
   String? value,
   Widget? valueView,

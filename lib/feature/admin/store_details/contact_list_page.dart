@@ -200,7 +200,7 @@ class _StoreCollectionTabState extends State<ContactListPage> {
     );
   }
 
-  _commonView({
+  Widget _commonView({
     Color? color,
     IconData? icon,
     String? title,

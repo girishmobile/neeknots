@@ -1,10 +1,30 @@
 {
   "project_info": {
     "project_number": "1027672009884",
+    "firebase_url": "https://neeknots-a8758-default-rtdb.firebaseio.com",
     "project_id": "neeknots-a8758",
     "storage_bucket": "neeknots-a8758.firebasestorage.app"
   },
   "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1027672009884:android:65b8dd84d5c704943a9159",
+        "android_client_info": {
+          "package_name": "com.redefine.ecommanager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuiduBnXasIFR_vb4G3bU4Nm96A9tQIaQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
     {
       "client_info": {
         "mobilesdk_app_id": "1:1027672009884:android:519b3c6e8f4fbce73a9159",

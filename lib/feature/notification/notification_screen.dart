@@ -168,7 +168,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     );
   }
 
-  _commonView({
+  Widget _commonView({
     Color? color,
     IconData? icon,
     String? title,

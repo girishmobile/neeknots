@@ -3,8 +3,8 @@ import 'package:neeknots/core/component/component.dart';
 import 'package:neeknots/core/string/string_utils.dart';
 import 'package:provider/provider.dart';
 import '../../core/component/responsive.dart';
-import '../../provider/AdminMenuProvider.dart';
-import 'CommonAdminLeftMenu.dart';
+import '../../provider/admin_menu_provider.dart';
+import 'common_admin_left_menu.dart';
 import 'all_store_page.dart';
 
 class AdminHomeSameer extends StatefulWidget {
@@ -24,7 +24,7 @@ class _AdminHomePageState extends State<AdminHomeSameer> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.sizeOf(context);
+
     var menuProvider = Provider.of<AdminMenuProvider>(context);
     var isMobile = Responsive.isMobile(context);
     return commonScaffold(

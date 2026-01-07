@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:neeknots/core/component/component.dart';
-import 'package:neeknots/core/component/context_extension.dart';
+
 import 'package:neeknots/core/string/string_utils.dart';
 import 'package:neeknots/provider/order_provider.dart';
 import 'package:neeknots/provider/theme_provider.dart';
@@ -9,9 +9,9 @@ import 'package:provider/provider.dart';
 import '../../core/color/color_utils.dart';
 import '../../main.dart';
 import '../../models/order_details_model.dart';
-import '../../models/order_model.dart';
 
-productInfo({required OrderData order}) {
+
+Widget productInfo({required OrderData order}) {
   return Container(
     decoration: commonBoxDecoration(borderColor: colorBorder, borderRadius: 8),
     margin: const EdgeInsets.all(16),
@@ -154,7 +154,7 @@ productInfo({required OrderData order}) {
   );
 }
 
-commonHeadingView({String? title, required bool isPayment}) {
+Widget commonHeadingView({String? title, required bool isPayment}) {
   return Padding(
     padding: EdgeInsets.all(12.0),
     child: Row(
@@ -192,7 +192,7 @@ commonHeadingView({String? title, required bool isPayment}) {
 }
 
 
-orderInfo({required OrderData order}) {
+Widget orderInfo({required OrderData order}) {
   final themeProvider = Provider.of<ThemeProvider>(
     navigatorKey.currentContext!,
   );
@@ -261,7 +261,7 @@ orderInfo({required OrderData order}) {
   );
 }
 
-customerInfo({required OrderData order}) {
+Widget customerInfo({required OrderData order}) {
   return Container(
     decoration: commonBoxDecoration(borderColor: colorBorder, borderRadius: 8),
     margin: const EdgeInsets.all(16),
@@ -341,7 +341,7 @@ customerInfo({required OrderData order}) {
   );
 }
 
-paymentSummery({required OrderData order}) {
+Widget paymentSummery({required OrderData order}) {
   return Container(
     decoration: commonBoxDecoration(borderColor: colorBorder, borderRadius: 8),
     margin: const EdgeInsets.all(16),
@@ -360,8 +360,8 @@ paymentSummery({required OrderData order}) {
             children: [
               _buildRowPayment(
                 title: "Subtotal",
-                amount: "$rupeeIcon${order.currentTotalPrice}",
-                value: "${order.lineItems?.length} items",
+                amount: "$rupeeIcon${order.currentTotalPrice ??"0"}",
+                value: "${order.lineItems?.length??"0"} items",
               ),
               /*_buildRowPayment(
                 title: "Add discount",
@@ -383,13 +383,13 @@ paymentSummery({required OrderData order}) {
               _buildRowPayment(
                 title: "Total",
                 fontWeight: FontWeight.w600,
-                amount: "$rupeeIcon${order.currentTotalPrice}",
+                amount: "$rupeeIcon${order.currentTotalPrice??"0"}",
                 fontSize: 14,
               ),
               _buildRowPayment(
                 title: "Paid",
                 fontWeight: FontWeight.w400,
-                amount: "$rupeeIcon${order.currentTotalPrice}",
+                amount: "$rupeeIcon${order.currentTotalPrice??"0"}",
                 fontSize: 14,
               ),
             ],

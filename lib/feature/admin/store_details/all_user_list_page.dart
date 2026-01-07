@@ -283,7 +283,7 @@ class _AllUserListPageState extends State<AllUserListPage> {
     );
   }
 
-  _commonText({
+  Widget _commonText({
     String? title,
     String? value,
     FontWeight? fontWeight,

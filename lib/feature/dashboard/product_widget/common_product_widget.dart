@@ -4,7 +4,7 @@ import 'package:neeknots/core/component/component.dart';
 import 'package:neeknots/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
 
-commonProductListView({
+Widget commonProductListView({
   required String image,
   String? textInventory1,
   String? textInventory2,

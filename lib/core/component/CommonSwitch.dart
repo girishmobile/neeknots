@@ -9,14 +9,14 @@ class CommonSwitch extends StatelessWidget {
   final Color inactiveTrackColor;
 
   const CommonSwitch({
-    Key? key,
+    super.key,
     required this.value,
     required this.onChanged,
     this.scale = 0.8,
     this.activeThumbColor = Colors.green,
     this.inactiveThumbColor = Colors.grey,
     this.inactiveTrackColor = const Color(0xFFBDBDBD),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class CommonSwitch extends StatelessWidget {
         value: value,
         activeThumbColor: activeThumbColor,
         inactiveThumbColor: inactiveThumbColor,
-        inactiveTrackColor: inactiveTrackColor.withOpacity(0.4),
+        inactiveTrackColor: inactiveTrackColor.withValues( alpha: 0.4),
         onChanged: onChanged,
       ),
     );

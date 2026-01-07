@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+
 import 'package:neeknots/core/color/color_utils.dart';
 import 'package:neeknots/core/component/component.dart';
 import 'package:neeknots/feature/auth/signup/signup_form_widget.dart';
@@ -26,12 +26,6 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   File? _pickedImage;
 
-  Future<void> _pickImage() async {
-    final picked = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (picked != null) {
-      setState(() => _pickedImage = File(picked.path));
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,13 +111,7 @@ class _SignupScreenState extends State<SignupScreen> {
         
                                       onPressed: () async {
                                         hideKeyboard(context);
-                                        String fullNumber =
-                                            provider
-                                                .tetCountryCodeController
-                                                .text +
-                                            provider.tetPhone.text;
-        
-                                        print('==========${fullNumber}');
+
                                         if (formSignupKey.currentState
                                                 ?.validate() ==
                                             true) {
@@ -168,12 +156,11 @@ class _SignupScreenState extends State<SignupScreen> {
                                                   },
                                                 );
                                               },
-                                              context: context,
+                                              context: navigatorKey.currentContext!,
                                               content:
                                                   "Your account is successfully created. You can access it after 24 hours.",
                                             );
                                           } catch (e) {
-                                            print('====$e');
                                             String errorMessage = e
                                                 .toString()
                                                 .split(": ")
@@ -181,7 +168,7 @@ class _SignupScreenState extends State<SignupScreen> {
         
                                             showCommonDialog(
                                               title: "Error",
-                                              context: context,
+                                              context: navigatorKey.currentContext!,
                                               confirmText: "Close",
                                               showCancel: false,
                                               content: errorMessage,

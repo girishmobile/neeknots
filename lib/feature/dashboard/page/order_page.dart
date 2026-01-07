@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../core/component/component.dart';
-import '../../../core/component/order_page.dart';
 import '../order_widget/common_order_view.dart';
 
 class OrderPage extends StatefulWidget {

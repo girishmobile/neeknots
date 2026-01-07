@@ -6,7 +6,6 @@ import 'package:neeknots/core/component/component.dart';
 import 'package:neeknots/core/image/image_utils.dart';
 import 'package:neeknots/provider/theme_provider.dart';
 
-import '../../../core/image_picker/image_pick_and_crop_widget.dart';
 import '../../../provider/image_picker_provider.dart';
 import '../../../provider/profile_provider.dart';
 
@@ -20,7 +19,6 @@ Widget buildAvatar({
 
   final fileExists = path != null && File(path).existsSync();
 
-  print('===iageUrl${imageUrl}');
   return Container(
     width: 120,
     height: 120,
@@ -58,7 +56,7 @@ Widget buildAvatar({
   );
 }
 
-profileView({
+Widget profileView({
   required ProfileProvider provider,
   required ImagePickerProvider imageProvider,
   required ThemeProvider themeProvider,
@@ -66,7 +64,6 @@ profileView({
   required String  imageUrl,
 
 }) {
-  print('=imageUrl===$imageUrl');
   return Row(
     mainAxisSize: MainAxisSize.min,
     crossAxisAlignment: CrossAxisAlignment.center,

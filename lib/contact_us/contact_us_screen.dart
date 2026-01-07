@@ -130,7 +130,7 @@ class ContactUsScreen extends StatelessWidget {
     );
   }
 
-  _commonView({
+  Widget _commonView({
     int? maxLine,
     String? title,
     String? prefixIcon,

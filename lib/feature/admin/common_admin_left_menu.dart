@@ -58,7 +58,7 @@ class CommonAdminLeftMenu extends StatelessWidget {
                 ),
               ),
             );
-          }).toList(),
+          }),
         ],
       ),
     );

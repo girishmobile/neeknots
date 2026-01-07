@@ -3,11 +3,9 @@ import 'package:neeknots/core/component/component.dart';
 import 'package:neeknots/core/firebase/auth_service.dart';
 import 'package:neeknots/feature/admin/store_details/all_user_list_page.dart';
 import 'package:neeknots/feature/admin/store_details/product_list_page.dart';
-import 'package:provider/provider.dart';
-
 import '../../../core/color/color_utils.dart';
-import '../../../core/component/CustomTabBar.dart';
-import '../../../provider/AdminMenuProvider.dart';
+import '../../../core/component/custom_tab_bar.dart';
+
 import 'contact_list_page.dart';
 import '../admin_view1/order_filter_list_page.dart';
 
@@ -46,7 +44,7 @@ class StoreListPageState extends State<StoreDetailsScreen>
   @override
   Widget build(BuildContext context) {
 
-    final AuthService _authService = AuthService();
+    final AuthService authService = AuthService();
     return commonScaffold(
       body: Row(
         children: [
@@ -76,9 +74,9 @@ class StoreListPageState extends State<StoreDetailsScreen>
                       ],
                       tabViews: [
                         AllUserListPage(storeName: widget.storeName),
-                        ProductListPage(storeName:widget.storeName ,collectionName:_authService.productCollection),
-                        ContactListPage( storeName:widget.storeName ,collectionName:_authService.contactUsCollection),
-                        OrderFilterListPage( storeName:widget.storeName ,collectionName:_authService.orderFilterCollection),
+                        ProductListPage(storeName:widget.storeName ,collectionName:authService.productCollection),
+                        ContactListPage( storeName:widget.storeName ,collectionName:authService.contactUsCollection),
+                        OrderFilterListPage( storeName:widget.storeName ,collectionName:authService.orderFilterCollection),
 
                       ],
                     ),

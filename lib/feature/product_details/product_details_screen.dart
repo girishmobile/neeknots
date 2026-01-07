@@ -165,8 +165,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       vertical: 5,
                                     ),
                                     child: _commonRichText(
-                                      str1: inventory ?? '',
-                                      str2: variants ?? '',
+                                      str1: inventory ,
+                                      str2: variants ,
                                       provider: themeProvider,
                                     ),
                                   ),
@@ -419,7 +419,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     return {"inventory": "$totalInventory", "variants": "$totalVariants"};
   }
 
-  _priceCalculation(ProductProvider provider) {
+  String _priceCalculation(ProductProvider provider) {
     var data = provider.productDetailsModel?.variants ?? [];
     final priceText = data.isNotEmpty == true
         ? '$rupeeIcon${data.first.price}'
@@ -427,7 +427,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     return priceText;
   }
 
-  _commonRichText({
+Widget  _commonRichText({
     required String str1,
     required String str2,
     required ThemeProvider provider,
@@ -455,26 +455,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
-  _commonDotView({String? text, required ThemeProvider themeProvider}) {
-    return Row(
-      spacing: 10,
-      children: [
-        Container(
-          width: 8,
-          height: 8,
-          decoration: commonBoxDecoration(
-            color: themeProvider.isDark
-                ? Colors.white
-                : Colors.black.withValues(alpha: 0.5),
-            shape: BoxShape.circle,
-          ),
-        ),
-        Expanded(child: commonText(text: text ?? 'Pure Cotton', fontSize: 12)),
-      ],
-    );
-  }
 
-  _commonHeading({String? text}) {
+ Widget _commonHeading({String? text}) {
     return commonText(
       text: text ?? "Product Description",
       fontWeight: FontWeight.w600,

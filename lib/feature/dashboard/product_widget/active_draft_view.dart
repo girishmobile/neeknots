@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 
 import '../../../core/component/component.dart';
 import '../../../core/component/context_extension.dart';
-import '../../../core/image/image_utils.dart';
 import '../../../core/string/string_utils.dart';
 import '../../../main.dart';
 import '../../../provider/product_provider.dart';

@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart' show FirebaseFirestore;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:neeknots/core/component/component.dart';
@@ -11,7 +10,7 @@ import 'package:neeknots/service/network_repository.dart';
 
 import '../core/firebase/auth_service.dart';
 import '../models/order_details_model.dart'
-    as orderDetails
+    as order
     show OrderDetailsModel;
 import '../service/api_config.dart';
 
@@ -92,14 +91,21 @@ class OrdersProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Map<String, List<Order>> _ordersByStatus = {};
+  final Map<String, List<Order>> _ordersByStatus = {};
 
   Map<String, List<Order>> get ordersByStatus => _ordersByStatus;
 
   // selected tab orders
   /*List<Order> get selectedOrders =>
       _ordersByStatus[selectedTab.toLowerCase()] ?? [];*/
-
+  int todaysOrderCount = 0;
+  int openOrderCount = 0;
+  var closedOrderCount = 0;
+  int pendingToChargeCount = 0;
+  int pendingShipmentCount = 0;
+  int shippedCount = 0;
+  int awaitingReturnCount = 0;
+  int completedCount = 0;
   Future<void> orderCountStatusValue1({
     int? limit,
     String? financialStatus,
@@ -121,14 +127,7 @@ class OrdersProvider with ChangeNotifier {
         final data = json.decode(response); // ✅ now .body works
 
         final fetchedOrders = OrderModel.fromJson(data).orders ?? [];
-        int todaysOrderCount = 0;
-        int openOrderCount = 0;
-        int closedOrderCount = 0;
-        int pendingToChargeCount = 0;
-        int pendingShipmentCount = 0;
-        int shippedCount = 0;
-        int awaitingReturnCount = 0;
-        int completedCount = 0;
+
         final todayStart = DateTime.now().toUtc().subtract(
           Duration(
             hours: DateTime.now().hour,
@@ -152,8 +151,9 @@ class OrdersProvider with ChangeNotifier {
           if (status == 'cancelled') totalCancel++;
 
           // Custom status counts
-          if (createdAt.isAfter(todayStart) && createdAt.isBefore(todayEnd))
+          if (createdAt.isAfter(todayStart) && createdAt.isBefore(todayEnd)) {
             todaysOrderCount++;
+          }
           if (status == 'pending') pendingToChargeCount++; // example mapping
           if (status == 'shipping') pendingShipmentCount++;
           if (status == 'shipped') shippedCount++;
@@ -165,24 +165,11 @@ class OrdersProvider with ChangeNotifier {
           // Open Orders: all others that are not closed
           if (!(status == 'cancelled' ||
               status == 'refunded' ||
-              status == 'completed'))
+              status == 'completed')) {
             openOrderCount++;
+          }
         }
 
-        debugPrint("===== ORDER COUNTS =====");
-        debugPrint("Today’s Order: $todaysOrderCount");
-        debugPrint("Open Order: $openOrderCount");
-        debugPrint("Closed Orders: $closedOrderCount");
-        debugPrint("Pending To Charge: $pendingToChargeCount");
-        debugPrint("Pending Shipment: $pendingShipmentCount");
-        debugPrint("Shipped: $shippedCount");
-        debugPrint("Awaiting Return: $awaitingReturnCount");
-        debugPrint("Completed: $completedCount");
-        debugPrint("Total Paid: $totalPaid");
-        debugPrint("Total Pending: $totalPending");
-        debugPrint("Total Refunded: $totalRefunded");
-        debugPrint("Total Shipping: $totalShipping");
-        debugPrint("Total Cancel: $totalCancel");
 
         totalPaid = fetchedOrders
             .where((e) => e.financialStatus?.toLowerCase() == 'paid')
@@ -418,7 +405,7 @@ class OrdersProvider with ChangeNotifier {
 
   OrderDetailsModel? get orderDetailsModel => _orderDetailsModel;
 
-  clearOrderDetailsData() {
+  Future<void> clearOrderDetailsData() async {
     _orderDetailsModel?.orderData = null;
     notifyListeners();
   }
@@ -432,7 +419,7 @@ class OrdersProvider with ChangeNotifier {
 
       final response = await callGETMethod(url: url);
 
-      _orderDetailsModel = orderDetails.OrderDetailsModel.fromJson(
+      _orderDetailsModel = order.OrderDetailsModel.fromJson(
         json.decode(response),
       );
 
@@ -637,7 +624,6 @@ class OrdersProvider with ChangeNotifier {
       if (createdMaxDate != null) 'created_at_max': createdMaxDate,
     };
 
-    print('==queryParams==${queryParams}');
     final baseUrl = await ApiConfig.baseUrl;
 
     final uri = Uri.parse(
@@ -649,12 +635,10 @@ class OrdersProvider with ChangeNotifier {
       headers: await ApiConfig.getCommonHeaders(),
     );
 
-    print('=======OrderUrl$uri');
     if (response.statusCode != 200) {
       _isFetching = false;
       notifyListeners();
 
-      print('=======OrderUrl$_isFetching');
       throw Exception("Error fetching orders: ${response.body}");
     }
 
@@ -700,7 +684,6 @@ class OrdersProvider with ChangeNotifier {
         fulfillmentStatus: null,
       );
     } else {
-      print('==click');
       getOrderList(
         loadMore: false,
         status: apiStatus,
@@ -811,7 +794,6 @@ class OrdersProvider with ChangeNotifier {
     }
   }
 
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
 
 
