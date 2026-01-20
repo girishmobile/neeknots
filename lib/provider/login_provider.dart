@@ -154,6 +154,7 @@ class LoginProvider with ChangeNotifier {
 
       return _userData ?? {}; // 🔹 return the user data
     } catch (e) {
+      print('---e$e');
       _setLoading(false);
       rethrow;
     } finally {
@@ -171,6 +172,8 @@ class LoginProvider with ChangeNotifier {
     if (email.isEmpty) {
       return; // stop execution
     }
+
+
 
     final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
 
@@ -191,7 +194,8 @@ class LoginProvider with ChangeNotifier {
         },
       }),
     );
-
+    print('---e${response.statusCode }');
+    print('---e${response.body }');
     if (response.statusCode == 200) {
       final FirebaseFirestore firestore = FirebaseFirestore.instance;
       await firestore.collection("stores").doc(userID).update({

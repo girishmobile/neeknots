@@ -1,3 +1,4 @@
+import 'package:email_otp/email_otp.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -11,13 +12,13 @@ import 'package:neeknots/routes/app_routes.dart';
 import 'package:provider/provider.dart';
 
 import 'login_widget.dart';
-
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
+
     final formLoginKey = GlobalKey<FormState>();
     return commonScaffold(
       body: Consumer2<ThemeProvider, LoginProvider>(
@@ -65,7 +66,8 @@ class LoginScreen extends StatelessWidget {
                                   text: "Please auth to continue  ",
                                 ),
                                 const SizedBox(height: 20),
-                                commonLoginView(
+
+                              commonLoginView(
                                   provider: provider,
                                   onPressSignUp: TapGestureRecognizer()
                                     ..onTap = () {
@@ -78,7 +80,11 @@ class LoginScreen extends StatelessWidget {
                                       );
                                     },
 
+
                                   onPressed: () async {
+                                  /*  EmailSender emailSender = EmailSender();
+                                    var response = await emailsender.sendOtp("pathansameerahmed@gmail.com", 123456);*/
+
                                     hideKeyboard(context);
 
                                     if (formLoginKey.currentState?.validate() ==

@@ -10,7 +10,9 @@ import 'package:provider/provider.dart';
 
 import '../../core/component/responsive.dart';
 import '../../core/firebase/auth_service.dart';
+import '../../main.dart';
 import '../../provider/admin_dashboard_provider.dart';
+import '../../routes/app_routes.dart';
 import 'admin_view1/admin_all_userlist.dart';
 import 'admin_view1/admin_product_list.dart';
 import 'admin_view1/common_admin_list_view.dart';
@@ -268,14 +270,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 0),
-          /*Align(
-                              alignment:
-                                  Alignment.center, // or Alignment.center
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 30.0,right: 30),
-                                child: commonAssetImage(icAppLogo, height: 80,fit: BoxFit.scaleDown),
-                              ),
-                            ),*/
+
           Container(
             height: 150,
             color: Colors.white,
@@ -353,6 +348,28 @@ class _AdminHomePageState extends State<AdminHomePage> {
                 );
               },
             ),
+          ),
+
+          commonButton(
+            height: 45,
+            color: Colors.red,
+            width: double.infinity,
+            text: "LogOut",
+            onPressed: () {
+              showCommonDialog(
+                confirmText: "Logout",
+                cancelText: "No",
+                content: "Are you sure want to logout",
+                title: "Logout",
+                context: context,
+                onPressed: () {
+                  navigatorKey.currentState?.pushNamedAndRemoveUntil(
+                    RouteName.adminLoginPage,
+                    (Route<dynamic> route) => false,
+                  );
+                },
+              );
+            },
           ),
         ],
       ),
