@@ -525,9 +525,12 @@ class OrdersProvider with ChangeNotifier {
     final createdAtMax = Uri.encodeComponent(utcEnd.toIso8601String());
     final url =
         "${await ApiConfig.ordersUrl}?created_at_min=$createdAtMin&created_at_max=$createdAtMax&status=any";
-    final response = await callGETMethod(url: url);
 
+    final response = await callGETMethod(url: url);
+    print('Response: ${globalStatusCode}');
+    print('Response: ${json.decode(response)}');
     if (globalStatusCode == 200) {
+
       _orderModelByDate = OrderModel.fromJson(json.decode(response));
 
       if (isDashboard) {

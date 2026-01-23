@@ -7,8 +7,24 @@ import '../core/component/phone_number_field.dart';
 import '../core/image/image_utils.dart';
 import '../core/validation/validation.dart';
 
-class ContactUsScreen extends StatelessWidget {
+class ContactUsScreen extends StatefulWidget {
   const ContactUsScreen({super.key});
+
+  @override
+  State<ContactUsScreen> createState() => _ContactUsScreenState();
+}
+
+class _ContactUsScreenState extends State<ContactUsScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    // Page load hone ke baad provider access
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final provider = context.read<LoginProvider>();
+      provider.resetState();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

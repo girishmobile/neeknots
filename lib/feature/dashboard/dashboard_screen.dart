@@ -145,8 +145,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   notificationWidget(
                     onTap: () {
                       navigatorKey.currentState?.pushNamed(
-                        RouteName.otpVerificationScreen,
-                        arguments: {'uid': "sa"},
+                        RouteName.notificationScreen,
+                  /*      arguments: {'uid': "sa"},*/
                       );
                     },
                   ),

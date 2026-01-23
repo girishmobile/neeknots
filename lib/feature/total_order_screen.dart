@@ -14,6 +14,7 @@ import '../core/color/color_utils.dart';
 import '../core/component/animated_counter.dart';
 import '../core/string/string_utils.dart';
 import '../provider/theme_provider.dart';
+import 'dashboard/order_widget/common_order_view.dart';
 
 class TotalOrderScreen extends StatefulWidget {
   const TotalOrderScreen({super.key});
@@ -52,9 +53,13 @@ class _TotalOrderScreenState extends State<TotalOrderScreen> {
 
   Future<void> init() async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final postMdl = Provider.of<OrdersProvider>(context, listen: false);
 
+      final postMdl = Provider.of<OrdersProvider>(context, listen: false);
       postMdl.resetData1();
+      Future.microtask(
+            () => Provider.of<OrdersProvider>(navigatorKey.currentContext!, listen: false).getAllFilterOrderList(),
+      );
+
       await postMdl.getAllFilterOrderList1();
       await postMdl.orderCountStatusValue();
     });
@@ -68,7 +73,7 @@ class _TotalOrderScreenState extends State<TotalOrderScreen> {
         context: context,
         centerTitle: true,
       ),
-      body: commonAppBackground(
+      body:CommonOrderView()/* commonAppBackground(
         child: Consumer2<ThemeProvider, OrdersProvider>(
           builder: (context, provider, orderProvider, child) {
             return Stack(
@@ -121,7 +126,7 @@ class _TotalOrderScreenState extends State<TotalOrderScreen> {
             );
           },
         ),
-      ),
+      )*/,
     );
   }
 
