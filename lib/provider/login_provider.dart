@@ -131,7 +131,6 @@ class LoginProvider with ChangeNotifier {
   }) async {
     _setLoading(true);
     try {
-
       _userData = await _authService.loginUser(
         email: email,
         mobile: mobile,
@@ -141,7 +140,7 @@ class LoginProvider with ChangeNotifier {
       notifyListeners();
       if (_userData?.isNotEmpty == true) {
         String otp = generateOtp();
-         await sendOtpEmail(email: email, userID: userData?['uid'], otp: otp);
+        await sendOtpEmail(email: email, userID: userData?['uid'], otp: otp);
         final FirebaseFirestore firestore = FirebaseFirestore.instance;
         await firestore.collection("stores").doc(userData?['uid']).update({
           "otp": otp,
@@ -173,8 +172,6 @@ class LoginProvider with ChangeNotifier {
       return; // stop execution
     }
 
-
-
     final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
 
     final response = await http.post(
@@ -194,8 +191,7 @@ class LoginProvider with ChangeNotifier {
         },
       }),
     );
-    print('---e${response.statusCode }');
-    print('---e${response.body }');
+
     if (response.statusCode == 200) {
       final FirebaseFirestore firestore = FirebaseFirestore.instance;
       await firestore.collection("stores").doc(userID).update({
@@ -290,6 +286,7 @@ class LoginProvider with ChangeNotifier {
   Timer? _timer;
 
   bool get canResend => _canResend;
+
   int get secondsRemaining => _secondsRemaining;
 
   void startResendTimer() {
