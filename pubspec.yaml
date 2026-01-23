@@ -42,21 +42,21 @@ dependencies:
   syncfusion_flutter_charts: ^31.1.19
   cached_network_image: ^3.4.1
   image_cropper: ^11.0.0
-  image_picker: ^1.2.0
+  image_picker: ^1.2.1
   permission_handler: ^12.0.1
   carousel_slider: ^5.1.1
-  firebase_core: ^4.1.0
-  flutter_local_notifications: ^19.4.2
-  firebase_messaging: ^16.0.1
-  connectivity_plus: ^7.0.0
-  internet_connection_checker: any
-  http: ^1.5.0
+  firebase_core: ^4.4.0
+  flutter_local_notifications: ^19.5.0
+  firebase_messaging: ^16.1.1
+  connectivity_plus: ^6.1.5
+  internet_connection_checker: ^3.0.1
+  http: ^1.6.0
   intl: ^0.20.2
   html: ^0.15.6
   url_launcher: ^6.3.2
-  cloud_firestore: ^6.1.1
-  firebase_auth: ^6.1.0
-  firebase_storage: ^13.0.2
+  cloud_firestore: ^6.1.2
+  firebase_auth: ^6.1.4
+  firebase_storage: ^13.0.6
   custom_date_range_picker: ^1.2.0
   pin_code_fields: ^8.0.1
   googleapis_auth: ^2.0.0

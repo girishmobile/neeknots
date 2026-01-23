@@ -1,5 +1,5 @@
-
 import 'package:flutter/gestures.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:neeknots/core/color/color_utils.dart';
@@ -12,6 +12,7 @@ import 'package:neeknots/routes/app_routes.dart';
 import 'package:provider/provider.dart';
 
 import 'login_widget.dart';
+
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
@@ -67,7 +68,7 @@ class LoginScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 20),
 
-                              commonLoginView(
+                                commonLoginView(
                                   provider: provider,
                                   onPressSignUp: TapGestureRecognizer()
                                     ..onTap = () {
@@ -80,9 +81,8 @@ class LoginScreen extends StatelessWidget {
                                       );
                                     },
 
-
                                   onPressed: () async {
-                                  /*  EmailSender emailSender = EmailSender();
+                                    /*  EmailSender emailSender = EmailSender();
                                     var response = await emailsender.sendOtp("pathansameerahmed@gmail.com", 123456);*/
 
                                     hideKeyboard(context);
@@ -108,7 +108,6 @@ class LoginScreen extends StatelessWidget {
                                           arguments: userData,
                                         );
                                       } catch (e) {
-
                                         String errorMessage = e
                                             .toString()
                                             .split(": ")
