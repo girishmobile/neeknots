@@ -11,18 +11,20 @@ class InternetProvider with ChangeNotifier {
   }
 
   void _init() {
-    Connectivity().onConnectivityChanged.listen((List<ConnectivityResult> results) async {
+    Connectivity().onConnectivityChanged.listen((
+      List<ConnectivityResult> results,
+    ) async {
       if (results.contains(ConnectivityResult.none)) {
         _isConnected = false;
       } else {
-        _isConnected = await InternetConnectionChecker().hasConnection;
+        _isConnected = await InternetConnectionChecker.instance.hasConnection;
       }
       notifyListeners();
     });
   }
 
   Future<void> checkNow() async {
-    _isConnected = await InternetConnectionChecker().hasConnection;
+    _isConnected = await InternetConnectionChecker.instance.hasConnection;
     notifyListeners();
   }
 }

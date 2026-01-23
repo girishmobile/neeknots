@@ -30,9 +30,23 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     _phoneOtpController.dispose();
     super.dispose();
   }*/
+
+  late final TextEditingController tetOTP = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      Provider.of<LoginProvider>(
+        navigatorKey.currentContext!,
+        listen: false,
+      ).startResendTimer();
+    });
+  }
+
   @override
   void dispose() {
-    //_emailOtpController.dispose();
+    tetOTP.dispose(); // ✅ ONLY here
     super.dispose();
   }
 
@@ -44,7 +58,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
     final provider = Provider.of<LoginProvider>(context, listen: false);
 
-    String emailOtp = provider.tetOTP.text.trim();
+    String emailOtp = tetOTP.text.trim();
     if (emailOtp.isEmpty) {
       ScaffoldMessenger.of(
         context,
@@ -56,20 +70,6 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
       );
       return;
     }
-
-    // Phone OTP validation
-
-    /*if (phoneOtp.isEmpty) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text("Please enter Phone OTP")));
-      return;
-    } else if (phoneOtp.length != 4) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Phone OTP must be 4 digits")),
-      );
-      return;
-    }*/
 
     try {
       final data = await provider.verifyOtp(
@@ -107,14 +107,6 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
         content: errorMessage,
       );
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    Future.microtask(() {
-      Provider.of<LoginProvider>(navigatorKey.currentContext!, listen: false).startResendTimer();
-    });
   }
 
   @override
@@ -204,16 +196,14 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                                     Align(
                                       alignment: AlignmentGeometry.center,
                                       child: CommonPinCodeField(
-                                        controller: loginProvider.tetOTP,
+                                        controller: tetOTP,
                                         activeFillColor: colorLogo,
                                         inactiveFillColor: colorBorder,
                                         selectedFillColor: colorLogo.withValues(
                                           alpha: 0.2,
                                         ),
-                                        onCompleted: (code) {
-                                        },
-                                        onChanged: (val) {
-                                        },
+                                        onCompleted: (code) {},
+                                        onChanged: (val) {},
                                       ),
                                     ),
 

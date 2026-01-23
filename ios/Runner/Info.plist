@@ -7,15 +7,16 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Neeknots</string>
+	<string>EComManager</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
-	<key>CFBundleIdentifier</key>
+	<key>CFBundleIdentifier</key>321	\
+	";  "
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>neeknots</string>
+	<string>EComManager</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -36,14 +37,14 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-	<key>NSCameraUsageDescription</key>
-	<string>We need to access your camera to take photos.</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>We need to save cropped images to your photo library.</string>
+	 <key>NSCameraUsageDescription</key>
+    <string>The camera is used to capture product photos and upload images for managing your store and listings.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need to access your photo library to select images.</string>
-	<key>NSUserNotificationUsageDescription</key>
-	<string>This app needs notification permission</string>
+    <string>Your photo library is used to select product images and media for managing your store and product listings.</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>Photos are saved to your library when you export or edit product images for your store.</string>
+    <key>NSUserNotificationUsageDescription</key>
+    <string>Notifications are used to send attendance alerts, reminders, and important work updates.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>

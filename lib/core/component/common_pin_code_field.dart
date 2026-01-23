@@ -3,7 +3,6 @@ import 'package:neeknots/core/component/component.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class CommonPinCodeField extends StatelessWidget {
-
   final Function(String)? onCompleted;
   final Function(String)? onChanged;
   final TextStyle? textStyle;
@@ -43,10 +42,13 @@ class CommonPinCodeField extends StatelessWidget {
       appContext: context,
       length: 4,
       controller: controller,
+      autoDisposeControllers: false,
       mainAxisAlignment: MainAxisAlignment.center,
       keyboardType: TextInputType.number,
       animationType: AnimationType.fade,
-      textStyle: textStyle ?? commonTextStyle(
+      textStyle:
+          textStyle ??
+          commonTextStyle(
             fontSize: 16,
             color: Colors.white,
             fontWeight: FontWeight.w500,
