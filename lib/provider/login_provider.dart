@@ -147,7 +147,7 @@ class LoginProvider with ChangeNotifier {
             "otp": otp,
             "otp_created_at": FieldValue.serverTimestamp(),
             "active_status":
-                false, // Ensure user is inactive until OTP verified
+                true, // Ensure user is inactive until OTP verified
           });
         } else {
           otp = generateOtp();
@@ -157,7 +157,7 @@ class LoginProvider with ChangeNotifier {
             "otp": otp,
             "otp_created_at": FieldValue.serverTimestamp(),
             "active_status":
-                false, // Ensure user is inactive until OTP verified
+                true, // Ensure user is inactive until OTP verified
           });
         }
 
@@ -166,7 +166,6 @@ class LoginProvider with ChangeNotifier {
 
       return _userData ?? {}; // 🔹 return the user data
     } catch (e) {
-      print('---e$e');
       _setLoading(false);
       rethrow;
     } finally {
@@ -204,8 +203,6 @@ class LoginProvider with ChangeNotifier {
         },
       }),
     );
-    print('---e${response.statusCode}');
-    print('---e${response.body}');
     if (response.statusCode == 200) {
       final FirebaseFirestore firestore = FirebaseFirestore.instance;
       await firestore.collection("stores").doc(userID).update({
