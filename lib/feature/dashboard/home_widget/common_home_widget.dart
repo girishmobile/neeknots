@@ -149,7 +149,7 @@ Widget homeTopView({
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color:  Colors.amber, // border color
+                              color: Colors.amber, // border color
                               width: 1.5, // border width
                             ),
                           ),
@@ -603,8 +603,7 @@ Widget commonTopProductListView({void Function()? onTap}) {
                       margin: EdgeInsetsGeometry.only(right: 10),
                       imageMargin: EdgeInsetsGeometry.only(left: 10),
 
-                      width:
-                          provider.products.length == 1
+                      width: provider.products.length == 1
                           ? MediaQuery.sizeOf(context).width - 30
                           : MediaQuery.sizeOf(context).width - 80,
                       image: data.image?.src ?? '',
@@ -690,8 +689,7 @@ Widget commonTopOrderListView({void Function()? onTap}) {
                     return commonOrderView(
                       margin: EdgeInsetsGeometry.only(right: 10),
 
-                      width:
-                          provider.filterOrderList.length == 1
+                      width: provider.filterOrderList.length == 1
                           ? MediaQuery.sizeOf(context).width - 30
                           : MediaQuery.sizeOf(context).width - 80,
                       onTap: () {

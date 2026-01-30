@@ -156,7 +156,10 @@ Widget commonBannerView({
 }
 //:39910815269055
 
-Widget _addImageButton({required ThemeProvider themeProvider, VoidCallback? onTap}) {
+Widget _addImageButton({
+  required ThemeProvider themeProvider,
+  VoidCallback? onTap,
+}) {
   return Align(
     alignment: Alignment.centerRight,
     child: Row(

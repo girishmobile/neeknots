@@ -8,7 +8,6 @@ import 'package:neeknots/core/image/image_utils.dart';
 import 'package:neeknots/provider/login_provider.dart';
 import 'package:provider/provider.dart';
 
-
 import '../../core/validation/validation.dart';
 import '../../main.dart';
 import '../../provider/theme_provider.dart';

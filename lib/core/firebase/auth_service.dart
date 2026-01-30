@@ -13,10 +13,10 @@ import '../../routes/app_routes.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final contactUsCollection="contact_us";
-  final orderFilterCollection="order_filter";
-  final productCollection="product";
-  final storesCollection="stores";
+  final contactUsCollection = "contact_us";
+  final orderFilterCollection = "order_filter";
+  final productCollection = "product";
+  final storesCollection = "stores";
   late final String storeName; // 🔹 dynamic storeName accessible in all methods
 
   //--------------------------------------------------------------------------------------------common Collection Store Wise ------------------------------------------------------------
@@ -63,7 +63,7 @@ class AuthService {
       final docRef = _firestore.collection(storesCollection).doc();
       String uid = docRef.id;
 
- /*     String photoUrl = "";
+      /*     String photoUrl = "";
       if (photo != null) {
         final ref = _storage.ref().child("store_photos").child("$uid.jpg");
         await ref.putFile(photo);
@@ -238,21 +238,27 @@ class AuthService {
       }
 
       final data = docSnapshot.data() as Map<String, dynamic>;
-
-      // 2️⃣ Check if OTP exists
-      if (!data.containsKey("otp")) {
-        throw "OTP not found. Please request a new OTP.";
-      }
-
+      //for Demo user
+      final String email = (data["email"] ?? "").toString().toLowerCase();
       final storedOtp = data["otp"];
-      final Timestamp otpCreatedAt = data["otp_created_at"];
+      // ✅ Demo user check by email
+      final bool isDemoUser = email == "girishchauhan@gmail.com";
 
-      // 3️⃣ Optional: check OTP expiry (e.g., 15 minutes)
-      final currentTime = DateTime.now();
-      final otpTime = otpCreatedAt.toDate();
-      if (currentTime.difference(otpTime).inMinutes > 15) {
-        throw "OTP expired. Please request a new OTP.";
+      if (!isDemoUser) {
+        if (!data.containsKey("otp")) {
+          throw "OTP not found. Please request a new OTP.";
+        }
+
+        final Timestamp otpCreatedAt = data["otp_created_at"];
+
+        // 3️⃣ Optional: check OTP expiry (e.g., 15 minutes)
+        final currentTime = DateTime.now();
+        final otpTime = otpCreatedAt.toDate();
+        if (currentTime.difference(otpTime).inMinutes > 15) {
+          throw "OTP expired. Please request a new OTP.";
+        }
       }
+      // 2️⃣ Check if OTP exists
 
       // 4️⃣ Verify OTP
       if (storedOtp == enteredOtp) {
@@ -325,7 +331,9 @@ class AuthService {
     required String name,
   }) async {
     try {
-      final contactCollection = await getStoreSubCollection(contactUsCollection);
+      final contactCollection = await getStoreSubCollection(
+        contactUsCollection,
+      );
 
       final docRef = contactCollection.doc();
       final uid = docRef.id;
@@ -350,7 +358,9 @@ class AuthService {
   //============================================contactUs==============================================================//
   Future<List<Map<String, dynamic>>> getAllContactList() async {
     try {
-      final contactCollection = await getStoreSubCollection(contactUsCollection);
+      final contactCollection = await getStoreSubCollection(
+        contactUsCollection,
+      );
 
       final storeSnapshot = await contactCollection.get();
 
@@ -390,7 +400,9 @@ class AuthService {
   Future<void> markAllAsSeen() async {
     try {
       WriteBatch batch = _firestore.batch();
-      final contactCollection = await getStoreSubCollection(contactUsCollection);
+      final contactCollection = await getStoreSubCollection(
+        contactUsCollection,
+      );
       final querySnapshot = await contactCollection.get();
       for (var doc in querySnapshot.docs) {
         batch.update(doc.reference, {"isSeen": true});
@@ -409,7 +421,9 @@ class AuthService {
 
   Future<List<Map<String, dynamic>>> getAllFilterOrderList() async {
     try {
-      final contactCollection = await getStoreSubCollection(orderFilterCollection);
+      final contactCollection = await getStoreSubCollection(
+        orderFilterCollection,
+      );
 
       final storeSnapshot = await contactCollection.get();
 
@@ -424,6 +438,4 @@ class AuthService {
       throw Exception("Failed to fetch contacts: $e");
     }
   }
-
-
 }

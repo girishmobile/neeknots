@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:neeknots/core/component/component.dart';
 import 'package:neeknots/core/component/context_extension.dart';
 import 'package:neeknots/core/component/date_utils.dart';
-import 'package:neeknots/core/image/image_utils.dart';
 import 'package:neeknots/feature/dashboard/order_widget/common_order_widget.dart';
 import 'package:neeknots/main.dart';
 import 'package:neeknots/provider/order_provider.dart';
@@ -53,11 +52,13 @@ class _TotalOrderScreenState extends State<TotalOrderScreen> {
 
   Future<void> init() async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-
       final postMdl = Provider.of<OrdersProvider>(context, listen: false);
       postMdl.resetData1();
       Future.microtask(
-            () => Provider.of<OrdersProvider>(navigatorKey.currentContext!, listen: false).getAllFilterOrderList(),
+        () => Provider.of<OrdersProvider>(
+          navigatorKey.currentContext!,
+          listen: false,
+        ).getAllFilterOrderList(),
       );
 
       await postMdl.getAllFilterOrderList1();
@@ -73,7 +74,7 @@ class _TotalOrderScreenState extends State<TotalOrderScreen> {
         context: context,
         centerTitle: true,
       ),
-      body:CommonOrderView()/* commonAppBackground(
+      body: CommonOrderView() /* commonAppBackground(
         child: Consumer2<ThemeProvider, OrdersProvider>(
           builder: (context, provider, orderProvider, child) {
             return Stack(
@@ -135,7 +136,6 @@ class _TotalOrderScreenState extends State<TotalOrderScreen> {
 
     return ListView.builder(
       shrinkWrap: true,
-
 
       padding: const EdgeInsets.all(0),
       itemCount: orders.length,
