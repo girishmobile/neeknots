@@ -40,12 +40,13 @@ class DashboardProvider with ChangeNotifier {
   }
 
   void resetTab() {
-    _currentIndex = 0;
+    _currentIndex = 2;
     _appbarTitle = null;
     _isFetching = false;
     _filter = "Month"; // 👈 default reset
     notifyListeners();
   }
+
   String? _name;
 
   String? get name => _name;
