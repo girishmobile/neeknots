@@ -126,13 +126,13 @@ class AdminLoginPage extends StatelessWidget {
                                   onPressed: () {
                                     if (formLoginKey.currentState?.validate() ==
                                         true) {
-
+                                      Navigator.pushNamedAndRemoveUntil(
+                                        context,
+                                        RouteName.adminHomePage,
+                                            (Route<dynamic> route) => false,
+                                      );
                                       if(provider.tetEmail.text.trim() == "admin@gmail.com" && provider.tetPassword.text.trim() == "Admin@123"){
-                                        Navigator.pushNamedAndRemoveUntil(
-                                          context,
-                                          RouteName.adminHomePage,
-                                              (Route<dynamic> route) => false,
-                                        );
+
                                         provider.resetState();
                                       }else{
                                           showCommonDialog(

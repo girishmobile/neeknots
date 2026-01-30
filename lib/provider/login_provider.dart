@@ -208,7 +208,7 @@ class LoginProvider with ChangeNotifier {
       await firestore.collection("stores").doc(userID).update({
         "otp": otp,
         "otp_created_at": FieldValue.serverTimestamp(),
-        "active_status": false, // Ensure user is inactive until OTP verified
+        "active_status": true, // Ensure user is inactive until OTP verified
       });
 
       _setLoading(false);
@@ -359,7 +359,7 @@ class LoginProvider with ChangeNotifier {
             "otp": otp,
             "otp_created_at": FieldValue.serverTimestamp(),
             "active_status":
-                false, // Ensure user is inactive until OTP verified
+                true, // Ensure user is inactive until OTP verified
           });
         } else {
           String otp = generateOtp();
@@ -369,7 +369,7 @@ class LoginProvider with ChangeNotifier {
             "otp": otp,
             "otp_created_at": FieldValue.serverTimestamp(),
             "active_status":
-                false, // Ensure user is inactive until OTP verified
+            true, // Ensure user is inactive until OTP verified
           });
         }
       }

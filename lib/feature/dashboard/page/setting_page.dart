@@ -18,6 +18,7 @@ import '../../../main.dart';
 import '../../../provider/customer_provider.dart';
 import '../../../provider/order_provider.dart';
 import '../../../provider/product_provider.dart';
+import '../../admin/admin_home_page.dart';
 
 
 class SettingPage extends StatefulWidget {
@@ -221,7 +222,7 @@ class _SettingPageState extends State<SettingPage> {
                   ],
                 ),
                 SizedBox(height: 8),
-               /* _commonView(
+              /*  _commonView(
                   onTap: () {
                     Navigator.push(
                       context,
