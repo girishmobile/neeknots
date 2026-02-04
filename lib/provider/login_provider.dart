@@ -155,8 +155,7 @@ class LoginProvider with ChangeNotifier {
           await firestore.collection("stores").doc(userData?['uid']).update({
             "otp": otp,
             "otp_created_at": FieldValue.serverTimestamp(),
-            "active_status":
-                true, // Ensure user is inactive until OTP verified
+            "active_status": true, // Ensure user is inactive until OTP verified
           });
         }
         //String otp = generateOtp();

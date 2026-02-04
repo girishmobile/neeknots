@@ -9,9 +9,7 @@ import 'package:neeknots/service/gloable_status_code.dart';
 import 'package:neeknots/service/network_repository.dart';
 
 import '../core/firebase/auth_service.dart';
-import '../models/order_details_model.dart'
-    as order
-    show OrderDetailsModel;
+import '../models/order_details_model.dart' as order show OrderDetailsModel;
 import '../service/api_config.dart';
 
 class OrdersProvider with ChangeNotifier {
@@ -170,7 +168,6 @@ class OrdersProvider with ChangeNotifier {
           }
         }
 
-
         totalPaid = fetchedOrders
             .where((e) => e.financialStatus?.toLowerCase() == 'paid')
             .length;
@@ -298,9 +295,9 @@ class OrdersProvider with ChangeNotifier {
         orderStatusCounts = tempCounts;
 
         // Logs
-       // debugPrint("===== ORDER COUNTS =====");
+        // debugPrint("===== ORDER COUNTS =====");
         orderStatusCounts.forEach((key, value) {
-         // debugPrint("$key : $value");
+          // debugPrint("$key : $value");
         });
 
         _isFetching = false;
@@ -527,10 +524,8 @@ class OrdersProvider with ChangeNotifier {
         "${await ApiConfig.ordersUrl}?created_at_min=$createdAtMin&created_at_max=$createdAtMax&status=any";
 
     final response = await callGETMethod(url: url);
-    print('Response: ${globalStatusCode}');
-    print('Response: ${json.decode(response)}');
-    if (globalStatusCode == 200) {
 
+    if (globalStatusCode == 200) {
       _orderModelByDate = OrderModel.fromJson(json.decode(response));
 
       if (isDashboard) {
@@ -797,9 +792,6 @@ class OrdersProvider with ChangeNotifier {
     }
   }
 
-
-
-
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -807,9 +799,9 @@ class OrdersProvider with ChangeNotifier {
     _isLoading = value;
     notifyListeners();
   }
+
   List<Map<String, dynamic>> _allOrderFilterList = [];
   List<Map<String, dynamic>> get allOrderFilterList => _allOrderFilterList;
-
 
   final AuthService _authService = AuthService();
   Future<void> getAllFilterOrderList() async {

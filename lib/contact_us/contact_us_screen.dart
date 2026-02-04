@@ -62,8 +62,10 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                         _commonView(
                           title: "Name",
                           controller: provider.tetFullName,
-                          validator: (value) =>
-                              emptyError(value, errorMessage: "Name is required"),
+                          validator: (value) => emptyError(
+                            value,
+                            errorMessage: "Name is required",
+                          ),
                         ),
                         _commonView(
                           title: "Email",
@@ -86,11 +88,17 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                           },
                         ),*/
                         Align(
-                            alignment: Alignment.topLeft,
-                            child: commonText(text: "Phone Number", fontWeight: FontWeight.w400,textAlign: TextAlign.left)),
+                          alignment: Alignment.topLeft,
+                          child: commonText(
+                            text: "Phone Number",
+                            fontWeight: FontWeight.w400,
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
                         PhoneNumberField(
                           phoneController: provider.tetPhone,
-                          countryCodeController: provider.tetCountryCodeController,
+                          countryCodeController:
+                              provider.tetCountryCodeController,
                           prefixIcon: commonPrefixIcon(image: icPhone),
                           validator: (value) {
                             if (value == null || value.length != 10) {
@@ -125,7 +133,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                         if (formContactUS.currentState?.validate() == true) {
                           String fullNumber =
                               provider.tetCountryCodeController.text +
-                                  provider.tetPhone.text;
+                              provider.tetPhone.text;
                           provider.addContactUsData(
                             email: provider.tetEmail.text,
                             mobile: fullNumber,
@@ -138,7 +146,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                   ],
                 ),
               ),
-              provider.isLoading?showLoaderList():SizedBox.shrink()
+              provider.isLoading ? showLoaderList() : SizedBox.shrink(),
             ],
           );
         },
@@ -167,10 +175,9 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
 
           hintText: '',
 
-          contentPadding:prefixIcon?.isNotEmpty==false?EdgeInsetsGeometry.zero: EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 16,
-          ) ,
+          contentPadding: prefixIcon?.isNotEmpty == false
+              ? EdgeInsetsGeometry.zero
+              : EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           //prefixIcon:prefixIcon?.isNotEmpty==true? commonPrefixIcon(image: prefixIcon??icUser):SizedBox(width: 0,),
           maxLines: maxLine ?? 1,
           controller: controller,
