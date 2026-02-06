@@ -41,6 +41,7 @@ class CommonPinCodeField extends StatelessWidget {
     return PinCodeTextField(
       appContext: context,
       length: 4,
+
       controller: controller,
       autoDisposeControllers: false,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -56,7 +57,7 @@ class CommonPinCodeField extends StatelessWidget {
       hintStyle: hintStyle ?? const TextStyle(color: Colors.grey),
       pinTheme: PinTheme(
         shape: PinCodeFieldShape.box,
-        fieldOuterPadding: EdgeInsets.only(right: 30),
+        fieldOuterPadding: EdgeInsets.symmetric(horizontal: 20),
         borderRadius: BorderRadius.circular(borderRadius),
         fieldHeight: fieldHeight,
         fieldWidth: fieldWidth,

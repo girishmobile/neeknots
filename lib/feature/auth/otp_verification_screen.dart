@@ -172,7 +172,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       */
                             Container(
                               decoration: commonBoxDecoration(
-                                borderColor: colorBorder,
+                              //  borderColor: colorBorder,
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(0.0),
