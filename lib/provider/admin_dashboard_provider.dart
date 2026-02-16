@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:neeknots/main.dart';
 
 import '../core/component/component.dart';
+import '../core/firebase/FcmService.dart';
 import '../core/firebase/auth_service.dart';
 import '../core/firebase/send_fcm_notification.dart';
+import '../core/hive/app_config_cache.dart';
 import '../feature/admin/admin_home_page.dart';
 
 class AdminDashboardProvider with ChangeNotifier {
@@ -120,7 +122,9 @@ class AdminDashboardProvider with ChangeNotifier {
               : "Your account has been deactivated, please contact support",
           data: {"category": "chat"},
         );
-        await sendFCMNotification(bodyMap: payload);
+
+        getUsersByStoreName(tetStoreName.text.trim(),);
+       // await sendFCMNotification(bodyMap: payload);
       }
 
       //fetchUsers();
@@ -133,17 +137,18 @@ class AdminDashboardProvider with ChangeNotifier {
     }
   }
 
-  Future<void> updateUserStatus({required String docId, String? token,required bool status}) async {
+  Future<void> updateUserStatus({
+    required String docId,
+    String? token,
+    required bool status,
+  }) async {
     try {
       _setUpdating(true);
       notifyListeners();
       await FirebaseFirestore.instance
           .collection(_authService.storesCollection)
           .doc(docId)
-          .update({
-
-        "active_status": status,
-      });
+          .update({"active_status": status});
       _setUpdating(false);
       notifyListeners();
       if (token != null && token.isNotEmpty) {
@@ -155,7 +160,15 @@ class AdminDashboardProvider with ChangeNotifier {
               : "Your account has been deactivated, please contact support",
           data: {"category": "chat"},
         );
-        await sendFCMNotification(bodyMap: payload);
+
+        print('======{$token');
+
+        FcmService.sendToToken(deviceToken: token??'', title: tetFullName.text.trim(), body: status
+          ? "Your account is activated, open the app"
+          : "Your account has been deactivated, please contact support",);
+       /* await sendPushNotification(fcmToken: token, title: tetFullName.text.trim(),  body: status
+            ? "Your account is activated, open the app"
+            : "Your account has been deactivated, please contact support",);*/
       }
 
       //fetchUsers();
@@ -455,6 +468,51 @@ class AdminDashboardProvider with ChangeNotifier {
     }
   }
 
+  List<Map<String, dynamic>> storeList = [];
+  int userCount = 0;
+  bool isLoadingUsers = false;
+
+  Future<void> getAdminStoreUsers() async {
+    try {
+      isLoadingUsers = true;
+      notifyListeners();
+
+      final config = await AppConfigCache.loadConfig();
+      final storeName = config["storeName"];
+
+      if (storeName == null || storeName.isEmpty) {
+        throw "Store name not found";
+      }
+
+      setStoreName(storeName ?? '');
+
+      final querySnapshot = await FirebaseFirestore.instance
+          .collection("stores")
+          .where("store_name", isEqualTo: storeName)
+          .get();
+
+      storeList = querySnapshot.docs.map((doc) {
+        final data = doc.data();
+        data["uid"] = doc.id;
+        return data;
+      }).toList();
+
+      userCount = storeList.length;
+    } catch (e) {
+      debugPrint("Error fetching users: $e");
+    } finally {
+      isLoadingUsers = false;
+      notifyListeners();
+    }
+  }
+
+  String? storeName;
+
+  void setStoreName(String name) {
+    storeName = name;
+    notifyListeners();
+  }
+
   Future<void> getUsersByStoreName(String storeName) async {
     try {
       _setLoading(true);
@@ -482,7 +540,6 @@ class AdminDashboardProvider with ChangeNotifier {
   List<Map<String, dynamic>> _allPendingRequest = [];
 
   List<Map<String, dynamic>> get allPendingRequest => _allPendingRequest;
-
   Future<void> getStoreCollectionData({
     required String storeName,
     required String collectionName, // e.g., 'contact_us'
@@ -492,11 +549,10 @@ class AdminDashboardProvider with ChangeNotifier {
     try {
       final querySnapshot = await _firestore
           .collection(storeName)
-
           .doc(collectionName) // if each store has a doc, adjust if needed
           .collection(collectionName)
-       //   .where('status', isEqualTo: false) // ← only false status
-         // .orderBy('created_date', descending: true)
+          //   .where('status', isEqualTo: false) // ← only false status
+          // .orderBy('created_date', descending: true)
           .get();
 
       final dataList = querySnapshot.docs.map((doc) {
@@ -695,7 +751,7 @@ class AdminDashboardProvider with ChangeNotifier {
       _setLoading(false);
       notifyListeners();
     } catch (e) {
-    /*  showCommonDialog(
+      /*  showCommonDialog(
         title: "title$contactsCount ${e}",
         context: navigatorKey.currentContext!,
       );*/

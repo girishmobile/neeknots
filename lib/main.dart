@@ -1,16 +1,15 @@
 import 'dart:developer';
 
-import 'package:email_otp/email_otp.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:neeknots/provider/admin_menu_provider.dart';
-import 'package:neeknots/provider/internet_provider.dart';
 import 'package:neeknots/provider/admin_dashboard_provider.dart';
 import 'package:neeknots/provider/admin_home_provider.dart';
+import 'package:neeknots/provider/admin_menu_provider.dart';
 import 'package:neeknots/provider/customer_provider.dart';
 import 'package:neeknots/provider/image_picker_provider.dart';
+import 'package:neeknots/provider/internet_provider.dart';
 import 'package:neeknots/provider/login_provider.dart';
 import 'package:neeknots/provider/notification_provider.dart';
 import 'package:neeknots/provider/order_provider.dart';
@@ -21,6 +20,7 @@ import 'package:neeknots/routes/app_routes.dart';
 import 'package:neeknots/routes/route_generator.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'core/firebase/firebase_options.dart';
 import 'core/firebase/notification_service.dart';
@@ -69,9 +69,11 @@ List<SingleChildWidget> providers = [
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await Supabase.initialize(url: apiUrl, anonKey: publicKey);
+
   try {
     await Hive.initFlutter();
-    // Only initialize Firebase if not already initialized
+
     if (Firebase.apps.isEmpty) {
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,

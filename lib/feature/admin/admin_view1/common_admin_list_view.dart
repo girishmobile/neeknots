@@ -83,18 +83,7 @@ class _CommonAdminListViewState extends State<CommonAdminListView> {
                         decoration: commonBoxDecoration(
                           color: storeColor.withValues(alpha: 0.03),
                           borderColor: storeColor,
-                         // color: isSelected ? Colors.blue.shade50 : Colors.white,
-                          //borderRadius: BorderRadius.circular(12),
-                         /* border: isSelected
-                              ? Border.all(color: Colors.blue, width: 2)
-                              : null,*/
-                       /*   boxShadow: const [
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 1,
-                              offset: Offset(0, 2),
-                            ),
-                          ],*/
+
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,

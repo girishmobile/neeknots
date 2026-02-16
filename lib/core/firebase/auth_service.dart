@@ -9,6 +9,7 @@ import 'package:neeknots/core/hive/app_config_cache.dart';
 
 import '../../main.dart';
 import '../../routes/app_routes.dart';
+import '../component/component.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -97,7 +98,78 @@ class AuthService {
       throw Exception("Signup failed: $e");
     }
   }
+  Future<Map<String, dynamic>> adminLoginUser({
+    required String email,
+    required String mobile,
+    required String countryCode,
+  }) async {
+    try {
+      final query = await _firestore
+          .collection(storesCollection)
+          .where("email", isEqualTo: email)
+          .where("mobile", isEqualTo: mobile)
+          .where("country_code", isEqualTo: countryCode)
+          .get();
 
+      if (query.docs.isEmpty) {
+        throw "User not found";
+      }
+
+      final doc = query.docs.first;
+      final data = doc.data();
+
+      if (data["active_status"] != true) {
+        throw "Account inactive";
+      }
+
+      data["uid"] = doc.id;
+
+      // ✅ Save store_name in cache
+     /* await AppConfigCache.saveConfig({
+        "uid": doc.id,
+        "storeName": data["store_name"],
+        "role": data["role"] ?? "user"
+      });*/
+
+      return data;
+    } catch (e) {
+      showCommonDialog(
+        title: "Error",
+        context: navigatorKey.currentContext!,
+        content: e.toString(),
+
+        showCancel: false,
+
+        confirmText: "Close",
+      );
+      throw Exception("Login failed: $e");
+    }
+  }
+  Future<List<Map<String, dynamic>>> getAdminStoreUsers() async {
+    try {
+      final config = await AppConfigCache.loadConfig();
+      final storeName = config["storeName"];
+
+      if (storeName == null || storeName.isEmpty) {
+        throw "Store name not found";
+      }
+
+      final querySnapshot = await _firestore
+          .collection(storesCollection)
+          .where("store_name", isEqualTo: storeName)
+          .get();
+
+      final users = querySnapshot.docs.map((doc) {
+        final data = doc.data();
+        data["uid"] = doc.id;
+        return data;
+      }).toList();
+
+      return users;
+    } catch (e) {
+      throw Exception("Failed to fetch store users: $e");
+    }
+  }
   /// 🔹 Login User with Email + Mobile
   Future<Map<String, dynamic>>  loginUser({
     required String email,

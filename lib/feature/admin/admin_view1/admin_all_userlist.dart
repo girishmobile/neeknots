@@ -147,7 +147,7 @@ class _AdminAllUserlistState extends State<AdminAllUserlist> {
                                   onChanged: (value) {
                                     setState(() => user['active_status'] = value);
 
-                                    provider.updateUserStatus(docId: user['id'],status: value);
+                                    provider.updateUserStatus(docId: user['id'],status: value,token: user['fcm_token']);
                                   },
                                   activeThumbColor: Colors.green,
                                   inactiveThumbColor: Colors.red,
@@ -212,6 +212,7 @@ class _AdminAllUserlistState extends State<AdminAllUserlist> {
                                     ),
                                   ),
                                 );
+
                               },
                               child: Container(
                                 padding: EdgeInsets.symmetric(

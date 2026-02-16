@@ -6,9 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:neeknots/core/component/component.dart';
 import 'package:neeknots/main.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../core/firebase/auth_service.dart';
+import '../core/hive/app_config_cache.dart';
 import '../core/string/string_utils.dart';
+import '../feature/admin/admin_user_home_page.dart';
 
 class LoginProvider with ChangeNotifier {
   final bool _isFetching = false;
@@ -124,6 +127,55 @@ class LoginProvider with ChangeNotifier {
     return (1000 + (DateTime.now().millisecondsSinceEpoch % 9000)).toString();
   }
 
+  Future<Map<String, dynamic>> adminUserLogin({
+    required String email,
+    required String mobile,
+    required String countryCode,
+    required BuildContext context,
+  }) async {
+    _setLoading(true);
+    try {
+      _userData = await _authService.adminLoginUser(
+        email: email,
+        mobile: mobile,
+        countryCode: countryCode,
+      );
+     /* var   otp = generateOtp();*/
+      final FirebaseFirestore firestore = FirebaseFirestore.instance;
+      await firestore.collection("stores").doc(userData?['uid']).update({
+        "otp": "1234",
+        "otp_created_at": FieldValue.serverTimestamp(),
+        "active_status": true, // Ensure user is inactive until OTP verified
+      });
+
+      await AppConfigCache.saveUser(
+        uid: _userData?['uid'],
+        name:_userData?['name'] ?? '',
+        email: _userData?['email'] ?? '',
+        photo:_userData?['logo_url'] ?? '',
+        mobile:_userData?['mobile'] ?? '',
+      );
+      await AppConfigCache.saveConfig(
+        accessToken: _userData?['accessToken'] ?? '',
+        storeName: _userData?['store_name'] ?? '',
+        versionCode:_userData?['version_code'] ?? '',
+        logoUrl: _userData?['logo_url'] ?? '',
+      );
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => AdminUserHomePage(storeName: _userData?['store_name'] ?? '',)),
+      );
+      notifyListeners();
+
+      return _userData ?? {}; // 🔹 return the user data
+    } catch (e) {
+      _setLoading(false);
+      rethrow;
+    } finally {
+      _setLoading(false);
+    }
+  }
   Future<Map<String, dynamic>> login({
     required String email,
     required String mobile,
@@ -141,7 +193,7 @@ class LoginProvider with ChangeNotifier {
       if (_userData?.isNotEmpty == true) {
         String otp = "1234";
         if (email == "girishchauhan@gmail.com") {
-          await sendOtpEmail(email: email, userID: userData?['uid'], otp: otp);
+         // await sendOtpEmail(email: email, userID: userData?['uid'], otp: otp);
           final FirebaseFirestore firestore = FirebaseFirestore.instance;
           await firestore.collection("stores").doc(userData?['uid']).update({
             "otp": otp,
@@ -150,13 +202,8 @@ class LoginProvider with ChangeNotifier {
           });
         } else {
           otp = generateOtp();
-          await sendOtpEmail(email: email, userID: userData?['uid'], otp: otp);
-          final FirebaseFirestore firestore = FirebaseFirestore.instance;
-          await firestore.collection("stores").doc(userData?['uid']).update({
-            "otp": otp,
-            "otp_created_at": FieldValue.serverTimestamp(),
-            "active_status": true, // Ensure user is inactive until OTP verified
-          });
+          await sendOtpEmail(email: email,);
+
         }
         //String otp = generateOtp();
       }
@@ -168,8 +215,40 @@ class LoginProvider with ChangeNotifier {
       _setLoading(false);
     }
   }
+  Future<void> sendOtpEmail({ required String email,
+   }) async {
+    try {
+      final response = await Supabase.instance.client.functions.invoke(
+        'send-otp',
+        body: {
+          'email': email,
+        },
+      );
 
-  Future<void> sendOtpEmail({
+      if (response.status == 200) {
+        print("OTP Sent");
+
+        final data = response.data;
+
+        final otp = data['otp'];   // 👈 get otp
+        print("OTP Sent: $otp");   // 👈 print otp
+
+        final FirebaseFirestore firestore = FirebaseFirestore.instance;
+        await firestore.collection("stores").doc(userData?['uid']).update({
+          "otp": otp,
+          "otp_created_at": FieldValue.serverTimestamp(),
+          "active_status": true, // Ensure user is inactive until OTP verified
+        });
+      } else {
+        print("Error: ${response.data}");
+      }
+    } catch (e) {
+      print("Exception: $e");
+    }
+  }
+
+/*
+  Future<void> sendOtpEmailForTesting({
     required String email,
     required String otp,
     required String userID,
@@ -211,7 +290,8 @@ class LoginProvider with ChangeNotifier {
     } else {
       _setLoading(false);
     }
-  }
+  }*/
+
 
   void resetAll() {
     // _userData = null;
@@ -349,7 +429,7 @@ class LoginProvider with ChangeNotifier {
       if (_userData?.isNotEmpty == true) {
         String otp = "1234";
         if (email == "girishchauhan@gmail.com") {
-          await sendOtpEmail(email: email, userID: userData?['uid'], otp: otp);
+         // await sendOtpEmail(email: email, userID: userData?['uid'], otp: otp);
           final FirebaseFirestore firestore = FirebaseFirestore.instance;
           await firestore.collection("stores").doc(userData?['uid']).update({
             "otp": otp,
@@ -357,14 +437,9 @@ class LoginProvider with ChangeNotifier {
             "active_status": true, // Ensure user is inactive until OTP verified
           });
         } else {
-          String otp = generateOtp();
-          await sendOtpEmail(email: email, userID: userId, otp: otp);
-          final FirebaseFirestore firestore = FirebaseFirestore.instance;
-          await firestore.collection("stores").doc(userId).update({
-            "otp": otp,
-            "otp_created_at": FieldValue.serverTimestamp(),
-            "active_status": true, // Ensure user is inactive until OTP verified
-          });
+
+          await sendOtpEmail(email: email,);
+
         }
       }
       _startNewCycle();

@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:neeknots/core/color/color_utils.dart';
 import 'package:neeknots/core/component/component.dart';
 import 'package:neeknots/core/image/image_utils.dart';
 import 'package:neeknots/core/validation/validation.dart';
+import 'package:neeknots/main.dart';
 import 'package:neeknots/provider/login_provider.dart';
 import 'package:neeknots/routes/app_routes.dart';
 import 'package:provider/provider.dart';
 
+import '../../admin/admin_dashboad.dart';
 import '../../core/component/responsive.dart';
+import '../../core/firebase/auth_service.dart';
+import 'admin_home_page.dart';
+import 'admin_user_home_page.dart';
 
 class AdminLoginPage extends StatelessWidget {
   const AdminLoginPage({super.key});
@@ -98,27 +105,33 @@ class AdminLoginPage extends StatelessWidget {
                                   prefixIcon: commonPrefixIcon(image: icEmail),
                                 ),
                                 const SizedBox(height: 24),
-                                commonTextField(
-                                  hintText: "Password",
-                                  controller: provider.tetPassword,
-                                  validator: validatePassword,
-                                  obscureText: provider.obscurePassword,
-                                  maxLines: 1,
-                                  prefixIcon: commonPrefixIcon(
-                                    image: icPassword,
+                                IntlPhoneField(
+                                  initialCountryCode: 'US',
+                                  controller: provider.tetPhone,
+                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                  style: commonTextStyle(
+                                    color:  Colors.black,
                                   ),
-                                  suffixIcon: GestureDetector(
-                                    onTap: () {
-                                      provider.togglePassword();
-                                    },
-                                    child: Icon(
-                                      provider.obscurePassword
-                                          ? Icons.visibility_off
-                                          : Icons.visibility,
-                                      color: Colors.grey,
+                                  decoration: InputDecoration(
+                                    hintText: "Phone Number",
+                                    hintStyle: commonTextStyle(color: Colors.grey),
+
+                                    contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                      vertical: 14,
                                     ),
+                                    border: commonTextFiledBorder(borderRadius: 12),
+                                    enabledBorder: commonTextFiledBorder(borderRadius: 12),
+                                    focusedBorder: commonTextFiledBorder(borderRadius: 12),
                                   ),
+                                  onChanged: (phone) {
+                                    provider.tetCountryCodeController.text = phone.countryCode;
+                                  },
+                                  onCountryChanged: (value) {
+                                    provider.tetCountryCodeController.text = value.dialCode;
+                                  },
                                 ),
+
                                 const SizedBox(height: 24),
                                 commonButton(
                                   text: "Login",
@@ -126,7 +139,9 @@ class AdminLoginPage extends StatelessWidget {
                                   onPressed: () {
                                     if (formLoginKey.currentState?.validate() ==
                                         true) {
-                                      Navigator.pushNamedAndRemoveUntil(
+
+                                      login(context: context,provider: provider);
+                                   /*   Navigator.pushNamedAndRemoveUntil(
                                         context,
                                         RouteName.adminHomePage,
                                             (Route<dynamic> route) => false,
@@ -142,7 +157,7 @@ class AdminLoginPage extends StatelessWidget {
                                             context: context,
                                             content: "Invalid credentials",
                                           );
-                                      }
+                                      }*/
 
                                     }
                                   },
@@ -163,4 +178,36 @@ class AdminLoginPage extends StatelessWidget {
       ),
     );
   }
+  Future<void> login({required BuildContext context, required LoginProvider provider}) async {
+    final email = provider.tetEmail.text.trim();
+    final mobile = '${provider.tetCountryCodeController.text.trim()}${provider.tetPhone.text.trim()}';
+
+    if (email.isEmpty || mobile.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Please enter email and mobile number")),
+      );
+      return;
+    }
+
+    if (email == "admin@gmail.com" && mobile == "+17984512507") {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => AdminHomePage()),
+      );
+      provider.resetState();
+    } else {
+      final userData = await provider.adminUserLogin(
+        context: context,
+        countryCode: provider
+            .tetCountryCodeController
+            .text,
+        email: provider.tetEmail.text.trim(),
+        mobile: provider.tetPhone.text,
+      );
+
+
+
+    }
+  }
+
 }

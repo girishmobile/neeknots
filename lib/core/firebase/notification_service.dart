@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
@@ -95,6 +96,21 @@ class NotificationService {
       while (apnsToken == null) {
         await Future.delayed(const Duration(milliseconds: 500));
         apnsToken = await _messaging.getAPNSToken();
+      }
+    } else if (kIsWeb) {
+      // Request permission for web notifications
+      try {
+        await FirebaseMessaging.instance.requestPermission(
+          alert: true,
+          announcement: false,
+          badge: true,
+          carPlay: false,
+          criticalAlert: false,
+          provisional: false,
+          sound: true,
+        );
+      } catch (e) {
+        debugPrint("🔥 Error requesting web notification permission: $e");
       }
     }
 

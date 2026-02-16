@@ -31,14 +31,15 @@ class AdminUserModel {
   });
 }
 
-class AdminHomePage extends StatefulWidget {
-  const AdminHomePage({super.key});
+class AdminUserHomePage extends StatefulWidget {
+  const AdminUserHomePage({super.key,this.storeName});
 
+final   String? storeName;
   @override
-  State<AdminHomePage> createState() => _AdminHomePageState();
+  State<AdminUserHomePage> createState() => _AdminHomePageState();
 }
 
-class _AdminHomePageState extends State<AdminHomePage> {
+class _AdminHomePageState extends State<AdminUserHomePage> {
   @override
   void initState() {
     super.initState();
@@ -48,15 +49,12 @@ class _AdminHomePageState extends State<AdminHomePage> {
     });
   }
 
-  void init() {
-    final customerProvider = Provider.of<AdminDashboardProvider>(
-      context,
-      listen: false,
-    );
+  void init() async {
+    final provider =
+    Provider.of<AdminDashboardProvider>(context, listen: false);
 
-    customerProvider.getStoreUserCounts();
+    await provider.getAdminStoreUsers();
   }
-
   // 🔹 Detail page for selected section (e.g., Orders, Products)
   Widget _buildSectionContent({
     required BuildContext context,
@@ -67,26 +65,26 @@ class _AdminHomePageState extends State<AdminHomePage> {
     switch (section) {
       case "Orders":
         return OrderFilterListPage(
-          storeName: provider.storeCounts[provider.selectedIndex]['store_name'],
+          storeName: provider.storeList [provider.selectedIndex]['store_name'],
           collectionName: authService.orderFilterCollection,
         );
       case "Products":
         return AdminProductList(
-          storeName: provider.storeCounts[provider.selectedIndex]['store_name'],
+          storeName: provider.storeList [provider.selectedIndex]['store_name'],
           collectionName: authService.productCollection,
         );
       case "Users":
         return AdminAllUserlist(
-          storeName: provider.storeCounts[provider.selectedIndex]['store_name'],
+          storeName: provider.storeList [provider.selectedIndex]['store_name'],
         );
       case "Contacts":
         return ContactListPage(
-          storeName: provider.storeCounts[provider.selectedIndex]['store_name'],
+          storeName: provider.storeList [provider.selectedIndex]['store_name'],
           collectionName: authService.contactUsCollection,
         );
       default:
         return AdminAllUserlist(
-          storeName: provider.storeCounts[provider.selectedIndex]['store_name'],
+          storeName: provider.storeList [provider.selectedIndex]['store_name'],
         );
     }
   }
@@ -110,7 +108,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
           ? AppBar(
               centerTitle: true,
               title: commonText(
-                text: appName,
+                text:widget.storeName?.toUpperCase()?? appName,
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
               ),
@@ -125,13 +123,13 @@ class _AdminHomePageState extends State<AdminHomePage> {
           builder: (context, provider, child) {
             // 🟡 STEP 1: Handle loading / empty state
 
-            if (provider.storeCounts.isEmpty) {
+            if (provider.storeList .isEmpty) {
               return const Center(child: CircularProgressIndicator());
             }
 
             // 🟢 STEP 2: Make sure selectedIndex is valid
 
-            if (provider.selectedIndex >= provider.storeCounts.length) {
+            if (provider.selectedIndex >= provider.storeList .length) {
               provider.setSelectedStore(0);
             }
 
@@ -221,11 +219,11 @@ class _AdminHomePageState extends State<AdminHomePage> {
                                 commonText(
                                   text: provider.selectedSection == null
                                       ? provider
-                                            .storeCounts[provider
+                                            .storeList [provider
                                                 .selectedIndex]['store_name']
                                             .toString()
                                             .toUpperCase() // optional
-                                      : "${provider.storeCounts[provider.selectedIndex]['store_name'].toString().toCapitalize()} / ${provider.selectedSection!}",
+                                      : "${provider.storeList [provider.selectedIndex]['store_name'].toString().toCapitalize()} / ${provider.selectedSection!}",
                                   fontSize: isMobile ? 16 : 20,
                                   fontWeight: isMobile
                                       ? FontWeight.w500
@@ -239,7 +237,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                               child: provider.selectedSection == null
                                   ? CommonAdminListView(
                                       storeName:
-                                          provider.storeCounts[provider
+                                          provider.storeList [provider
                                               .selectedIndex]['store_name'],
                                     )
                                   : _buildSectionContent(
@@ -288,68 +286,53 @@ class _AdminHomePageState extends State<AdminHomePage> {
             fontWeight: FontWeight.w600,
           ),
           SizedBox(height: isMobile ? 10 : 24),
-          Expanded(
-            child: ListView.builder(
-              itemCount: provider.storeCounts.length,
-              itemBuilder: (context, index) {
-                final store = provider.storeCounts[index];
-                bool isSelected = provider.selectedIndex == index;
-                return GestureDetector(
-                  onTap: () async {
-                    if (isMobile) {
-                      Navigator.pop(context); // closes the drawer
-                    }
-                    provider.setSelectedStore(index);
-                    provider.setSelectedSection(null);
-                    await provider.fetchStoreCounts(
-                      storeName: provider.storeCounts[index]['store_name'],
-                    );
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.only(bottom: 12),
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 14,
-                      horizontal: 16,
-                    ),
-                    decoration: BoxDecoration(
-                      color: isSelected
-                          ? Colors.black
-                          // ✅ subtle selection
-                          : Colors.transparent,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: isSelected ? Colors.black : Colors.grey.shade300,
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.store,
-                          color: isSelected
-                              ? Colors.white
-                              : Colors.grey.shade600,
-                          size: 20,
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: commonText(
-                            text: store['store_name'].toString().toCapitalize(),
-                            color: isSelected ? Colors.white : Colors.black87,
-                            fontSize: 16,
-                            fontWeight: isSelected
-                                ? FontWeight.w500
-                                : FontWeight.normal,
-                            //overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ],
+
+          GestureDetector(
+            onTap: () async {
+              if (isMobile) {
+                Navigator.pop(context); // closes the drawer
+              }
+
+
+            },
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 12),
+              padding: const EdgeInsets.symmetric(
+                vertical: 14,
+                horizontal: 16,
+              ),
+             decoration: BoxDecoration(
+                color:Colors.black,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                  color:  Colors.grey.shade300,
+                ),
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.store,
+                    color:Colors.white,
+                    size: 20,
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: commonText(
+                      text: widget.storeName.toString().toCapitalize(),
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight:
+                           FontWeight.normal,
+                      //overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                );
-              },
+                ],
+              ),
             ),
           ),
 
+
+          Spacer(),
           commonButton(
             height: 45,
             color: Colors.red,
@@ -371,10 +354,9 @@ class _AdminHomePageState extends State<AdminHomePage> {
               );
             },
           ),
+          SizedBox(height: 40,)
         ],
       ),
     );
   }
 }
-
-

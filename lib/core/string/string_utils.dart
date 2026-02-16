@@ -6,3 +6,5 @@ const String otpServiceID = "service_w30wawk";
 const String otpTemplateID = "template_kamg6na";
 const String otpPublicID = "C9fjVOcjGH6sw1uRS";
 const String errorMsg = "Data Not Available";
+const String publicKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh4d2x3dXZ2eHRqeXVraWZkYXJoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA4ODAwOTUsImV4cCI6MjA4NjQ1NjA5NX0.GhYGUQZbCEj60ENbCNzDiNCSsrZWSUQ5VRgw1PxA8JU";
+const String apiUrl= "https://hxwlwuvvxtjyukifdarh.supabase.co";
