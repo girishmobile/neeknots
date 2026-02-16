@@ -1,9 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:neeknots/core/color/color_utils.dart';
 import 'package:neeknots/core/component/component.dart';
-import 'package:neeknots/core/firebase/FcmService.dart';
 import 'package:neeknots/core/image/image_utils.dart';
 import 'package:neeknots/provider/dashboard_provider.dart';
 import 'package:neeknots/provider/login_provider.dart';
@@ -11,7 +9,6 @@ import 'package:neeknots/provider/profile_provider.dart';
 import 'package:neeknots/provider/theme_provider.dart';
 import 'package:neeknots/routes/app_routes.dart';
 import 'package:provider/provider.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/firebase/auth_service.dart';
 import '../../../core/hive/app_config_cache.dart';
@@ -19,7 +16,6 @@ import '../../../main.dart';
 import '../../../provider/customer_provider.dart';
 import '../../../provider/order_provider.dart';
 import '../../../provider/product_provider.dart';
-import '../../admin/admin_home_page.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -107,7 +103,10 @@ class _SettingPageState extends State<SettingPage> {
                             fontSize: 30,
                             color: colorButton1,
                             fontWeight: FontWeight.w700,
-                            text: ((provider.userData?['name'] ?? '').toString().isNotEmpty)
+                            text:
+                                ((provider.userData?['name'] ?? '')
+                                    .toString()
+                                    .isNotEmpty)
                                 ? provider.userData!['name'][0].toUpperCase()
                                 : '',
                           ),
@@ -173,7 +172,7 @@ class _SettingPageState extends State<SettingPage> {
                         title: "Version Name",
                         value: provider.userData?['version_code'] ?? '-',
                       ),
-                     /* _commonRow(
+                      /* _commonRow(
                         value: '',
                         title: "Status",
                         view: Row(
@@ -221,17 +220,18 @@ class _SettingPageState extends State<SettingPage> {
                                     vertical: 5,
                                   ),
                                   decoration: commonBoxDecoration(
-                                    color: (isActive ? Colors.green : Colors.red)
-                                        .withValues(alpha: 0.09),
-                                    borderColor:
-                                    isActive ? Colors.green : Colors.red,
+                                    color:
+                                        (isActive ? Colors.green : Colors.red)
+                                            .withValues(alpha: 0.09),
+                                    borderColor: isActive
+                                        ? Colors.green
+                                        : Colors.red,
                                     borderRadius: 8,
                                   ),
                                   child: commonText(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
-                                    color:
-                                    isActive ? Colors.green : Colors.red,
+                                    color: isActive ? Colors.green : Colors.red,
                                     text: isActive ? "Active" : "Inactive",
                                   ),
                                 ),
@@ -240,23 +240,19 @@ class _SettingPageState extends State<SettingPage> {
                           },
                         ),
                       ),
-
                     ],
                   ),
                 ),
-
 
                 SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
-                  children: [
-
-                  ],
+                  children: [],
                 ),
 
-             /*   commonButton(text: "Send", onPressed: (){
+                /*   commonButton(text: "Send", onPressed: (){
 
                     sendOtp("sameer@redefinesolutions.com");
                 }),
@@ -265,7 +261,6 @@ class _SettingPageState extends State<SettingPage> {
 
                   verifyOtp("sameer@redefinesolutions.com","896317");
                 }),*/
-
                 SizedBox(height: 18),
                 Column(
                   spacing: 20,
@@ -300,7 +295,7 @@ class _SettingPageState extends State<SettingPage> {
                             await AppConfigCache.clearConfig();
                             navigatorKey.currentState?.pushNamedAndRemoveUntil(
                               RouteName.loginScreen,
-                                  (Route<dynamic> route) => false,
+                              (Route<dynamic> route) => false,
                             );
                           },
                           cancelText: "No",
@@ -369,8 +364,7 @@ class _SettingPageState extends State<SettingPage> {
                   ],
                 ),
 
-
-                 /* commonButton(text: "Send Notification", onPressed: () async {
+                /* commonButton(text: "Send Notification", onPressed: () async {
 
                   }),*/
                 /*  _commonView(

@@ -1,15 +1,10 @@
-
 import 'dart:convert';
+
 import 'package:flutter/services.dart';
 import 'package:googleapis_auth/auth_io.dart';
-import 'package:http/http.dart' as http;
 
 class FcmService {
-
-
-  static const _scopes = [
-    'https://www.googleapis.com/auth/firebase.messaging',
-  ];
+  static const _scopes = ['https://www.googleapis.com/auth/firebase.messaging'];
 
   static Future<void> sendToToken({
     required String deviceToken,
@@ -25,11 +20,8 @@ class FcmService {
     final payload = {
       "message": {
         "token": deviceToken,
-        "notification": {
-          "title": title,
-          "body": body,
-        }
-      }
+        "notification": {"title": title, "body": body},
+      },
     };
 
     final response = await client.post(
@@ -41,9 +33,7 @@ class FcmService {
     client.close();
 
     if (response.statusCode != 200) {
-      throw Exception(
-        'FCM Error ${response.statusCode}: ${response.body}',
-      );
+      throw Exception('FCM Error ${response.statusCode}: ${response.body}');
     }
   }
 
@@ -58,4 +48,3 @@ class FcmService {
     return clientViaServiceAccount(credentials, _scopes);
   }
 }
-

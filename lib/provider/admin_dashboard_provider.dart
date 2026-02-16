@@ -114,14 +114,6 @@ class AdminDashboardProvider with ChangeNotifier {
       _setUpdating(false);
       notifyListeners();
       if (token != null && token.isNotEmpty) {
-        final payload = buildNotificationPayload(
-          token: token,
-          title: tetFullName.text.trim(),
-          body: _status
-              ? "Your account is activated, open the app"
-              : "Your account has been deactivated, please contact support",
-          data: {"category": "chat"},
-        );
 
         getUsersByStoreName(tetStoreName.text.trim(),);
        // await sendFCMNotification(bodyMap: payload);

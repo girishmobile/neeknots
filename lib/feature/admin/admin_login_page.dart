@@ -5,16 +5,11 @@ import 'package:neeknots/core/color/color_utils.dart';
 import 'package:neeknots/core/component/component.dart';
 import 'package:neeknots/core/image/image_utils.dart';
 import 'package:neeknots/core/validation/validation.dart';
-import 'package:neeknots/main.dart';
 import 'package:neeknots/provider/login_provider.dart';
-import 'package:neeknots/routes/app_routes.dart';
 import 'package:provider/provider.dart';
 
-import '../../admin/admin_dashboad.dart';
 import '../../core/component/responsive.dart';
-import '../../core/firebase/auth_service.dart';
 import 'admin_home_page.dart';
-import 'admin_user_home_page.dart';
 
 class AdminLoginPage extends StatelessWidget {
   const AdminLoginPage({super.key});
