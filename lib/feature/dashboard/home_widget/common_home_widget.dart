@@ -222,7 +222,7 @@ Widget _commonDashboardView({
 
         borderColor:
             color?.withValues(alpha: 0.3) ?? colorLogo.withValues(alpha: 0.3),
-        borderRadius: 10,
+        borderRadius: 8,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

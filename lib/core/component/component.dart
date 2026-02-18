@@ -205,8 +205,8 @@ BoxDecoration commonBoxDecoration({
         ? BorderRadius.circular(borderRadius)
         : null,
     border: Border.all(color: borderColor, width: borderWidth),
-
     gradient: gradient,
+    boxShadow: boxShadow,
   );
 }
 
@@ -229,7 +229,9 @@ Widget commonButton({
     builder: (context, provider, child) {
       return SizedBox(
         height: height ?? 56,
-        width: kIsWeb?width:MediaQuery.sizeOf(navigatorKey.currentContext!).width,
+        width: kIsWeb
+            ? width
+            : MediaQuery.sizeOf(navigatorKey.currentContext!).width,
         child: DecoratedBox(
           decoration: BoxDecoration(
             color: color ?? (provider.isDark ? Colors.white : colorLogo),
@@ -1264,7 +1266,6 @@ Widget commonTextRich({
   TextStyle? textStyle2,
   GestureRecognizer? onTap,
 }) {
-
   return Text.rich(
     textAlign: textAlign ?? TextAlign.center,
     TextSpan(

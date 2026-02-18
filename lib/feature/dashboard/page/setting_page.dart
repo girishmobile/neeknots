@@ -44,7 +44,6 @@ class _SettingPageState extends State<SettingPage> {
     );
 
     customerProvider.getStoreUserCounts();
-
   }
 
   @override
@@ -58,8 +57,7 @@ class _SettingPageState extends State<SettingPage> {
               physics: BouncingScrollPhysics(),
               padding: EdgeInsets.all(16),
               children: [
-                SizedBox(height: 50),
-
+                const SizedBox(height: 50),
                 Container(
                   decoration: commonBoxDecoration(
                     //  borderColor: colorBorder
@@ -101,7 +99,7 @@ class _SettingPageState extends State<SettingPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 commonText(
                   textAlign: TextAlign.center,
                   text: provider.userData?['name'] ?? '',
@@ -109,7 +107,7 @@ class _SettingPageState extends State<SettingPage> {
                   fontWeight: FontWeight.w700,
                   color: themeProvider.isDark ? Colors.white : colorLogo,
                 ),
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
                 commonText(
                   textAlign: TextAlign.center,
                   text: provider.userData?['email'] ?? '',
@@ -119,13 +117,14 @@ class _SettingPageState extends State<SettingPage> {
                       ? Colors.white
                       : Colors.black.withValues(alpha: 0.8),
                 ),
-                SizedBox(height: 36),
+                const SizedBox(height: 36),
                 commonText(
                   text: "Personal Details",
                   fontWeight: FontWeight.w600,
                   fontSize: 16,
                   color: colorButton1,
                 ),
+                const SizedBox(height: 8),
                 Container(
                   decoration: commonBoxDecoration(
                     borderColor: colorBorder,
@@ -200,7 +199,7 @@ class _SettingPageState extends State<SettingPage> {
                   ),
                 ),
 
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -217,7 +216,7 @@ class _SettingPageState extends State<SettingPage> {
 
                   verifyOtp("sameer@redefinesolutions.com","896317");
                 }),*/
-                SizedBox(height: 18),
+                const SizedBox(height: 18),
                 Column(
                   spacing: 20,
                   mainAxisAlignment: MainAxisAlignment.center,

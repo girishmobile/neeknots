@@ -32,7 +32,7 @@ Future<void> sendPushNotification({
 
     if (response.statusCode == 200) {
       print("Notification Sent Successfully");
-      print(response.body);
+     // print(response.body);
     } else {
       print("Error: ${response.statusCode}");
       print(response.body);
