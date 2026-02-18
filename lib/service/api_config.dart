@@ -9,7 +9,6 @@ class ApiConfig {
   static Future<Map<String, String>> getCommonHeaders() async {
     final token = await accessToken;
 
-
     return {
       'Content-Type': 'application/json',
       'accept': '*/*',
@@ -22,7 +21,7 @@ class ApiConfig {
     final storeName = config['storeName'] ?? '';
     final versionCode = config['versionCode'] ?? '';
 
-    print('==storeName===${storeName}');
+    //print('==storeName===${storeName}');
 
     return "https://$storeName.myshopify.com/admin/api/$versionCode";
   }
