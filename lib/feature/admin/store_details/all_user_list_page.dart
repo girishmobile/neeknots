@@ -229,6 +229,7 @@ class _AllUserListPageState extends State<AllUserListPage> {
                                                       SizedBox(height: 20),
                                                       CommonAdminWidget(
                                                         data: data,
+                                                        isEdit: true,
                                                         provider: provider,
                                                         onPressed: () {},
                                                       ),

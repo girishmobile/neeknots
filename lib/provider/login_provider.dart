@@ -246,50 +246,6 @@ class LoginProvider with ChangeNotifier {
     }
   }
 
-/*
-  Future<void> sendOtpEmailForTesting({
-    required String email,
-    required String otp,
-    required String userID,
-  }) async {
-    _setLoading(true);
-
-    if (email.isEmpty) {
-      return; // stop execution
-    }
-
-    final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
-
-    final response = await http.post(
-      url,
-      headers: {
-        'origin': 'http://localhost',
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode({
-        'service_id': otpServiceID,
-        'template_id': otpTemplateID,
-        'user_id': otpPublicID,
-        'template_params': {
-          'email': email,
-          'passcode': otp,
-          'time': '15 minutes', // or generate expiry dynamically
-        },
-      }),
-    );
-    if (response.statusCode == 200) {
-      final FirebaseFirestore firestore = FirebaseFirestore.instance;
-      await firestore.collection("stores").doc(userID).update({
-        "otp": otp,
-        "otp_created_at": FieldValue.serverTimestamp(),
-        "active_status": true, // Ensure user is inactive until OTP verified
-      });
-
-      _setLoading(false);
-    } else {
-      _setLoading(false);
-    }
-  }*/
 
 
   void resetAll() {

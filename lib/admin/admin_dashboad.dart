@@ -278,6 +278,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                                                                   ),
                                                                   CommonAdminWidget(
                                                                     data: data,
+                                                                    isEdit: true,
                                                                     provider:
                                                                         provider,
                                                                     onPressed: () {},

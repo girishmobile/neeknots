@@ -8,6 +8,7 @@ import 'package:neeknots/feature/admin/admin_view1/order_filter_list_page.dart';
 import 'package:neeknots/feature/admin/store_details/contact_list_page.dart';
 import 'package:provider/provider.dart';
 
+import '../../admin/common_admin_widget.dart';
 import '../../core/component/responsive.dart';
 import '../../core/firebase/auth_service.dart';
 import '../../main.dart';
@@ -209,28 +210,114 @@ class _AdminHomePageState extends State<AdminHomePage> {
                             // 🏷 Top header with back arrow
                             Row(
                               children: [
-                                if (provider.selectedSection != null)
-                                  IconButton(
-                                    icon: const Icon(Icons.arrow_back),
-                                    onPressed: () {
-                                      // provider.setSelectedStore(index);
-                                      provider.setSelectedSection(null);
-                                      // setState(() => selectedSection = null);
-                                    },
+                                Expanded(
+                                  child: Row(
+                                    children: [
+                                      if (provider.selectedSection != null)
+                                        IconButton(
+                                          icon: const Icon(Icons.arrow_back),
+                                          onPressed: () {
+                                            // provider.setSelectedStore(index);
+                                            provider.setSelectedSection(null);
+                                            // setState(() => selectedSection = null);
+                                          },
+                                        ),
+                                      commonText(
+                                        text: provider.selectedSection == null
+                                            ? provider
+                                                  .storeCounts[provider
+                                                      .selectedIndex]['store_name']
+                                                  .toString()
+                                                  .toUpperCase() // optional
+                                            : "${provider.storeCounts[provider.selectedIndex]['store_name'].toString().toCapitalize()} / ${provider.selectedSection!}",
+                                        fontSize: isMobile ? 16 : 20,
+                                        fontWeight: isMobile
+                                            ? FontWeight.w500
+                                            : FontWeight.bold,
+                                      ),
+                                    ],
                                   ),
-                                commonText(
-                                  text: provider.selectedSection == null
-                                      ? provider
-                                            .storeCounts[provider
-                                                .selectedIndex]['store_name']
-                                            .toString()
-                                            .toUpperCase() // optional
-                                      : "${provider.storeCounts[provider.selectedIndex]['store_name'].toString().toCapitalize()} / ${provider.selectedSection!}",
-                                  fontSize: isMobile ? 16 : 20,
-                                  fontWeight: isMobile
-                                      ? FontWeight.w500
-                                      : FontWeight.bold,
                                 ),
+                                provider.selectedSection
+                                            .toString()
+                                            .toLowerCase() ==
+                                        "users"
+                                    ? commonInkWell(
+                                  onTap: (){
+                                    showCommonBottomSheet(
+                                      context: context,
+                                      content: SizedBox(
+                                        height:
+                                        MediaQuery.sizeOf(
+                                          context,
+                                        ).height *
+                                            0.8,
+                                        child: ListView(
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .spaceBetween,
+                                              children: [
+                                                commonHeadingText(
+                                                  text: "Edit Information",
+                                                ),
+                                                commonInkWell(
+                                                  onTap: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Container(
+                                                    width: 35,
+                                                    height: 35,
+                                                    decoration:
+                                                    commonBoxDecoration(
+                                                      color: Colors.black,
+                                                      shape:
+                                                      BoxShape.circle,
+                                                    ),
+                                                    child: Icon(
+                                                      Icons.close,
+                                                      color: Colors.white,
+                                                      size: 15,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(height: 20),
+                                            CommonAdminWidget(
+                                              data: {
+                                                "store_name":provider.storeCounts[provider.selectedIndex]['store_name'].toString(),
+                                                "version_code":provider.storeCounts[provider.selectedIndex]['version_code'].toString(),
+                                                "accessToken":provider.storeCounts[provider.selectedIndex]['accessToken'].toString(),
+                                              },
+                                              isEdit: false,
+                                              provider: provider,
+                                              onPressed: () {},
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                      child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 10,
+                                            vertical: 5,
+                                          ),
+                                          decoration: commonBoxDecoration(
+                                            color: colorButton,
+                                            borderRadius: 8,
+                                          ),
+
+                                          child: commonText(
+                                            text: "Add User".toUpperCase(),
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                    )
+                                    : SizedBox.shrink(),
                               ],
                             ),
                             SizedBox(height: isMobile ? 10 : 24),
@@ -376,5 +463,3 @@ class _AdminHomePageState extends State<AdminHomePage> {
     );
   }
 }
-
-

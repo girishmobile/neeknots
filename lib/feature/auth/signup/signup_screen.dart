@@ -136,7 +136,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                                   .trim(),
                                               mobile: provider.tetPhone.text,
                                               name: provider.tetFullName.text.trim(),
-                                              photo: _pickedImage,
+                                             // photo: _pickedImage,
                                             );
         
                                             showCommonDialog(

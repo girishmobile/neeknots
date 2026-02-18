@@ -50,6 +50,9 @@ class AuthService {
     required String logoUrl,
     required String name,
     String? countryCode,
+    String? accessToken,
+    String? versionCode,
+
     File? photo,
   }) async {
     try {
@@ -81,8 +84,8 @@ class AuthService {
         "email": email,
         "mobile": mobile,
         "name": name,
-        "accessToken": '',
-        "version_code": '',
+        "accessToken":accessToken,
+        "version_code": versionCode,
         "logo_url": '',
         "photo": '',
         "country_code": countryCode ?? "+1",

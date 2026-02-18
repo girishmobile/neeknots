@@ -30,7 +30,9 @@ class SignupProvider extends ChangeNotifier {
     required String countryCode,
     required String logoUrl,
     required String name,
-    required dynamic photo,
+
+    String ?accessToken,
+    String ?versionCode,
   }) async {
 
     _setLoading(true);
@@ -43,7 +45,9 @@ class SignupProvider extends ChangeNotifier {
         countryCode:countryCode ,
         mobile: mobile,
         name: name,
-        photo: photo,
+        accessToken: accessToken,
+        versionCode: versionCode,
+       // photo: photo,
       );
       notifyListeners();
     } catch (e) {
