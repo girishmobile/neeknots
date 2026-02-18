@@ -57,9 +57,9 @@ class AuthService {
           .collection(storesCollection)
           .where("email", isEqualTo: email)
           .get();
-      if (existing.docs.isNotEmpty) {
+    /*  if (existing.docs.isNotEmpty) {
         throw "Email already exists";
-      }
+      }*/
 
       final docRef = _firestore.collection(storesCollection).doc();
       String uid = docRef.id;

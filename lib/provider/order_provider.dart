@@ -352,15 +352,24 @@ class OrdersProvider with ChangeNotifier {
     _isFetching = true;
     notifyListeners();
 
-    final url = "${await ApiConfig.totalOrderUrl}?status=any";
 
-    final response = await callGETMethod(url: url);
+    try{
+      final url = "${await ApiConfig.totalOrderUrl}?status=any";
 
-    if (globalStatusCode == 200) {
-      final data = json.decode(await response);
-      _totalOrderCount = data["count"] ?? 0;
+      final response = await callGETMethod(url: url);
+
+      if (globalStatusCode == 200) {
+        final data = json.decode(await response);
+        _totalOrderCount = data["count"] ?? 0;
+      }
+
     }
+    catch(e){
 
+      _totalOrderCount=0;
+      _isFetching = false;
+      notifyListeners();
+    }
     _isFetching = false;
     notifyListeners();
   }
@@ -376,23 +385,31 @@ class OrdersProvider with ChangeNotifier {
     _isFetching = true;
     notifyListeners();
 
-    final utcStart = startDate.toUtc();
-    final utcEnd = endDate.toUtc();
+    try{
+      final utcStart = startDate.toUtc();
+      final utcEnd = endDate.toUtc();
 
-    // Format as ISO 8601
-    final createdAtMin = Uri.encodeComponent(utcStart.toIso8601String());
-    final createdAtMax = Uri.encodeComponent(utcEnd.toIso8601String());
-    final url =
-        "${await ApiConfig.totalOrderUrl}?created_at_min=$createdAtMin&created_at_max=$createdAtMax&status=any";
-    final response = await callGETMethod(url: url);
+      // Format as ISO 8601
+      final createdAtMin = Uri.encodeComponent(utcStart.toIso8601String());
+      final createdAtMax = Uri.encodeComponent(utcEnd.toIso8601String());
+      final url =
+          "${await ApiConfig.totalOrderUrl}?created_at_min=$createdAtMin&created_at_max=$createdAtMax&status=any";
+      final response = await callGETMethod(url: url);
 
-    if (globalStatusCode == 200) {
-      final data = json.decode(response);
+      if (globalStatusCode == 200) {
+        final data = json.decode(response);
 
-      _totalOrderSaleCount = data["count"] ?? 0;
+        _totalOrderSaleCount = data["count"] ?? 0;
+        _isFetching = false;
+        notifyListeners();
+      }
+    }
+    catch(e){
+      _totalOrderSaleCount =  0;
       _isFetching = false;
       notifyListeners();
     }
+
 
     _isFetching = false;
     notifyListeners();
@@ -513,30 +530,37 @@ class OrdersProvider with ChangeNotifier {
     _orderModelByDate = null;
 
     notifyListeners();
+    try{
+      final utcStart = startDate.toUtc();
+      final utcEnd = endDate.toUtc();
 
-    final utcStart = startDate.toUtc();
-    final utcEnd = endDate.toUtc();
+      // Format as ISO 8601
+      final createdAtMin = Uri.encodeComponent(utcStart.toIso8601String());
+      final createdAtMax = Uri.encodeComponent(utcEnd.toIso8601String());
+      final url =
+          "${await ApiConfig.ordersUrl}?created_at_min=$createdAtMin&created_at_max=$createdAtMax&status=any";
 
-    // Format as ISO 8601
-    final createdAtMin = Uri.encodeComponent(utcStart.toIso8601String());
-    final createdAtMax = Uri.encodeComponent(utcEnd.toIso8601String());
-    final url =
-        "${await ApiConfig.ordersUrl}?created_at_min=$createdAtMin&created_at_max=$createdAtMax&status=any";
+      final response = await callGETMethod(url: url);
 
-    final response = await callGETMethod(url: url);
+      if (globalStatusCode == 200) {
+        _orderModelByDate = OrderModel.fromJson(json.decode(response));
 
-    if (globalStatusCode == 200) {
-      _orderModelByDate = OrderModel.fromJson(json.decode(response));
+        if (isDashboard) {
+          _totalOrderPrice = getTotalOrderPrice(
+            _orderModelByDate ?? OrderModel(),
+          );
+        }
 
-      if (isDashboard) {
-        _totalOrderPrice = getTotalOrderPrice(
-          _orderModelByDate ?? OrderModel(),
-        );
+        _isFetching = false;
+        notifyListeners();
       }
-
+    }catch(e){
+      _orderModelByDate?.orders?.clear();
       _isFetching = false;
       notifyListeners();
     }
+
+
 
     _isFetching = false;
     notifyListeners();
@@ -610,58 +634,72 @@ class OrdersProvider with ChangeNotifier {
     String? createdMinDate,
     String? createdMaxDate,
   }) async {
-    final queryParams = {
-      'limit': limit?.toString() ?? '10',
-      'status': 'any',
-
-      if (pageInfo != null) 'page_info': pageInfo,
-      if (financialStatus != null) 'financial_status': financialStatus,
-      if (status != null) 'status': status,
-      if (createdMinDate != null) 'created_at_min': createdMinDate,
-      if (fulfillmentStatus != null) 'fulfillment_status': fulfillmentStatus,
-      if (createdMaxDate != null) 'created_at_max': createdMaxDate,
-    };
-
-    final baseUrl = await ApiConfig.baseUrl;
-
-    final uri = Uri.parse(
-      "$baseUrl/orders.json",
-    ).replace(queryParameters: queryParams);
-
-    final response = await http.get(
-      uri,
-      headers: await ApiConfig.getCommonHeaders(),
-    );
-
-    if (response.statusCode != 200) {
-      _isFetching = false;
+    try {
+      _isFetching = true;
       notifyListeners();
 
-      throw Exception("Error fetching orders: ${response.body}");
-    }
+      final queryParams = {
+        'limit': limit?.toString() ?? '10',
+        'status': 'any',
 
-    final data = json.decode(response.body);
+        if (pageInfo != null) 'page_info': pageInfo,
+        if (financialStatus != null) 'financial_status': financialStatus,
+        if (status != null) 'status': status,
+        if (createdMinDate != null) 'created_at_min': createdMinDate,
+        if (fulfillmentStatus != null)
+          'fulfillment_status': fulfillmentStatus,
+        if (createdMaxDate != null) 'created_at_max': createdMaxDate,
+      };
 
-    final orders = (data['orders'] as List)
-        .map((e) => Order.fromJson(e))
-        .toList();
-    String? nextPageInfo;
-    final linkHeader = response.headers['link'];
-    if (linkHeader != null) {
-      final parts = linkHeader.split(',');
-      for (var part in parts) {
-        if (part.contains('rel="next"')) {
-          final match = RegExp(r'page_info=([^&>]+)').firstMatch(part);
-          if (match != null) {
-            nextPageInfo = match.group(1);
+      final baseUrl = await ApiConfig.baseUrl;
+
+      final uri = Uri.parse(
+        "$baseUrl/orders.json",
+      ).replace(queryParameters: queryParams);
+
+      final response = await http.get(
+        uri,
+        headers: await ApiConfig.getCommonHeaders(),
+      );
+
+
+      final data = json.decode(response.body);
+
+      final orders = (data['orders'] as List)
+          .map((e) => Order.fromJson(e))
+          .toList();
+
+      String? nextPageInfo;
+      final linkHeader = response.headers['link'];
+
+      if (linkHeader != null) {
+        final parts = linkHeader.split(',');
+        for (var part in parts) {
+          if (part.contains('rel="next"')) {
+            final match =
+            RegExp(r'page_info=([^&>]+)').firstMatch(part);
+            if (match != null) {
+              nextPageInfo = match.group(1);
+            }
           }
         }
       }
+
+      return {
+        "orders": orders,
+        "nextPageInfo": nextPageInfo,
+      };
+    } catch (e, stackTrace) {
+      debugPrint("Order Pagination Error: $e");
+      debugPrint("StackTrace: $stackTrace");
+
+      rethrow; // agar upar handle karna ho
+    } finally {
+      _isFetching = false;
+      notifyListeners();
     }
-    _isFetching = false;
-    notifyListeners();
-    return {"orders": orders, "nextPageInfo": nextPageInfo};
   }
+
 
   void filterByStatus({
     String? status,
@@ -737,8 +775,16 @@ class OrdersProvider with ChangeNotifier {
       }
 
       _nextPageInfo = result["nextPageInfo"];
+    } catch (e) {
+      debugPrint("Order List Error: $e");
+
+      // 🔥 Error aaye to clear karo
+      _ordersList.clear();
+
+      notifyListeners();
     } finally {
       _isFetching = false;
+      _ordersList.clear();
       notifyListeners();
     }
   }

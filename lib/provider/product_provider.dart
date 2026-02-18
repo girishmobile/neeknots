@@ -328,6 +328,7 @@ class ProductProvider with ChangeNotifier {
       _isFetching = false;
       notifyListeners();
     } catch (e) {
+      _products.clear();
       debugPrint("⚠️ Unexpected Error: $e");
     } finally {
       _isFetching = false;
@@ -375,12 +376,20 @@ class ProductProvider with ChangeNotifier {
   Future<void> getTotalProductCount() async {
     _isFetching = true;
     notifyListeners();
-    final response = await callGETMethod(url: await ApiConfig.totalProductUrl);
+    try{
+      final response = await callGETMethod(url: await ApiConfig.totalProductUrl);
 
-    if (globalStatusCode == 200) {
-      final data = json.decode(response);
+      if (globalStatusCode == 200) {
+        final data = json.decode(response);
 
-      _totalProductCount = data["count"] ?? 0;
+        _totalProductCount = data["count"] ?? 0;
+        _isFetching = false;
+        notifyListeners();
+      }
+
+    }
+    catch(e){
+      _totalProductCount =  0;
       _isFetching = false;
       notifyListeners();
     }
@@ -737,7 +746,7 @@ class ProductProvider with ChangeNotifier {
   }
 
   int _pendingCount = 0; // Provider me variable define karo
-  int get pendingCount => _pendingCount;
+  int get   pendingCount => _pendingCount;
 
   Future<void> getCountPendingRequest() async {
     _setLoading(true);
@@ -754,6 +763,7 @@ class ProductProvider with ChangeNotifier {
       _setLoading(false);
       notifyListeners();
     } catch (e) {
+      _pendingCount=0;
       _setLoading(false);
       notifyListeners();
       debugPrint("Error fetching pending products: $e");

@@ -48,6 +48,9 @@ class CustomerProvider with ChangeNotifier {
     }
     catch(e){
       debugPrint(e.toString());
+      _totalCustomerCount = 0;
+      _isFetching = false;
+      notifyListeners();
     }
 
     _isFetching = false;
@@ -58,15 +61,25 @@ class CustomerProvider with ChangeNotifier {
   CustomerModel? get customerModel => _customerModel;
 
   Future<void> getCustomerList() async {
+
     _isFetching = true;
     notifyListeners();
-    final response = await callGETMethod(
-      url: '${await ApiConfig.customerUrl}?order=updated_at+desc',
-    );
+    try{
+      final response = await callGETMethod(
+        url: '${await ApiConfig.customerUrl}?order=updated_at+desc',
+      );
 
-    if (globalStatusCode == 200) {
-      _customerModel = CustomerModel.fromJson(json.decode(response));
+      if (globalStatusCode == 200) {
+        _customerModel = CustomerModel.fromJson(json.decode(response));
 
+        _isFetching = false;
+        notifyListeners();
+      }
+
+    }
+    catch(e){
+      _customerModel?.customers?.clear();
+      debugPrint(e.toString());
       _isFetching = false;
       notifyListeners();
     }

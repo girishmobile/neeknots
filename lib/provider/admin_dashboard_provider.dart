@@ -2,10 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:neeknots/main.dart';
 
-import '../core/component/component.dart';
 import '../core/firebase/FcmService.dart';
 import '../core/firebase/auth_service.dart';
-import '../core/firebase/send_fcm_notification.dart';
 import '../core/hive/app_config_cache.dart';
 import '../feature/admin/admin_home_page.dart';
 
@@ -144,18 +142,9 @@ class AdminDashboardProvider with ChangeNotifier {
       _setUpdating(false);
       notifyListeners();
       if (token != null && token.isNotEmpty) {
-        final payload = buildNotificationPayload(
-          token: token,
-          title: tetFullName.text.trim(),
-          body: status
-              ? "Your account is activated, open the app"
-              : "Your account has been deactivated, please contact support",
-          data: {"category": "chat"},
-        );
 
-        print('======{$token');
 
-        FcmService.sendToToken(deviceToken: token??'', title: tetFullName.text.trim(), body: status
+        FcmService.sendToToken(deviceToken: token, title: tetFullName.text.trim(), body: status
           ? "Your account is activated, open the app"
           : "Your account has been deactivated, please contact support",);
        /* await sendPushNotification(fcmToken: token, title: tetFullName.text.trim(),  body: status
@@ -427,7 +416,7 @@ class AdminDashboardProvider with ChangeNotifier {
 
   List<Map<String, dynamic>> get storeCounts => _storeCounts;
 
-  Future<void> getStoreUserCounts() async {
+ /* Future<void> getStoreUserCounts() async {
     _setLoading(true);
     notifyListeners();
     try {
@@ -459,6 +448,69 @@ class AdminDashboardProvider with ChangeNotifier {
       throw Exception("Failed to fetch store counts: $e");
     }
   }
+*/
+  Future<void> getStoreUserCounts() async {
+    _setLoading(true);
+    notifyListeners();
+
+    try {
+      final querySnapshot = await _firestore
+          .collection(_authService.storesCollection)
+          .get();
+
+      final Map<String, Map<String, dynamic>> storeMap = {};
+
+      for (var doc in querySnapshot.docs) {
+        final data = doc.data();
+        final storeName = data['store_name'] ?? '';
+
+        if (storeMap.containsKey(storeName)) {
+          storeMap[storeName]!['count'] =
+              (storeMap[storeName]!['count'] ?? 0) + 1;
+        } else {
+          storeMap[storeName] = {
+            ...data,          // ✅ store full document data
+            'uid': doc.id,    // ✅ store document id
+            'count': 1        // ✅ store count
+          };
+        }
+      }
+
+      _storeCounts = storeMap.values.toList();
+
+      _setLoading(false);
+      notifyListeners();
+    } catch (e) {
+      throw Exception("Failed to fetch store counts: $e");
+    }
+  }
+
+  Future<void> getUserStoresByEmail() async {
+    _setLoading(true);
+    notifyListeners();
+
+    try {
+      final email = await AppConfigCache.getUserEmail();
+
+      final querySnapshot = await _firestore
+          .collection('stores')
+          .where('email', isEqualTo: email)
+          .get();
+
+      _storeCounts = querySnapshot.docs.map((doc) {
+        return {
+          ...doc.data(),
+          'uid': doc.id,
+        };
+      }).toList();
+
+      _setLoading(false);
+      notifyListeners();
+    } catch (e) {
+      _setLoading(false);
+      throw Exception("Failed to fetch stores: $e");
+    }
+  }
 
   List<Map<String, dynamic>> storeList = [];
   int userCount = 0;
@@ -476,7 +528,7 @@ class AdminDashboardProvider with ChangeNotifier {
         throw "Store name not found";
       }
 
-      setStoreName(storeName ?? '');
+      setStoreName(storeName );
 
       final querySnapshot = await FirebaseFirestore.instance
           .collection("stores")

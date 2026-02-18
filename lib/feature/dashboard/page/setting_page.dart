@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:neeknots/core/color/color_utils.dart';
 import 'package:neeknots/core/component/component.dart';
-import 'package:neeknots/core/image/image_utils.dart';
 import 'package:neeknots/provider/dashboard_provider.dart';
 import 'package:neeknots/provider/login_provider.dart';
 import 'package:neeknots/provider/profile_provider.dart';
@@ -13,6 +12,7 @@ import 'package:provider/provider.dart';
 import '../../../core/firebase/auth_service.dart';
 import '../../../core/hive/app_config_cache.dart';
 import '../../../main.dart';
+import '../../../provider/admin_dashboard_provider.dart';
 import '../../../provider/customer_provider.dart';
 import '../../../provider/order_provider.dart';
 import '../../../provider/product_provider.dart';
@@ -37,10 +37,13 @@ class _SettingPageState extends State<SettingPage> {
   Future<void> init() async {
     final profile = Provider.of<ProfileProvider>(context, listen: false);
     await profile.loadUserData(); // <-- await here
+    final customerProvider = Provider.of<AdminDashboardProvider>(
+      context,
+      listen: false,
+    );
 
-    /*print(
-      '==userData===${profile.userData.toString()}',
-    ); */ // Now it will have value
+    customerProvider.getStoreUserCounts();
+
   }
 
   @override
@@ -56,24 +59,6 @@ class _SettingPageState extends State<SettingPage> {
               children: [
                 SizedBox(height: 50),
 
-                /*CachedNetworkImage(
-                  height: 150,
-                  fit: BoxFit.cover,
-                  width: size.width * 0.7,
-                  imageUrl: provider.userData?['logo_url'] ?? '',
-
-                  placeholder: (context, url) =>
-                      Center(child: CircularProgressIndicator(strokeWidth: 2)),
-                  errorWidget: (context, url, error) => Center(
-                    child: Container(
-                      child: commonAssetImage(
-                        width: size.width * 0.7,
-                        fit: BoxFit.scaleDown,
-                        icAppLogo,
-                      ),
-                    ),
-                  ),
-                ),*/
                 Container(
                   decoration: commonBoxDecoration(
                     //  borderColor: colorBorder
@@ -172,37 +157,7 @@ class _SettingPageState extends State<SettingPage> {
                         title: "Version Name",
                         value: provider.userData?['version_code'] ?? '-',
                       ),
-                      /* _commonRow(
-                        value: '',
-                        title: "Status",
-                        view: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 14,
-                                vertical: 5,
-                              ),
-                              decoration: commonBoxDecoration(
-                                color: Colors.green.withValues(alpha: 0.09),
-                                borderColor: Colors.green,
-                                borderRadius: 8,
-                              ),
-                              child: commonText(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                color: (provider.userData?['active_status'])
-                                    ? Colors.green
-                                    : Colors.red,
 
-                                text: (provider.userData?['active_status'])
-                                    ? "Active"
-                                    : "Inactive",
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),*/
                       _commonRow(
                         value: '',
                         title: "Status",
@@ -363,6 +318,8 @@ class _SettingPageState extends State<SettingPage> {
                     ),
                   ],
                 ),
+                SizedBox(height: 18),
+
 
                 /* commonButton(text: "Send Notification", onPressed: () async {
 
@@ -388,63 +345,6 @@ class _SettingPageState extends State<SettingPage> {
           ],
         );
       },
-    );
-  }
-
-  Widget _commonView({
-    String? text,
-    Widget? trailing,
-    String? image,
-    void Function()? onTap,
-    required ThemeProvider provider,
-  }) {
-    return Container(
-      decoration: commonBoxDecoration(
-        borderColor: colorBorder,
-        color: colorButton1.withValues(alpha: 0.04),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(2.0),
-        child: commonListTile(
-          onTap: onTap,
-          titleFontWeight: FontWeight.w500,
-          titleFontSize: 14,
-          textColor: provider.isDark ? Colors.white : colorLogo,
-          contentPadding: EdgeInsetsGeometry.zero,
-          trailing:
-              trailing ??
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.arrow_forward_ios,
-                  color: Colors.grey,
-                  size: 15,
-                ),
-              ),
-          leadingIcon: Container(
-            width: 35,
-            height: 35,
-            decoration: commonBoxDecoration(
-              color: provider.isDark
-                  ? Colors.transparent
-                  : colorLogo.withValues(alpha: 0.05),
-              borderColor: provider.isDark
-                  ? Colors.white
-                  : colorLogo.withValues(alpha: 0.5),
-              shape: BoxShape.circle,
-            ),
-            child: Center(
-              child: commonPrefixIcon(
-                width: 20,
-                colorIcon: provider.isDark ? Colors.white : colorLogo,
-                height: 20,
-                image: image ?? icTotalProduct,
-              ),
-            ),
-          ),
-          title: text ?? "Change Theme",
-        ),
-      ),
     );
   }
 

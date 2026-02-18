@@ -7,6 +7,7 @@ import 'package:neeknots/provider/order_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../provider/product_provider.dart';
+import '../../common_all_store_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -23,6 +24,13 @@ class _HomePageState extends State<HomePage> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       init();
     });
+  }
+
+  void call(bool isTure){
+    if(isTure){
+      init();
+    }
+
   }
 
   Future<void> init() async {
@@ -70,6 +78,17 @@ class _HomePageState extends State<HomePage> {
 
                 padding: EdgeInsets.all(12),
                 children: [
+                  SizedBox(height: 5),
+                  commonText(
+                    text: "Select Store",
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  SizedBox(height: 5),
+                  CommonAllStoreWidget(
+                    onStoreChanged:call
+                  ),
+                  SizedBox(height: 5),
                   homeTopView(
                     totalPendingRequest: productProvider.pendingCount,
                     totalOrderPrice: orderProvider.totalOrderPrice,
