@@ -7,7 +7,7 @@ import 'package:neeknots/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/color/color_utils.dart';
-import '../../core/component/common_pin_code_field.dart';
+
 import '../../core/hive/app_config_cache.dart';
 import '../../main.dart';
 import '../../routes/app_routes.dart';

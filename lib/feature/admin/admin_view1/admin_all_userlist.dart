@@ -48,208 +48,361 @@ class _AdminAllUserlistState extends State<AdminAllUserlist> {
         return Stack(
           clipBehavior: Clip.none,
           children: [
-            provider.allUsers.isNotEmpty
-                ? ListView.builder(
-                    itemCount: provider.allUsers.length,
-                    itemBuilder: (context, index) {
-                      final user = provider.allUsers[index];
-                      return Container(
-                        margin: const EdgeInsets.symmetric(vertical: 8),
-                        decoration: commonBoxDecoration(
-                          color: Colors.white,
-                          borderColor: colorBorder,
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.all(isMobile ? 10 : 16.0),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Row(
-                                  spacing: 10,
-                                  children: [
-                                    ClipRRect(
-                                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: CachedNetworkImage(
-                                        height: isMobile ? 60 : 100,
-                                        width: isMobile ? 60 : 80,
-                                        fit: BoxFit.cover,
-                                        imageUrl: user["logo_url"],
-                                        placeholder: (context, url) => Center(
-                                          child: SizedBox(
-                                            width: 20,
-                                            height: 20,
-                                            child: CircularProgressIndicator(
-                                              strokeWidth: 2,
-                                            ),
-                                          ),
-                                        ),
-                                        errorWidget: (context, url, error) =>
-                                            Center(
-                                              child: commonAssetImage(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                icErrorImage,
-                                              ),
-                                            ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          commonText(
-                                            text: user['name'],
-                                            fontSize: isMobile ? 14 : 16,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.black87,
-                                          ),
-                                          const SizedBox(height: 3),
-                                          commonText(
-                                            overflow: TextOverflow.ellipsis,
-                                            text: user['email'],
+            Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Spacer(),
+                    commonInkWell(
 
-                                            fontSize: isMobile ? 12 : 14,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.black45,
-                                          ),
-                                          const SizedBox(height: 4),
-                                          commonText(
-                                            text:
-                                                "${user["country_code"] ?? "N/A"}${user["mobile"] ?? "N/A"}",
-                                            fontSize: isMobile ? 12 : 14,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.black45,
-                                          ),
-                                        ],
+                      onTap: () {
+                        print('-----tp');
+                        provider.resetAllFields();
+                        showCommonBottomSheet(
+                          context: context,
+                          content: SizedBox(
+                            height:
+                            MediaQuery.sizeOf(
+                              context,
+                            ).height *
+                                0.8,
+                            child: ListView(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment
+                                      .spaceBetween,
+                                  children: [
+                                    commonHeadingText(
+                                      text: "Add Information",
+                                    ),
+                                    commonInkWell(
+                                      onTap: () {
+                                        Navigator.pop(
+                                          context,
+                                        );
+                                      },
+                                      child: Container(
+                                        width: 35,
+                                        height: 35,
+                                        decoration:
+                                        commonBoxDecoration(
+                                          color: Colors
+                                              .black,
+                                          shape: BoxShape
+                                              .circle,
+                                        ),
+                                        child: Icon(
+                                          Icons.close,
+                                          color: Colors.white,
+                                          size: 15,
+                                        ),
                                       ),
                                     ),
-                                    // 🟢 Switch (on/off)
                                   ],
                                 ),
+                                SizedBox(height: 20),
+                                CommonAdminWidget(
+                                  data: provider.allUsers.isNotEmpty
+                                      ? {
+                                    "store_name": provider.allUsers[0]['store_name'],
+                                    "version_code": provider.allUsers[0]['version_code'],
+                                    "accessToken": provider.allUsers[0]['accessToken'],
+                                  }
+                                      : {
+
+                                  },
+                                  isEdit: false,
+                                  provider: provider,
+                                  onPressed: () {},
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                      child: Container(
+
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 30,
+                          vertical: 8,
+                        ),
+                        decoration: commonBoxDecoration(
+                          color: colorButton,
+                          borderRadius: 8,
+                        ),
+
+                        child: commonText(
+                          text: "Add User".toUpperCase(),
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                provider.allUsers.isNotEmpty
+                    ? Expanded(
+                      child: ListView.builder(
+                          itemCount: provider.allUsers.length,
+                          itemBuilder: (context, index) {
+                            final user = provider.allUsers[index];
+                            return Container(
+                              margin: const EdgeInsets.symmetric(vertical: 8),
+                              decoration: commonBoxDecoration(
+                                color: Colors.white,
+                                borderColor: colorBorder,
                               ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                spacing: 8,
-                                children: [
-                                  Row(
-                                    children: [
-                                      commonText(
-                                        fontSize: isMobile ? 10 : 12,
-                                        text: user['active_status']
-                                            ? "Active"
-                                            : "Inactive",
-                                        color: user['active_status']
-                                            ? Colors.green
-                                            : Colors.red,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                      const SizedBox(width: 8),
-                                      CommonSwitch(
-                                        scale: isMobile ? 0.6 : 0.8,
-                                        value: user['active_status'],
-                                        onChanged: (value) {
-                                          setState(
-                                            () => user['active_status'] = value,
-                                          );
-
-                                          provider.updateUserStatus(
-                                            docId: user['id'],
-                                            status: value,
-                                            token: user['fcm_token'],
-                                          );
-                                        },
-                                        activeThumbColor: Colors.green,
-                                        inactiveThumbColor: Colors.red,
-                                      ),
-                                    ],
-                                  ),
-
-                                  commonInkWell(
-                                    onTap: () {
-                                      showCommonBottomSheet(
-                                        context: context,
-                                        content: SizedBox(
-                                          height:
-                                              MediaQuery.sizeOf(
-                                                context,
-                                              ).height *
-                                              0.8,
-                                          child: ListView(
+                              child: Padding(
+                                padding: EdgeInsets.all(isMobile ? 10 : 16.0),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Row(
+                                            spacing: 10,
                                             children: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  commonHeadingText(
-                                                    text: "Edit Information",
-                                                  ),
-                                                  commonInkWell(
-                                                    onTap: () {
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Container(
-                                                      width: 35,
-                                                      height: 35,
-                                                      decoration:
-                                                          commonBoxDecoration(
-                                                            color: Colors.black,
-                                                            shape:
-                                                                BoxShape.circle,
+                                              ClipRRect(
+                                                clipBehavior:
+                                                    Clip.antiAliasWithSaveLayer,
+                                                borderRadius: BorderRadius.circular(
+                                                  10,
+                                                ),
+                                                child: CachedNetworkImage(
+                                                  height: isMobile ? 60 : 100,
+                                                  width: isMobile ? 60 : 80,
+                                                  fit: BoxFit.cover,
+                                                  imageUrl: user["logo_url"],
+                                                  placeholder: (context, url) => Center(
+                                                    child: SizedBox(
+                                                      width: 20,
+                                                      height: 20,
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                            strokeWidth: 2,
                                                           ),
-                                                      child: Icon(
-                                                        Icons.close,
-                                                        color: Colors.white,
-                                                        size: 15,
-                                                      ),
                                                     ),
                                                   ),
-                                                ],
+                                                  errorWidget:
+                                                      (context, url, error) => Center(
+                                                        child: commonAssetImage(
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                10,
+                                                              ),
+                                                          icErrorImage,
+                                                        ),
+                                                      ),
+                                                ),
                                               ),
-                                              SizedBox(height: 20),
-                                              CommonAdminWidget(
-                                                data: user,
-                                                isEdit: true,
-                                                provider: provider,
-                                                onPressed: () {},
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    commonText(
+                                                      text: user['name'],
+                                                      fontSize: isMobile ? 14 : 16,
+                                                      fontWeight: FontWeight.w600,
+                                                      color: Colors.black87,
+                                                    ),
+                                                    const SizedBox(height: 3),
+                                                    commonText(
+                                                      overflow: TextOverflow.ellipsis,
+                                                      text: user['email'],
+
+                                                      fontSize: isMobile ? 12 : 14,
+                                                      fontWeight: FontWeight.w400,
+                                                      color: Colors.black45,
+                                                    ),
+                                                    const SizedBox(height: 4),
+                                                    commonText(
+                                                   /*   text:
+                                                          "${user["country_code"] ?? "N/A"}${user["mobile"] ?? "N/A"}",*/
+                                                      text: formatPhone(user["country_code"], user["mobile"]),
+                                                      fontSize: isMobile ? 12 : 14,
+                                                      fontWeight: FontWeight.w400,
+                                                      color: Colors.black45,
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
+                                              // 🟢 Switch (on/off)
                                             ],
                                           ),
                                         ),
-                                      );
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: isMobile ? 20 : 30,
-                                        vertical: isMobile ? 6 : 10,
-                                      ),
-                                      decoration: commonBoxDecoration(
-                                        borderColor: colorBorder,
-                                        color: Colors.white,
-                                      ),
-                                      child: Center(
-                                        child: commonText(
-                                          fontSize: isMobile ? 9 : 11,
-                                          color: colorTextDesc1,
+                                        Column(
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          spacing: 8,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                commonText(
+                                                  fontSize: isMobile ? 10 : 12,
+                                                  text: user['active_status']
+                                                      ? "Active"
+                                                      : "Inactive",
+                                                  color: user['active_status']
+                                                      ? Colors.green
+                                                      : Colors.red,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                                const SizedBox(width: 8),
+                                                CommonSwitch(
+                                                  scale: isMobile ? 0.6 : 0.8,
+                                                  value: user['active_status'],
+                                                  onChanged: (value) {
+                                                    setState(
+                                                      () => user['active_status'] =
+                                                          value,
+                                                    );
 
-                                          fontWeight: FontWeight.w600,
-                                          text: "Edit Info".toUpperCase(),
+                                                    provider.updateUserStatus(
+                                                      docId: user['id'],
+                                                      status: value,
+                                                      token: user['fcm_token'],
+                                                    );
+                                                  },
+                                                  activeThumbColor: Colors.green,
+                                                  inactiveThumbColor: Colors.red,
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
-                                      ),
+                                      ],
                                     ),
-                                  ),
-                                ],
+                                    Row(
+                                      spacing: 10,
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      children: [
+                                        commonInkWell(
+                                          onTap: () {
+                                            showCommonDialog(
+                                              title: "Delete",
+                                              cancelText: "No",
+                                              context: context,
+                                              onPressed: (){
+                                                Navigator.pop(context);
+                                                provider.deleteUser(docId: user['id'],storeName: user['store_name']);
+                                              },
+                                              content:
+                                                  "Are you sure want to delete\n${user['name']}?",
+                                              confirmText: "Yes",
+                                            );
+                                          },
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: isMobile ? 20 : 30,
+                                              vertical: isMobile ? 6 : 10,
+                                            ),
+                                            decoration: commonBoxDecoration(
+                                              borderColor: Colors.red,
+                                              color: Colors.white,
+                                            ),
+                                            child: Center(
+                                              child: commonText(
+                                                fontSize: isMobile ? 9 : 11,
+                                                color: Colors.red,
+
+                                                fontWeight: FontWeight.w600,
+                                                text: "Delete".toUpperCase(),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        commonInkWell(
+                                          onTap: () {
+                                            showCommonBottomSheet(
+                                              context: context,
+                                              content: SizedBox(
+                                                height:
+                                                    MediaQuery.sizeOf(
+                                                      context,
+                                                    ).height *
+                                                    0.8,
+                                                child: ListView(
+                                                  children: [
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        commonHeadingText(
+                                                          text: "Edit Information",
+                                                        ),
+                                                        commonInkWell(
+                                                          onTap: () {
+                                                            Navigator.pop(context);
+                                                          },
+                                                          child: Container(
+                                                            width: 35,
+                                                            height: 35,
+                                                            decoration:
+                                                                commonBoxDecoration(
+                                                                  color: Colors.black,
+                                                                  shape:
+                                                                      BoxShape.circle,
+                                                                ),
+                                                            child: Icon(
+                                                              Icons.close,
+                                                              color: Colors.white,
+                                                              size: 15,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(height: 20),
+                                                    CommonAdminWidget(
+                                                      data: user,
+                                                      isEdit: true,
+                                                      provider: provider,
+                                                      onPressed: () {},
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: isMobile ? 20 : 30,
+                                              vertical: isMobile ? 6 : 10,
+                                            ),
+                                            decoration: commonBoxDecoration(
+                                              borderColor: colorBorder,
+                                              color: Colors.white,
+                                            ),
+                                            child: Center(
+                                              child: commonText(
+                                                fontSize: isMobile ? 9 : 11,
+                                                color: colorTextDesc1,
+
+                                                fontWeight: FontWeight.w600,
+                                                text: "Edit Info".toUpperCase(),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ],
-                          ),
+                            );
+                          },
                         ),
-                      );
-                    },
-                  )
-                : commonErrorView(),
+                    )
+                    : commonErrorView(),
+              ],
+            ),
 
             provider.isLoading ? showLoaderList() : SizedBox.shrink(),
           ],

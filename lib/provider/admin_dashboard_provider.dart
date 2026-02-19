@@ -74,7 +74,21 @@ class AdminDashboardProvider with ChangeNotifier {
     }
     _setLoading(false);
   }
+  void resetAllFields() {
+    tetFullName.clear();
+    tetEmail.clear();
+    tetPhone.clear();
+    tetCountryCodeController.clear();
+    tetStoreName.clear();
+    tetWebsiteUrl.clear();
+    tetAccessToken.clear();
+    tetVersionCode.clear();
+    tetAppLogo.clear();
 
+    _status = false; // also reset switch/checkbox if needed
+
+    notifyListeners();
+  }
   void applySearch(String query) {
     _searchQuery = query.toLowerCase();
 
@@ -102,6 +116,7 @@ class AdminDashboardProvider with ChangeNotifier {
             "name": tetFullName.text.trim(),
             "email": tetEmail.text.trim(),
             "mobile": tetPhone.text.trim(),
+            "country_code": tetCountryCodeController.text.trim(),
             "store_name": tetStoreName.text.trim(),
             "accessToken": tetAccessToken.text.trim(),
             "version_code": tetVersionCode.text.trim(),
@@ -114,14 +129,37 @@ class AdminDashboardProvider with ChangeNotifier {
       if (token != null && token.isNotEmpty) {
 
         getUsersByStoreName(tetStoreName.text.trim(),);
+
        // await sendFCMNotification(bodyMap: payload);
       }
 
       //fetchUsers();
       _setUpdating(false);
+      resetAllFields();
       notifyListeners();
     } catch (e) {
       debugPrint("Error updating user: $e");
+      _setUpdating(false);
+      notifyListeners();
+    }
+  }
+  Future<void> deleteUser({required String docId,required String storeName}) async {
+    try {
+      _setUpdating(true);
+      notifyListeners();
+
+      await FirebaseFirestore.instance
+          .collection(_authService.storesCollection)
+          .doc(docId)
+          .delete();
+
+
+      _setUpdating(false);
+      getUsersByStoreName(storeName.trim(),);
+      notifyListeners();
+
+    } catch (e) {
+      debugPrint("Error deleting user: $e");
       _setUpdating(false);
       notifyListeners();
     }

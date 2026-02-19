@@ -38,7 +38,7 @@ class CommonPinCodeField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PinCodeTextField(
+    return MaterialPinField(
       appContext: context,
       length: 4,
 

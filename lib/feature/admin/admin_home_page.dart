@@ -123,8 +123,9 @@ class _AdminHomePageState extends State<AdminHomePage> {
             ),
       body: commonAppBackground(
         child: Consumer<AdminDashboardProvider>(
+
           builder: (context, provider, child) {
-            // 🟡 STEP 1: Handle loading / empty state
+
 
             if (provider.storeCounts.isEmpty) {
               return const Center(child: CircularProgressIndicator());
@@ -238,86 +239,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                                     ],
                                   ),
                                 ),
-                                provider.selectedSection
-                                            .toString()
-                                            .toLowerCase() ==
-                                        "users"
-                                    ? commonInkWell(
-                                  onTap: (){
-                                    showCommonBottomSheet(
-                                      context: context,
-                                      content: SizedBox(
-                                        height:
-                                        MediaQuery.sizeOf(
-                                          context,
-                                        ).height *
-                                            0.8,
-                                        child: ListView(
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .spaceBetween,
-                                              children: [
-                                                commonHeadingText(
-                                                  text: "Edit Information",
-                                                ),
-                                                commonInkWell(
-                                                  onTap: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                  child: Container(
-                                                    width: 35,
-                                                    height: 35,
-                                                    decoration:
-                                                    commonBoxDecoration(
-                                                      color: Colors.black,
-                                                      shape:
-                                                      BoxShape.circle,
-                                                    ),
-                                                    child: Icon(
-                                                      Icons.close,
-                                                      color: Colors.white,
-                                                      size: 15,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(height: 20),
-                                            CommonAdminWidget(
-                                              data: {
-                                                "store_name":provider.storeCounts[provider.selectedIndex]['store_name'].toString(),
-                                                "version_code":provider.storeCounts[provider.selectedIndex]['version_code'].toString(),
-                                                "accessToken":provider.storeCounts[provider.selectedIndex]['accessToken'].toString(),
-                                              },
-                                              isEdit: false,
-                                              provider: provider,
-                                              onPressed: () {},
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                      child: Container(
-                                          padding: EdgeInsets.symmetric(
-                                            horizontal: 10,
-                                            vertical: 5,
-                                          ),
-                                          decoration: commonBoxDecoration(
-                                            color: colorButton,
-                                            borderRadius: 8,
-                                          ),
 
-                                          child: commonText(
-                                            text: "Add User".toUpperCase(),
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                    )
-                                    : SizedBox.shrink(),
                               ],
                             ),
                             SizedBox(height: isMobile ? 10 : 24),

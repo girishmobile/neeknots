@@ -61,8 +61,8 @@ class _StoreCollectionTabState extends State<ContactListPage> {
                   crossAxisSpacing: 5,
                   mainAxisSpacing: 12,
                   childAspectRatio: isMobile
-                      ? 1.3
-                      : 2.1, // adjust roughly for initial layout
+                      ? 1.7
+                      : 3.1, // adjust roughly for initial layout
                 ),
                 itemCount: provider.contacts.length,
                 physics: BouncingScrollPhysics(),
@@ -78,7 +78,7 @@ class _StoreCollectionTabState extends State<ContactListPage> {
                     child: Column(
                       spacing: 4,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
 
                       children: [
@@ -130,6 +130,7 @@ class _StoreCollectionTabState extends State<ContactListPage> {
                           child: commonText(
                             text: data['message'],
                             maxLines: 5,
+                            textAlign: TextAlign.start,
                             overflow: TextOverflow.ellipsis,
                             fontSize: 12,
                             color: colorTextDesc1,

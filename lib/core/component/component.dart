@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:html/parser.dart' as html_parser;
+import 'package:intl_phone_field/countries.dart';
 import 'package:neeknots/core/color/color_utils.dart';
 import 'package:neeknots/core/image/image_utils.dart';
 import 'package:neeknots/core/string/string_utils.dart';
@@ -1286,4 +1287,28 @@ Widget commonTextRich({
       ],
     ),
   );
+}
+String formatPhone(String? code, String? number) {
+  if (code == null || number == null) return "N/A";
+
+  final formattedCode =
+  code.startsWith("+") ? code : "+$code";
+
+  return "$formattedCode$number";
+}
+
+String getInitialCountryCode(String? dialCode) {
+  if (dialCode == null || dialCode.isEmpty) {
+    return 'US'; // fallback
+  }
+
+  try {
+    final country = countries.firstWhere(
+          (c) => c.dialCode == dialCode,
+    );
+
+    return country.code; // ISO code like IN, US, AE
+  } catch (e) {
+    return 'US'; // fallback if not found
+  }
 }

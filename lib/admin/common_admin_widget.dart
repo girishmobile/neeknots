@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:intl_phone_field/countries.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:neeknots/core/component/CommonSwitch.dart';
 import 'package:neeknots/provider/admin_dashboard_provider.dart';
 import 'package:provider/provider.dart';
@@ -58,6 +61,7 @@ class _State extends State<CommonAdminWidget> {
       }
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AdminDashboardProvider>(
@@ -88,35 +92,37 @@ class _State extends State<CommonAdminWidget> {
                 ),
 
                 const SizedBox(height: 20),
-                PhoneNumberField(
-                  fillColor: Colors.grey.withValues(alpha: 0.1),
-                  filled: widget.isEdit ? true : false,
-                  phoneController: widget.provider.tetPhone,
-                  countryCodeController:
-                      widget.provider.tetCountryCodeController,
-                  prefixIcon: commonPrefixIcon(image: icPhone),
-                  validator: (value) {
-                    if (value == null || value.length != 10) {
-                      return "Enter 10 digit phone number";
-                    }
-                    return null;
-                  },
-                  isCountryCodeEditable: widget.isEdit ? false : true,
-                  // fixed +1
-                  isPhoneEditable: widget.isEdit ? false : true, // fixed +1
-                ),
-                /*commonTextField(
-                  hintText: "Phone No",
-                  controller: widget.provider.tetPhone,
-                  readOnly: true,
-                  maxLines: 1,
-                  fillColor: Colors.grey.withValues(alpha: 0.1),
-                  filled: true,
+                IntlPhoneField(
 
-                  keyboardType: TextInputType.phone,
-                  validator: validateTenDigitPhone,
-                  prefixIcon: commonPrefixIcon(image: icPhone),
-                ),*/
+
+                  initialCountryCode: widget.isEdit
+                      ? getInitialCountryCode(widget.data["country_code"])
+                      : 'US',
+                  controller: provider.tetPhone,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  style: commonTextStyle(
+                    color:  Colors.black,
+                  ),
+                  decoration: InputDecoration(
+                    hintText: "Phone Number",
+                    hintStyle: commonTextStyle(color: Colors.grey),
+
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 14,
+                    ),
+                    border: commonTextFiledBorder(borderRadius: 12),
+                    enabledBorder: commonTextFiledBorder(borderRadius: 12),
+                    focusedBorder: commonTextFiledBorder(borderRadius: 12),
+                  ),
+                  onChanged: (phone) {
+                    provider.tetCountryCodeController.text = phone.countryCode;
+                  },
+                  onCountryChanged: (value) {
+                    provider.tetCountryCodeController.text = value.dialCode;
+                  },
+                ),
+
                 const SizedBox(height: 20),
                 commonTextField(
                   hintText: "Store Name",
