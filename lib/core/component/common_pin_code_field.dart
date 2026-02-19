@@ -16,7 +16,7 @@ class CommonPinCodeField extends StatelessWidget {
   final double fieldHeight;
   final double fieldWidth;
   final double borderRadius;
-  final TextEditingController? controller;
+  final PinInputController? pinController;
   const CommonPinCodeField({
     super.key,
 
@@ -31,14 +31,64 @@ class CommonPinCodeField extends StatelessWidget {
     this.selectedBorderColor = Colors.black,
     this.activeBorderColor = Colors.transparent,
     this.fieldHeight = 50,
-    this.controller,
+    this.pinController,
     this.fieldWidth = 50,
     this.borderRadius = 5,
   });
 
   @override
   Widget build(BuildContext context) {
-    return PinCodeTextField(
+    return MaterialPinField(
+      pinController: pinController,
+      length: 4,
+      mainAxisAlignment: MainAxisAlignment.center,
+      keyboardType: TextInputType.number,
+      hintStyle: hintStyle ?? const TextStyle(color: Colors.grey),
+      theme: MaterialPinTheme(
+        // Shape
+        shape: MaterialPinShape.outlined,
+        cellSize: Size(56, 64),
+        spacing: 8,
+        borderRadius: BorderRadius.circular(12),
+
+        // Border
+        borderWidth: 1.5,
+        focusedBorderWidth: 2.0,
+        borderColor: Colors.grey,
+        focusedBorderColor: Colors.blue,
+        filledBorderColor: Colors.green,
+        errorColor: Colors.red,
+
+        // Fill
+        fillColor: Colors.grey[100],
+        focusedFillColor: Colors.blue[50],
+        filledFillColor: Colors.green[50],
+
+        // Text
+        textStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        textGradient: LinearGradient(colors: [Colors.blue, Colors.purple]),
+        obscuringCharacter: '●',
+
+        // Cursor
+        showCursor: true,
+        cursorColor: Colors.blue,
+        cursorWidth: 2,
+        animateCursor: true,
+
+        // Animation
+        entryAnimation: MaterialPinAnimation.scale,
+        animationDuration: Duration(milliseconds: 150),
+        animationCurve: Curves.easeOut,
+
+        // Error
+        enableErrorShake: true,
+        errorAnimationDuration: Duration(milliseconds: 500),
+      ),
+    );
+  }
+}
+/**
+ * PinCodeTextField(
       appContext: context,
       length: 4,
 
@@ -75,5 +125,4 @@ class CommonPinCodeField extends StatelessWidget {
       onChanged: onChanged,
       beforeTextPaste: (text) => true,
     );
-  }
-}
+ */

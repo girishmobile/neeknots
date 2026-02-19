@@ -153,7 +153,7 @@ class NotificationService {
         ?.createNotificationChannel(channel);
 
     await _localNotificationsPlugin.initialize(
-      initSettings,
+      settings: initSettings,
       onDidReceiveNotificationResponse: (NotificationResponse response) {
         final payload = response.payload;
         if (payload != null) {
@@ -251,10 +251,10 @@ class NotificationService {
       );*/
 
       await _localNotificationsPlugin.show(
-        0,
-        title,
-        body,
-        const NotificationDetails(
+        id: 0,
+        title: title,
+        body: body,
+        notificationDetails: const NotificationDetails(
           iOS: DarwinNotificationDetails(
             presentAlert: true,
             presentBadge: true,

@@ -320,16 +320,15 @@ class _SettingPageState extends State<SettingPage> {
                 ),
                 SizedBox(height: 18),
 
-
-                commonButton(text: "admin", onPressed: (){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          AdminHomePage(),
-                    ),
-                  );
-                })
+                // commonButton(text: "admin", onPressed: (){
+                //   Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //       builder: (context) =>
+                //           AdminHomePage(),
+                //     ),
+                //   );
+                // })
                 /* commonButton(text: "Send Notification", onPressed: () async {
 
                   }),*/

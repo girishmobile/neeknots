@@ -1,13 +1,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:neeknots/core/component/common_pin_code_field.dart';
 import 'package:neeknots/core/component/component.dart';
 import 'package:neeknots/provider/login_provider.dart';
 import 'package:neeknots/provider/signup_provider.dart';
 import 'package:neeknots/provider/theme_provider.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/color/color_utils.dart';
-import '../../core/component/common_pin_code_field.dart';
 import '../../core/hive/app_config_cache.dart';
 import '../../main.dart';
 import '../../routes/app_routes.dart';
@@ -31,7 +32,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     super.dispose();
   }*/
 
-  late final TextEditingController tetOTP = TextEditingController();
+  //late final TextEditingController tetOTP = TextEditingController();
+
+  late final PinInputController tetOTP = PinInputController();
 
   @override
   void initState() {
@@ -172,7 +175,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       */
                             Container(
                               decoration: commonBoxDecoration(
-                              //  borderColor: colorBorder,
+                                //  borderColor: colorBorder,
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(0.0),
@@ -196,7 +199,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                                     Align(
                                       alignment: AlignmentGeometry.center,
                                       child: CommonPinCodeField(
-                                        controller: tetOTP,
+                                        pinController: tetOTP,
                                         activeFillColor: colorLogo,
                                         inactiveFillColor: colorBorder,
                                         selectedFillColor: colorLogo.withValues(
