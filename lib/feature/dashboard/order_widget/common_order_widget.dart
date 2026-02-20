@@ -73,31 +73,7 @@ Widget commonOrderView({
                     ),
                   ),
                 ),
-              /*  commonOrderItemView(
-                  colorValue: provider.isDark ? Colors.white : colorTextDesc,
-                  text: "Delivery Status",
 
-                  valueView: Container(
-                    decoration:
-                        decoration ??
-                        commonBoxDecoration(
-                          borderRadius: 8,
-                          color: Colors.grey.withValues(alpha: 0.5),
-                        ),
-                    padding: EdgeInsets.only(
-                      left: 10,
-                      right: 10,
-                      top: 5,
-                      bottom: 5,
-                    ),
-                    child: commonText(
-                      text: status,
-                      fontSize: 10,
-                      color: colorTextStatus,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),*/
                 commonOrderItemView(
                   colorValue: Colors.blueAccent,
                   text: "Total",

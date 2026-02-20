@@ -149,13 +149,13 @@ class _AdminProductListState extends State<AdminProductList> {
                                                 productProvider
                                                     .uploadProductImageViaAdminWeb(
                                                       imagePath: data['image'],
-                                                      storeRoom: widget.storeName,
+                                                      storeRoom:
+                                                          widget.storeName,
                                                       productId:
                                                           data['product_id'],
                                                       uid: data['id'],
                                                     )
                                                     .then((_) async {
-
                                                       await provider
                                                           .getStoreCollectionData(
                                                             storeName: widget
@@ -190,10 +190,11 @@ class _AdminProductListState extends State<AdminProductList> {
                                               confirmText: "Yes",
                                               title: "Decline",
                                               onPressed: () {
-                                                 Navigator.pop(context);
+                                                Navigator.pop(context);
                                                 productProvider
                                                     .updateProductStatusWeb(
-                                                  storeName:    widget.storeName,
+                                                      storeName:
+                                                          widget.storeName,
                                                       uid: data['id'],
 
                                                       title: "disapproved_date",
@@ -207,7 +208,7 @@ class _AdminProductListState extends State<AdminProductList> {
                                                                 .collectionName,
                                                           ); // ya koi refresh method
                                                     });
-                                                //provider.uploadProductImageViaAdmin(imagePath: data['image'], productId: data['product_id'],uid:  data['uid']);
+
                                               },
                                               context: context,
                                               content:

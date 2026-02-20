@@ -104,6 +104,7 @@ class OrdersProvider with ChangeNotifier {
   int shippedCount = 0;
   int awaitingReturnCount = 0;
   int completedCount = 0;
+
   Future<void> orderCountStatusValue1({
     int? limit,
     String? financialStatus,
@@ -352,8 +353,7 @@ class OrdersProvider with ChangeNotifier {
     _isFetching = true;
     notifyListeners();
 
-
-    try{
+    try {
       final url = "${await ApiConfig.totalOrderUrl}?status=any";
 
       final response = await callGETMethod(url: url);
@@ -362,11 +362,8 @@ class OrdersProvider with ChangeNotifier {
         final data = json.decode(await response);
         _totalOrderCount = data["count"] ?? 0;
       }
-
-    }
-    catch(e){
-
-      _totalOrderCount=0;
+    } catch (e) {
+      _totalOrderCount = 0;
       _isFetching = false;
       notifyListeners();
     }
@@ -385,7 +382,7 @@ class OrdersProvider with ChangeNotifier {
     _isFetching = true;
     notifyListeners();
 
-    try{
+    try {
       final utcStart = startDate.toUtc();
       final utcEnd = endDate.toUtc();
 
@@ -403,13 +400,11 @@ class OrdersProvider with ChangeNotifier {
         _isFetching = false;
         notifyListeners();
       }
-    }
-    catch(e){
-      _totalOrderSaleCount =  0;
+    } catch (e) {
+      _totalOrderSaleCount = 0;
       _isFetching = false;
       notifyListeners();
     }
-
 
     _isFetching = false;
     notifyListeners();
@@ -530,7 +525,7 @@ class OrdersProvider with ChangeNotifier {
     _orderModelByDate = null;
 
     notifyListeners();
-    try{
+    try {
       final utcStart = startDate.toUtc();
       final utcEnd = endDate.toUtc();
 
@@ -554,13 +549,11 @@ class OrdersProvider with ChangeNotifier {
         _isFetching = false;
         notifyListeners();
       }
-    }catch(e){
+    } catch (e) {
       _orderModelByDate?.orders?.clear();
       _isFetching = false;
       notifyListeners();
     }
-
-
 
     _isFetching = false;
     notifyListeners();
@@ -646,8 +639,7 @@ class OrdersProvider with ChangeNotifier {
         if (financialStatus != null) 'financial_status': financialStatus,
         if (status != null) 'status': status,
         if (createdMinDate != null) 'created_at_min': createdMinDate,
-        if (fulfillmentStatus != null)
-          'fulfillment_status': fulfillmentStatus,
+        if (fulfillmentStatus != null) 'fulfillment_status': fulfillmentStatus,
         if (createdMaxDate != null) 'created_at_max': createdMaxDate,
       };
 
@@ -662,7 +654,6 @@ class OrdersProvider with ChangeNotifier {
         headers: await ApiConfig.getCommonHeaders(),
       );
 
-
       final data = json.decode(response.body);
 
       final orders = (data['orders'] as List)
@@ -676,8 +667,7 @@ class OrdersProvider with ChangeNotifier {
         final parts = linkHeader.split(',');
         for (var part in parts) {
           if (part.contains('rel="next"')) {
-            final match =
-            RegExp(r'page_info=([^&>]+)').firstMatch(part);
+            final match = RegExp(r'page_info=([^&>]+)').firstMatch(part);
             if (match != null) {
               nextPageInfo = match.group(1);
             }
@@ -685,10 +675,7 @@ class OrdersProvider with ChangeNotifier {
         }
       }
 
-      return {
-        "orders": orders,
-        "nextPageInfo": nextPageInfo,
-      };
+      return {"orders": orders, "nextPageInfo": nextPageInfo};
     } catch (e, stackTrace) {
       debugPrint("Order Pagination Error: $e");
       debugPrint("StackTrace: $stackTrace");
@@ -699,7 +686,6 @@ class OrdersProvider with ChangeNotifier {
       notifyListeners();
     }
   }
-
 
   void filterByStatus({
     String? status,
@@ -779,24 +765,25 @@ class OrdersProvider with ChangeNotifier {
       debugPrint("Order List Error: $e");
 
       // 🔥 Error aaye to clear karo
-      _ordersList.clear();
+      //      _ordersList.clear();
 
       notifyListeners();
     } finally {
       _isFetching = false;
-      _ordersList.clear();
       notifyListeners();
     }
   }
 
   List<Order> get filterOrderList {
-    return ordersList.where((p) {
+    final filtered = _ordersList.where((p) {
       final matchesSearch = p.name.toString().toLowerCase().contains(
         _searchQuery.toLowerCase(),
       );
 
       return matchesSearch;
     }).toList();
+
+    return filtered;
   }
 
   String getDeliveryStatus(OrderData order) {
@@ -839,6 +826,7 @@ class OrdersProvider with ChangeNotifier {
   }
 
   bool _isLoading = false;
+
   bool get isLoading => _isLoading;
 
   void _setLoading(bool value) {
@@ -847,9 +835,11 @@ class OrdersProvider with ChangeNotifier {
   }
 
   List<Map<String, dynamic>> _allOrderFilterList = [];
+
   List<Map<String, dynamic>> get allOrderFilterList => _allOrderFilterList;
 
   final AuthService _authService = AuthService();
+
   Future<void> getAllFilterOrderList() async {
     _setLoading(true);
     try {

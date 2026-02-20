@@ -50,11 +50,12 @@ AppBar commonAppBar({
       style: commonTextStyle(
         fontSize: 18,
         fontWeight: FontWeight.w600,
-        color: Colors.white,
+        color: colorText,
       ),
     ),
     centerTitle: centerTitle,
-    backgroundColor: backgroundColor,
+    //backgroundColor: backgroundColor,
+    backgroundColor: Colors.white,
     // important
     elevation: 0,
     actions: actions,
@@ -64,11 +65,12 @@ AppBar commonAppBar({
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: const Icon(Icons.arrow_back_ios_new_sharp, color: Colors.white),
+          icon: const Icon(Icons.arrow_back_ios_new_sharp, color: colorText),
         ),
     flexibleSpace: Container(
       decoration: BoxDecoration(
-        color: themeProvider.isDark ? colorDarkBgColor : colorLogo,
+        color: Colors.white,
+        //color: themeProvider.isDark ? colorDarkBgColor : colorLogo,
         borderRadius: BorderRadius.circular(0),
       ),
     ),
@@ -481,12 +483,15 @@ Widget commonScaffold({
   bool resizeToAvoidBottomInset = true,
 }) {
   return Scaffold(
+
     appBar:
         appBar ??
         (title != null
             ? AppBar(title: commonText(text: title), centerTitle: true)
             : null),
-    body: body,
+    body: Container(
+
+        child: body),
     backgroundColor: backgroundColor,
     floatingActionButton: floatingActionButton,
     drawer: drawer,
@@ -876,7 +881,7 @@ Widget commonPrefixIcon({
 }
 
 class BottomNavItems {
-  static const List<BottomNavigationBarItem> items = [
+  static  List<BottomNavigationBarItem> items = [
     BottomNavigationBarItem(
       icon: ImageIcon(AssetImage(icProductMenu)),
       label: 'Product',
@@ -1311,4 +1316,34 @@ String getInitialCountryCode(String? dialCode) {
   } catch (e) {
     return 'US'; // fallback if not found
   }
+}
+Widget infoRowBox({
+  String? text,
+  String? value,
+  Widget? valueView,
+  FontWeight? fontWeight,
+  Color? colorText,
+  Color? colorValue,
+}) {
+  return Row(
+    children: [
+      Expanded(
+        child: commonText(
+          text: text ?? "Order No",
+          fontWeight: fontWeight ?? FontWeight.w500,
+          fontSize: 12,
+          color: colorText,
+        ),
+      ),
+      valueView ??
+          commonText(
+            textAlign: TextAlign.left,
+            text: value ?? '',
+
+            fontWeight: fontWeight ?? FontWeight.w500,
+            fontSize: 12,
+            color: colorValue,
+          ),
+    ],
+  );
 }

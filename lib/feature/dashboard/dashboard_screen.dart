@@ -1,5 +1,6 @@
 import 'dart:io' show Platform;
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:neeknots/core/color/color_utils.dart';
@@ -59,6 +60,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Future<void> init() async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final profile = Provider.of<ProfileProvider>(context, listen: false);
+      await profile.loadUserData(); // <-- a
       String? storedEmailOrMobile = await AppConfigCache.getName();
       String? id = await AppConfigCache.getID();
       final provider = Provider.of<DashboardProvider>(
@@ -67,8 +70,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
       );
       provider.setName(storedEmailOrMobile);
 
-      //09-Oct-2025 Girish Chauhan
-      //Step 1 request notification permission first
       FirebaseMessaging messaging = FirebaseMessaging.instance;
       NotificationSettings settings = await messaging.requestPermission(
         alert: true,
@@ -118,9 +119,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         return Stack(
           children: [
             commonScaffold(
-              backgroundColor: themeProvider.isDark
+            /*  backgroundColor: themeProvider.isDark
                   ? colorDarkBgColor
-                  : Colors.white,
+                  : Colors.white,*/
               appBar: commonAppBar(
                 backgroundColor: themeProvider.isDark
                     ? colorDarkBgColor
@@ -136,7 +137,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     },
                     icon: commonAssetImage(
                       icContact,
-                      color: Colors.white,
+                      color: colorText,
                       width: 30,
                       height: 30,
                     ),
@@ -154,45 +155,36 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ],
                 title: provider.appbarTitle ?? "Home",
                 context: context,
-                leading: Container(
-                  padding: EdgeInsets.only(left: 16),
+                leading:
+                Consumer<ProfileProvider>(
+                  builder: (context,provider,child) {
+                    return Container(
 
-                  child: commonInkWell(
-                    onTap: () => provider.setIndex(4),
-                    child: Center(
-                      child: /*commonCircleAssetImage(
-
-                        borderColor: Colors.white,
-                        borderWidth: 2,
-                        icDummyUser,
-                        size: 40,
-                      )*/ SizedBox(
-                        width: 45,
-                        height: 45,
-                        child: CircleAvatar(
-                          radius: 100,
-                          child: commonCircleNetworkImage(
-                            '',
-
-                            color: themeProvider.isDark
-                                ? colorDarkBgColor
-                                : Colors.black,
-
-                            errorWidget: commonErrorBoxView(
-                              colorText: themeProvider.isDark
-                                  ? Colors.white
-                                  : Colors.white,
-                              text: (provider.name?.isNotEmpty ?? false
-                                  ? getInitials(
-                                      provider.name.toString().toUpperCase(),
-                                    )
-                                  : ''),
+                      padding: EdgeInsets.only(left: 10),
+                      child: CircleAvatar(
+                        radius: 100,
+                        backgroundColor: colorButton1.withValues(alpha: 0.09),
+                        child: ClipOval(
+                          child: CachedNetworkImage(
+                            height: 45,
+                            width: 45,
+                            fit: BoxFit.cover,
+                            imageUrl: provider.userData?['logo_url'] ?? '',
+                            errorWidget: (context, url, error) => commonText(
+                              fontSize: 30,
+                              color: colorButton1,
+                              fontWeight: FontWeight.w700,
+                              text: ((provider.userData?['name'] ?? '')
+                                  .toString()
+                                  .isNotEmpty)
+                                  ? provider.userData!['name'][0].toUpperCase()
+                                  : '',
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
+                    );
+                  }
                 ),
               ),
 

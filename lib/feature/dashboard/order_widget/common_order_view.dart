@@ -63,6 +63,7 @@ class _CommonOrderViewState extends State<CommonOrderView> {
   Widget build(BuildContext context) {
     return Consumer<OrdersProvider>(
       builder: (context, provider, child) {
+        final list = provider.filterOrderList;
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(

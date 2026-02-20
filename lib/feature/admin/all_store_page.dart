@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:neeknots/feature/admin/store_details/store_details_screen.dart';
 import 'package:provider/provider.dart';
 
-import '../../core/component/animated_counter.dart';
 import '../../core/component/component.dart';
 import '../../provider/admin_dashboard_provider.dart';
 
@@ -31,6 +30,7 @@ class _StoreGridViewState extends State<AllStorePage> {
 
     customerProvider.getStoreUserCounts();
   }
+
   int selectedIndex = 0;
 
   @override
@@ -49,13 +49,14 @@ class _StoreGridViewState extends State<AllStorePage> {
                   commonHeadingText(text: "All Store"),
                   Expanded(
                     child: GridView.builder(
-
-                      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 350, // maximum width of each box
-                        mainAxisSpacing: 10,
-                        crossAxisSpacing: 10,
-                        childAspectRatio: 1, // square boxes
-                      ),
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent:
+                                350, // maximum width of each box
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10,
+                            childAspectRatio: 1, // square boxes
+                          ),
                       itemCount: provider.storeCounts.length,
                       itemBuilder: (context, index) {
                         final store = provider.storeCounts[index];
@@ -75,7 +76,8 @@ class _StoreGridViewState extends State<AllStorePage> {
                                 child: Column(
                                   children: [
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         commonHeadingText(
                                           text: store['store_name']
@@ -105,7 +107,8 @@ class _StoreGridViewState extends State<AllStorePage> {
                                     SizedBox(height: 20),
                                     Expanded(
                                       child: StoreDetailsScreen(
-                                        storeName: store['store_name'].toString(),
+                                        storeName: store['store_name']
+                                            .toString(),
                                       ),
                                     ),
                                   ],
@@ -151,16 +154,14 @@ class _StoreGridViewState extends State<AllStorePage> {
                                         ),
                                       ),
                                       child: Center(
-                                        child: AnimatedCounter(
-                                          leftText: '',
-                                          rightText: '',
-                                          endValue: store['count'],
-                                          duration: Duration(seconds: 2),
-                                          style: commonTextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w500,
-                                            color: storeColor,
-                                          ),
+                                        child: commonText(
+                                          /* leftText: '',
+                                          rightText: '',*/
+                                          text: '${store['count']}',
+                                          //duration: Duration(seconds: 2),
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500,
+                                          color: storeColor,
                                         ),
                                       ),
                                     ),

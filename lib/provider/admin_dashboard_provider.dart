@@ -74,6 +74,7 @@ class AdminDashboardProvider with ChangeNotifier {
     }
     _setLoading(false);
   }
+
   void resetAllFields() {
     tetFullName.clear();
     tetEmail.clear();
@@ -89,6 +90,7 @@ class AdminDashboardProvider with ChangeNotifier {
 
     notifyListeners();
   }
+
   void applySearch(String query) {
     _searchQuery = query.toLowerCase();
 
@@ -127,10 +129,9 @@ class AdminDashboardProvider with ChangeNotifier {
       _setUpdating(false);
       notifyListeners();
       if (token != null && token.isNotEmpty) {
+        getUsersByStoreName(tetStoreName.text.trim());
 
-        getUsersByStoreName(tetStoreName.text.trim(),);
-
-       // await sendFCMNotification(bodyMap: payload);
+        // await sendFCMNotification(bodyMap: payload);
       }
 
       //fetchUsers();
@@ -143,7 +144,11 @@ class AdminDashboardProvider with ChangeNotifier {
       notifyListeners();
     }
   }
-  Future<void> deleteUser({required String docId,required String storeName}) async {
+
+  Future<void> deleteUser({
+    required String docId,
+    required String storeName,
+  }) async {
     try {
       _setUpdating(true);
       notifyListeners();
@@ -153,11 +158,9 @@ class AdminDashboardProvider with ChangeNotifier {
           .doc(docId)
           .delete();
 
-
       _setUpdating(false);
-      getUsersByStoreName(storeName.trim(),);
+      getUsersByStoreName(storeName.trim());
       notifyListeners();
-
     } catch (e) {
       debugPrint("Error deleting user: $e");
       _setUpdating(false);
@@ -180,12 +183,14 @@ class AdminDashboardProvider with ChangeNotifier {
       _setUpdating(false);
       notifyListeners();
       if (token != null && token.isNotEmpty) {
-
-
-        FcmService.sendToToken(deviceToken: token, title: tetFullName.text.trim(), body: status
-          ? "Your account is activated, open the app"
-          : "Your account has been deactivated, please contact support",);
-       /* await sendPushNotification(fcmToken: token, title: tetFullName.text.trim(),  body: status
+        FcmService.sendToToken(
+          deviceToken: token,
+          title: tetFullName.text.trim(),
+          body: status
+              ? "Your account is activated, open the app"
+              : "Your account has been deactivated, please contact support",
+        );
+        /* await sendPushNotification(fcmToken: token, title: tetFullName.text.trim(),  body: status
             ? "Your account is activated, open the app"
             : "Your account has been deactivated, please contact support",);*/
       }
@@ -454,7 +459,7 @@ class AdminDashboardProvider with ChangeNotifier {
 
   List<Map<String, dynamic>> get storeCounts => _storeCounts;
 
- /* Future<void> getStoreUserCounts() async {
+  /* Future<void> getStoreUserCounts() async {
     _setLoading(true);
     notifyListeners();
     try {
@@ -507,9 +512,9 @@ class AdminDashboardProvider with ChangeNotifier {
               (storeMap[storeName]!['count'] ?? 0) + 1;
         } else {
           storeMap[storeName] = {
-            ...data,          // ✅ store full document data
-            'uid': doc.id,    // ✅ store document id
-            'count': 1        // ✅ store count
+            ...data, // ✅ store full document data
+            'uid': doc.id, // ✅ store document id
+            'count': 1, // ✅ store count
           };
         }
       }
@@ -536,10 +541,7 @@ class AdminDashboardProvider with ChangeNotifier {
           .get();
 
       _storeCounts = querySnapshot.docs.map((doc) {
-        return {
-          ...doc.data(),
-          'uid': doc.id,
-        };
+        return {...doc.data(), 'uid': doc.id};
       }).toList();
 
       _setLoading(false);
@@ -566,7 +568,7 @@ class AdminDashboardProvider with ChangeNotifier {
         throw "Store name not found";
       }
 
-      setStoreName(storeName );
+      setStoreName(storeName);
 
       final querySnapshot = await FirebaseFirestore.instance
           .collection("stores")
@@ -622,6 +624,7 @@ class AdminDashboardProvider with ChangeNotifier {
   List<Map<String, dynamic>> _allPendingRequest = [];
 
   List<Map<String, dynamic>> get allPendingRequest => _allPendingRequest;
+
   Future<void> getStoreCollectionData({
     required String storeName,
     required String collectionName, // e.g., 'contact_us'

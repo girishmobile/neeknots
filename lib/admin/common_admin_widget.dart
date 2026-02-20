@@ -6,6 +6,7 @@ import 'package:neeknots/core/component/CommonSwitch.dart';
 import 'package:neeknots/provider/admin_dashboard_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../core/color/color_utils.dart';
 import '../core/component/component.dart';
 import '../core/component/phone_number_field.dart';
 import '../core/image/image_utils.dart';
@@ -266,7 +267,7 @@ Widget notificationWidget({String? value, void Function()? onTap}) {
               image: icNotification,
               width: 24,
               height: 24,
-              colorIcon: Colors.white,
+              colorIcon:colorText,
             ),
 
             Positioned(

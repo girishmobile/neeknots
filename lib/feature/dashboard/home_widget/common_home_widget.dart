@@ -12,7 +12,6 @@ import 'package:neeknots/routes/app_routes.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../../../core/component/animated_counter.dart';
 import '../../../core/component/common_date_range_picker.dart';
 import '../../../core/component/date_utils.dart';
 import '../../../core/string/string_utils.dart';
@@ -66,7 +65,6 @@ Widget homeTopView({
                   },
                   leftText: "",
                   rightText: "",
-                  //value: "\$278m",
                   value: totalSaleOrder,
                 ),
               ),
@@ -178,11 +176,8 @@ Widget homeTopView({
                     ),
                   ),
 
-                  AnimatedCounter(
-                    leftText: '',
-                    rightText: '',
-                    endValue: totalPendingRequest,
-                    duration: Duration(seconds: 2),
+                  commonText(
+                    text: '$totalPendingRequest',
                     style: commonTextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -247,11 +242,7 @@ Widget _commonDashboardView({
                   height: 24,
                   color: color ?? Colors.transparent,
                 ),
-              ) /*Icon(
-                icon,
-                color: startColor ?? Colors.transparent,
-                size: 28,
-              )*/,
+              ),
             ),
           ),
           const SizedBox(height: 12),
@@ -261,30 +252,13 @@ Widget _commonDashboardView({
             fontWeight: FontWeight.w600,
             color: provider.isDark ? Colors.white : colorText,
           ),
-
-          AnimatedCounter(
-            leftText: leftText,
-            rightText: rightText?.isNotEmpty == true ? rightText : '',
-            endValue: value,
-            duration: Duration(seconds: 2),
-            style: commonTextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.w600,
-              color: provider.isDark ? Colors.white : colorTextDesc1,
-            ),
-          ),
-          /*   subtitle?.isNotEmpty==true?*/ commonText(
+          commonText(text: "$value", fontSize: 25, fontWeight: FontWeight.w600),
+          commonText(
             text: subtitle ?? '',
             fontSize: 14,
             fontWeight: FontWeight.w600,
             color: provider.isDark ? Colors.white : colorLogo,
-          ) /*:SizedBox.shrink()*/,
-          /*commonText(
-            text: value,
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-            color: provider.isDark ? Colors.white : colorText,
-          ),*/
+          ),
         ],
       ),
     ),
@@ -392,7 +366,6 @@ Widget homeGraphView({required bool isSaleDetails}) {
                                       endDate: endDate,
                                     );
                                     productProvider.clearDateRange();
-                                    // यहाँ API call या कोई भी extra काम कर सकते हो
                                   },
                                   onCancelClick: () {
                                     debugPrint("Date range cleared");
@@ -408,7 +381,6 @@ Widget homeGraphView({required bool isSaleDetails}) {
                           ),
                         ),
                       ),
-                      // commonAssetImage(icProductFilter,width: 24,height: 24,color: colorTextDesc1),
                     ],
                   ),
 
@@ -423,14 +395,6 @@ Widget homeGraphView({required bool isSaleDetails}) {
                       ? SfCartesianChart(
                           plotAreaBorderWidth: 0,
                           primaryXAxis: CategoryAxis(
-                            /* axisLabelFormatter: (AxisLabelRenderDetails details) {
-                              final label = details.text.replaceAll(RegExp(r'[^0-9]'), ''); // remove non-numeric
-                              final allowed = ['1', '5', '10', '15', '20', '25', '30'];
-                              if (allowed.contains(label)) {
-                                return ChartAxisLabel(details.text, details.textStyle);
-                              }
-                              return  ChartAxisLabel('', TextStyle());
-                            },*/
                             interval: 5, // 👈 Show every 5th day label
                             labelStyle: commonTextStyle(
                               fontSize: 12,
@@ -486,12 +450,7 @@ Widget homeGraphView({required bool isSaleDetails}) {
                               animationDuration: 1500,
                               // in milliseconds (1.5 seconds)
                               animationDelay: 300,
-                              // optional delay before animation starts
-                              /*    gradient: LinearGradient(
-                                colors: [Colors.orange.withValues(alpha: 0.4), Colors.orange],
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                              ),*/
+
                               gradient: const LinearGradient(
                                 colors: [Color(0xFFFF9800), Color(0xFFFFC107)],
                                 begin: Alignment.centerLeft,
@@ -500,17 +459,7 @@ Widget homeGraphView({required bool isSaleDetails}) {
                               borderColor: Colors.orange,
                               borderWidth: 2,
                               color: Colors.orange.withValues(alpha: 0.5),
-                              /*borderColor: Colors.orange,
-                              borderWidth: 2,
 
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(12),
-                                topRight: Radius.circular(12),
-                              ),*/
-                              //width: 0.5,
-                              // bar thickness (0.5 = 50% of available slot)
-                              //  spacing: 0.2,
-                              // gap between bars
                               markerSettings: const MarkerSettings(
                                 isVisible: true,
                                 height: 6,

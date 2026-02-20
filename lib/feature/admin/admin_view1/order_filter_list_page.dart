@@ -24,7 +24,7 @@ class OrderFilterListPage extends StatefulWidget {
 }
 
 class _StoreCollectionTabState extends State<OrderFilterListPage> {
-   @override
+  @override
   void initState() {
     super.initState();
 
@@ -63,17 +63,21 @@ class _StoreCollectionTabState extends State<OrderFilterListPage> {
         }
 
         final provider = context.read<AdminDashboardProvider>();
-        final message = await provider.addNewOrderFilter(name: name,status: status,storeName: widget.storeName);
+        final message = await provider.addNewOrderFilter(
+          name: name,
+          status: status,
+          storeName: widget.storeName,
+        );
 
         if (message != null) {
           ScaffoldMessenger.of(
             navigatorKey.currentContext!,
           ).showSnackBar(SnackBar(content: Text(message)));
         } else {
-          ScaffoldMessenger.of(  navigatorKey.currentContext!).showSnackBar(
+          ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
             const SnackBar(content: Text("Filter added successfully!")),
           );
-          Navigator.pop(  navigatorKey.currentContext!);
+          Navigator.pop(navigatorKey.currentContext!);
         }
       },
       contentView: StatefulBuilder(
@@ -94,13 +98,16 @@ class _StoreCollectionTabState extends State<OrderFilterListPage> {
                   children: [
                     commonText(text: "Status:"),
                     CommonSwitch(
-                      activeThumbColor: Colors.green,      // when ON
-                      inactiveThumbColor: Colors.grey, // thumb when OFF
-                      inactiveTrackColor: Colors.grey.withValues(alpha: 0.4), // track when OFF
+                      activeThumbColor: Colors.green,
+                      // when ON
+                      inactiveThumbColor: Colors.grey,
+                      // thumb when OFF
+                      inactiveTrackColor: Colors.grey.withValues(alpha: 0.4),
 
+                      // track when OFF
                       value: status,
                       onChanged: (value) {
-                        setState(() => status = value );
+                        setState(() => status = value);
                       },
                     ),
                   ],
@@ -119,23 +126,22 @@ class _StoreCollectionTabState extends State<OrderFilterListPage> {
     return Column(
       children: [
         Row(
-
-
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-
             commonButton(
-                height: 45,
-                colorBorder: colorBorder,
-                color: Colors.white,
-                textColor: colorLogo,
-                padding: EdgeInsets.symmetric(horizontal: 30),
-                fontSize: 12,
+              height: 45,
+              colorBorder: colorBorder,
+              color: Colors.white,
+              textColor: colorLogo,
+              padding: EdgeInsets.symmetric(horizontal: 30),
+              fontSize: 12,
 
-                text: "Add New Order Filter", onPressed: (){
-              _showAddFilterDialog(context);
-            }),
+              text: "Add New Order Filter",
+              onPressed: () {
+                _showAddFilterDialog(context);
+              },
+            ),
           ],
         ),
         Expanded(
@@ -151,12 +157,13 @@ class _StoreCollectionTabState extends State<OrderFilterListPage> {
               return Stack(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: 8,
+                    ),
                     child: Column(
                       children: [
-
                         SizedBox(height: 10),
-
 
                         SizedBox(height: 10),
                         Expanded(
@@ -174,32 +181,34 @@ class _StoreCollectionTabState extends State<OrderFilterListPage> {
                                 margin: EdgeInsets.all(5),
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical:15),
+                                    horizontal: 10,
+                                    vertical: 15,
+                                  ),
                                   child: commonListTile(
-
-                                    titleFontSize: isMobile?14:16,
+                                    titleFontSize: isMobile ? 14 : 16,
 
                                     contentPadding: EdgeInsetsGeometry.zero,
-                                    title: item["title"].toString().toCapitalize(),
+                                    title: item["title"]
+                                        .toString()
+                                        .toCapitalize(),
                                     trailing: Row(
-
                                       mainAxisSize: MainAxisSize.min,
                                       mainAxisAlignment: MainAxisAlignment.end,
-                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
                                       children: [
                                         CommonSwitch(
                                           value: item["status"] ?? false,
                                           activeThumbColor: Colors.green,
                                           inactiveThumbColor: Colors.grey,
-                                          inactiveTrackColor: Colors.grey.withValues(alpha: 0.4),
+                                          inactiveTrackColor: Colors.grey
+                                              .withValues(alpha: 0.4),
                                           onChanged: (value) {
                                             provider.toggleStatus(
                                               item["id"],
                                               value,
                                             );
                                           },
-
                                         ),
                                         IconButton(
                                           icon: const Icon(
@@ -214,23 +223,33 @@ class _StoreCollectionTabState extends State<OrderFilterListPage> {
                                               title: "Delete",
                                               onPressed: () async {
                                                 Navigator.pop(context);
-                                                await context.read<AdminDashboardProvider>().deleteOrderFilter(uid: item["id"],storeName: widget.storeName);
-                                                ScaffoldMessenger.of(  navigatorKey.currentContext!).showSnackBar(
-                                                  SnackBar(content: Text("Deleted \"${item["title"]}\"")),
+                                                await context
+                                                    .read<
+                                                      AdminDashboardProvider
+                                                    >()
+                                                    .deleteOrderFilter(
+                                                      uid: item["id"],
+                                                      storeName:
+                                                          widget.storeName,
+                                                    );
+                                                ScaffoldMessenger.of(
+                                                  navigatorKey.currentContext!,
+                                                ).showSnackBar(
+                                                  SnackBar(
+                                                    content: Text(
+                                                      "Deleted \"${item["title"]}\"",
+                                                    ),
+                                                  ),
                                                 );
                                               },
                                               context: context,
                                               content:
-                                              "Are you sure you want to delete ${item["title"]}",
+                                                  "Are you sure you want to delete ${item["title"]}",
                                             );
-
                                           },
                                         ),
                                       ],
                                     ),
-
-
-
                                   ),
                                 ),
                               );
@@ -238,7 +257,6 @@ class _StoreCollectionTabState extends State<OrderFilterListPage> {
                           ),
                         ),
                         Padding(
-
                           padding: const EdgeInsets.only(
                             bottom: 30.0,
                             top: 30.0,
@@ -246,12 +264,18 @@ class _StoreCollectionTabState extends State<OrderFilterListPage> {
                             right: 16,
                           ),
                           child: commonButton(
-                            width: isMobile?MediaQuery.sizeOf(context).width:MediaQuery.sizeOf(context).width*0.3,
+                            width: isMobile
+                                ? MediaQuery.sizeOf(context).width
+                                : MediaQuery.sizeOf(context).width * 0.3,
                             text: "Update",
 
                             onPressed: () async {
-                              await provider.updateAllStatusesToFirebase(storeName: widget.storeName);
-                              ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
+                              await provider.updateAllStatusesToFirebase(
+                                storeName: widget.storeName,
+                              );
+                              ScaffoldMessenger.of(
+                                navigatorKey.currentContext!,
+                              ).showSnackBar(
                                 SnackBar(
                                   content: commonText(
                                     text: "Statuses updated!",

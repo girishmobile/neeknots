@@ -50,143 +50,131 @@ class _ProductListPageState extends State<ProductListPage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
 
-    return Consumer2<AdminDashboardProvider,ProductProvider >(
-      builder: (context, provider, productProvider,child) {
-        if (provider.isLoading ) {
+    return Consumer2<AdminDashboardProvider, ProductProvider>(
+      builder: (context, provider, productProvider, child) {
+        if (provider.isLoading) {
           return SizedBox.shrink();
         }
 
         return Stack(
           children: [
             ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: provider.allPendingRequest.length,
-                    itemBuilder: (context, index) {
-                      var data = provider.allPendingRequest[index];
-                      Uint8List? imageBytes;
-                      if (data['image'] != null && data['image'].isNotEmpty) {
-                        imageBytes = base64Decode(data['image']);
-                      }
-                      return Container(
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        decoration: commonBoxDecoration(
-                          borderColor: colorBorder,
+              shrinkWrap: true,
+              itemCount: provider.allPendingRequest.length,
+              itemBuilder: (context, index) {
+                var data = provider.allPendingRequest[index];
+                Uint8List? imageBytes;
+                if (data['image'] != null && data['image'].isNotEmpty) {
+                  imageBytes = base64Decode(data['image']);
+                }
+                return Container(
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  decoration: commonBoxDecoration(borderColor: colorBorder),
+                  padding: const EdgeInsets.all(0.0),
+                  margin: const EdgeInsets.all(8.0),
+                  child: Column(
+                    spacing: 5,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      imageBytes != null
+                          ? ClipRRect(
+                              borderRadius: BorderRadiusGeometry.only(
+                                topLeft: Radius.circular(8),
+                                topRight: Radius.circular(8),
+                              ),
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              child: Image.memory(
+                                imageBytes,
+                                width: size.width,
+                                height: 200,
+                                fit: BoxFit.cover,
+                              ),
+                            )
+                          : SizedBox.shrink(),
+
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 8.0,
+                          right: 8,
+                          top: 5,
+                          bottom: 10,
                         ),
-                        padding: const EdgeInsets.all(0.0),
-                        margin: const EdgeInsets.all(8.0),
                         child: Column(
-                          spacing: 5,
                           mainAxisAlignment: MainAxisAlignment.start,
+                          spacing: 8,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            imageBytes != null
-                                ? ClipRRect(
-                                    borderRadius: BorderRadiusGeometry.only(
-                                      topLeft: Radius.circular(8),
-                                      topRight: Radius.circular(8),
-                                    ),
-                                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                                    child: Image.memory(
-                                      imageBytes,
-                                      width: size.width,
-                                      height: 200,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  )
-                                : SizedBox.shrink(),
-
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                left: 8.0,
-                                right: 8,
-                                top: 5,
-                                bottom: 10,
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                spacing: 8,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  commonText(
-                                    text: data['name'],
-                                    fontWeight: FontWeight.w600,
-                                  ),
-
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        child: commonText(
-                                          text: formatTimestamp(
-                                            data['created_date'],
-                                          ),
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                      _commonButton(
-                                        color: Colors.green,
-                                        onTap: () {
-                                          showCommonDialog(
-                                            confirmText: "Upload",
-                                            title: "Approve",
-                                            onPressed: () {
-                                              Navigator.pop(context);
-
-                                              productProvider
-                                                  .uploadProductImageViaAdmin(
-                                                    imagePath: data['image'],
-                                                    productId:
-                                                        data['product_id'],
-                                                    uid: data['uid'],
-                                                  );
-                                            },
-                                            context: context,
-                                            content:
-                                                "Are you sure you want to approve this image?",
-                                          );
-                                        },
-                                      ),
-                                      SizedBox(width: 8),
-                                      _commonButton(
-                                        color: Colors.red,
-                                        onTap: () {
-                                          showCommonDialog(
-                                            confirmText: "Yes",
-                                            title: "Decline",
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                              productProvider.updateProductStatus(
-                                                uid: data['uid'],
-                                                title: "disapproved_date",
-                                              );
-                                              //provider.uploadProductImageViaAdmin(imagePath: data['image'], productId: data['product_id'],uid:  data['uid']);
-                                            },
-                                            context: context,
-                                            content:
-                                                "Are you sure you want to disapprove this image?",
-                                          );
-                                        },
-                                        text: "Disapprove",
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                            commonText(
+                              text: data['name'],
+                              fontWeight: FontWeight.w600,
                             ),
 
-                            /* Row(
-                            children: [
-                              Expanded(child: commonText(text: "Product Name")),
-                              commonText(text: "Product Name"),
-                            ],
-                          ),*/
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: commonText(
+                                    text: formatTimestamp(data['created_date']),
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                                _commonButton(
+                                  color: Colors.green,
+                                  onTap: () {
+                                    showCommonDialog(
+                                      confirmText: "Upload",
+                                      title: "Approve",
+                                      onPressed: () {
+                                        Navigator.pop(context);
+
+                                        productProvider
+                                            .uploadProductImageViaAdmin(
+                                              imagePath: data['image'],
+                                              productId: data['product_id'],
+                                              uid: data['uid'],
+                                            );
+                                      },
+                                      context: context,
+                                      content:
+                                          "Are you sure you want to approve this image?",
+                                    );
+                                  },
+                                ),
+                                SizedBox(width: 8),
+                                _commonButton(
+                                  color: Colors.red,
+                                  onTap: () {
+                                    showCommonDialog(
+                                      confirmText: "Yes",
+                                      title: "Decline",
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                        productProvider.updateProductStatus(
+                                          uid: data['uid'],
+                                          title: "disapproved_date",
+                                        );
+                                      },
+                                      context: context,
+                                      content:
+                                          "Are you sure you want to disapprove this image?",
+                                    );
+                                  },
+                                  text: "Disapprove",
+                                ),
+                              ],
+                            ),
                           ],
                         ),
-                      );
-                    },
+                      ),
+
+
+                    ],
                   ),
+                );
+              },
+            ),
 
             provider.isLoading || productProvider.isImageUpdating
                 ? showLoaderList()

@@ -57,43 +57,29 @@ class _AdminAllUserlistState extends State<AdminAllUserlist> {
                   children: [
                     Spacer(),
                     commonInkWell(
-
                       onTap: () {
-                        print('-----tp');
                         provider.resetAllFields();
                         showCommonBottomSheet(
                           context: context,
                           content: SizedBox(
-                            height:
-                            MediaQuery.sizeOf(
-                              context,
-                            ).height *
-                                0.8,
+                            height: MediaQuery.sizeOf(context).height * 0.8,
                             child: ListView(
                               children: [
                                 Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment
-                                      .spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    commonHeadingText(
-                                      text: "Add Information",
-                                    ),
+                                    commonHeadingText(text: "Add Information"),
                                     commonInkWell(
                                       onTap: () {
-                                        Navigator.pop(
-                                          context,
-                                        );
+                                        Navigator.pop(context);
                                       },
                                       child: Container(
                                         width: 35,
                                         height: 35,
-                                        decoration:
-                                        commonBoxDecoration(
-                                          color: Colors
-                                              .black,
-                                          shape: BoxShape
-                                              .circle,
+                                        decoration: commonBoxDecoration(
+                                          color: Colors.black,
+                                          shape: BoxShape.circle,
                                         ),
                                         child: Icon(
                                           Icons.close,
@@ -108,13 +94,14 @@ class _AdminAllUserlistState extends State<AdminAllUserlist> {
                                 CommonAdminWidget(
                                   data: provider.allUsers.isNotEmpty
                                       ? {
-                                    "store_name": provider.allUsers[0]['store_name'],
-                                    "version_code": provider.allUsers[0]['version_code'],
-                                    "accessToken": provider.allUsers[0]['accessToken'],
-                                  }
-                                      : {
-
-                                  },
+                                          "store_name": provider
+                                              .allUsers[0]['store_name'],
+                                          "version_code": provider
+                                              .allUsers[0]['version_code'],
+                                          "accessToken": provider
+                                              .allUsers[0]['accessToken'],
+                                        }
+                                      : {},
                                   isEdit: false,
                                   provider: provider,
                                   onPressed: () {},
@@ -125,7 +112,6 @@ class _AdminAllUserlistState extends State<AdminAllUserlist> {
                         );
                       },
                       child: Container(
-
                         padding: EdgeInsets.symmetric(
                           horizontal: 30,
                           vertical: 8,
@@ -146,7 +132,7 @@ class _AdminAllUserlistState extends State<AdminAllUserlist> {
                 ),
                 provider.allUsers.isNotEmpty
                     ? Expanded(
-                      child: ListView.builder(
+                        child: ListView.builder(
                           itemCount: provider.allUsers.length,
                           itemBuilder: (context, index) {
                             final user = provider.allUsers[index];
@@ -169,26 +155,30 @@ class _AdminAllUserlistState extends State<AdminAllUserlist> {
                                               ClipRRect(
                                                 clipBehavior:
                                                     Clip.antiAliasWithSaveLayer,
-                                                borderRadius: BorderRadius.circular(
-                                                  10,
-                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
                                                 child: CachedNetworkImage(
                                                   height: isMobile ? 60 : 100,
                                                   width: isMobile ? 60 : 80,
                                                   fit: BoxFit.cover,
                                                   imageUrl: user["logo_url"],
-                                                  placeholder: (context, url) => Center(
-                                                    child: SizedBox(
-                                                      width: 20,
-                                                      height: 20,
-                                                      child:
-                                                          CircularProgressIndicator(
-                                                            strokeWidth: 2,
-                                                          ),
-                                                    ),
-                                                  ),
+                                                  placeholder: (context, url) =>
+                                                      Center(
+                                                        child: SizedBox(
+                                                          width: 20,
+                                                          height: 20,
+                                                          child:
+                                                              CircularProgressIndicator(
+                                                                strokeWidth: 2,
+                                                              ),
+                                                        ),
+                                                      ),
                                                   errorWidget:
-                                                      (context, url, error) => Center(
+                                                      (
+                                                        context,
+                                                        url,
+                                                        error,
+                                                      ) => Center(
                                                         child: commonAssetImage(
                                                           borderRadius:
                                                               BorderRadius.circular(
@@ -206,26 +196,37 @@ class _AdminAllUserlistState extends State<AdminAllUserlist> {
                                                   children: [
                                                     commonText(
                                                       text: user['name'],
-                                                      fontSize: isMobile ? 14 : 16,
-                                                      fontWeight: FontWeight.w600,
+                                                      fontSize: isMobile
+                                                          ? 14
+                                                          : 16,
+                                                      fontWeight:
+                                                          FontWeight.w600,
                                                       color: Colors.black87,
                                                     ),
                                                     const SizedBox(height: 3),
                                                     commonText(
-                                                      overflow: TextOverflow.ellipsis,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
                                                       text: user['email'],
 
-                                                      fontSize: isMobile ? 12 : 14,
-                                                      fontWeight: FontWeight.w400,
+                                                      fontSize: isMobile
+                                                          ? 12
+                                                          : 14,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                       color: Colors.black45,
                                                     ),
                                                     const SizedBox(height: 4),
                                                     commonText(
-                                                   /*   text:
-                                                          "${user["country_code"] ?? "N/A"}${user["mobile"] ?? "N/A"}",*/
-                                                      text: formatPhone(user["country_code"], user["mobile"]),
-                                                      fontSize: isMobile ? 12 : 14,
-                                                      fontWeight: FontWeight.w400,
+                                                      text: formatPhone(
+                                                        user["country_code"],
+                                                        user["mobile"],
+                                                      ),
+                                                      fontSize: isMobile
+                                                          ? 12
+                                                          : 14,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                       color: Colors.black45,
                                                     ),
                                                   ],
@@ -236,8 +237,10 @@ class _AdminAllUserlistState extends State<AdminAllUserlist> {
                                           ),
                                         ),
                                         Column(
-                                          mainAxisAlignment: MainAxisAlignment.end,
-                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
                                           spacing: 8,
                                           children: [
                                             Row(
@@ -258,8 +261,9 @@ class _AdminAllUserlistState extends State<AdminAllUserlist> {
                                                   value: user['active_status'],
                                                   onChanged: (value) {
                                                     setState(
-                                                      () => user['active_status'] =
-                                                          value,
+                                                      () =>
+                                                          user['active_status'] =
+                                                              value,
                                                     );
 
                                                     provider.updateUserStatus(
@@ -268,8 +272,10 @@ class _AdminAllUserlistState extends State<AdminAllUserlist> {
                                                       token: user['fcm_token'],
                                                     );
                                                   },
-                                                  activeThumbColor: Colors.green,
-                                                  inactiveThumbColor: Colors.red,
+                                                  activeThumbColor:
+                                                      Colors.green,
+                                                  inactiveThumbColor:
+                                                      Colors.red,
                                                 ),
                                               ],
                                             ),
@@ -280,7 +286,8 @@ class _AdminAllUserlistState extends State<AdminAllUserlist> {
                                     Row(
                                       spacing: 10,
                                       mainAxisAlignment: MainAxisAlignment.end,
-                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
                                       children: [
                                         commonInkWell(
                                           onTap: () {
@@ -288,9 +295,12 @@ class _AdminAllUserlistState extends State<AdminAllUserlist> {
                                               title: "Delete",
                                               cancelText: "No",
                                               context: context,
-                                              onPressed: (){
+                                              onPressed: () {
                                                 Navigator.pop(context);
-                                                provider.deleteUser(docId: user['id'],storeName: user['store_name']);
+                                                provider.deleteUser(
+                                                  docId: user['id'],
+                                                  storeName: user['store_name'],
+                                                );
                                               },
                                               content:
                                                   "Are you sure want to delete\n${user['name']}?",
@@ -335,24 +345,29 @@ class _AdminAllUserlistState extends State<AdminAllUserlist> {
                                                               .spaceBetween,
                                                       children: [
                                                         commonHeadingText(
-                                                          text: "Edit Information",
+                                                          text:
+                                                              "Edit Information",
                                                         ),
                                                         commonInkWell(
                                                           onTap: () {
-                                                            Navigator.pop(context);
+                                                            Navigator.pop(
+                                                              context,
+                                                            );
                                                           },
                                                           child: Container(
                                                             width: 35,
                                                             height: 35,
                                                             decoration:
                                                                 commonBoxDecoration(
-                                                                  color: Colors.black,
-                                                                  shape:
-                                                                      BoxShape.circle,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  shape: BoxShape
+                                                                      .circle,
                                                                 ),
                                                             child: Icon(
                                                               Icons.close,
-                                                              color: Colors.white,
+                                                              color:
+                                                                  Colors.white,
                                                               size: 15,
                                                             ),
                                                           ),
@@ -399,7 +414,7 @@ class _AdminAllUserlistState extends State<AdminAllUserlist> {
                             );
                           },
                         ),
-                    )
+                      )
                     : commonErrorView(),
               ],
             ),

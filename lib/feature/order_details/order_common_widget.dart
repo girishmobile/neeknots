@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:neeknots/core/component/component.dart';
-
 import 'package:neeknots/core/string/string_utils.dart';
 import 'package:neeknots/provider/order_provider.dart';
 import 'package:neeknots/provider/theme_provider.dart';
@@ -9,7 +8,6 @@ import 'package:provider/provider.dart';
 import '../../core/color/color_utils.dart';
 import '../../main.dart';
 import '../../models/order_details_model.dart';
-
 
 Widget productInfo({required OrderData order}) {
   return Container(
@@ -78,9 +76,12 @@ Widget productInfo({required OrderData order}) {
                               Container(
                                 decoration: commonBoxDecoration(
                                   color: colorBorder.withValues(alpha: 0.1),
-                                  borderRadius: 5
+                                  borderRadius: 5,
                                 ),
-                                padding: EdgeInsets.symmetric(horizontal: 3,vertical: 1),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 3,
+                                  vertical: 1,
+                                ),
                                 child: commonText(
                                   fontWeight: FontWeight.w500,
                                   text: secondText,
@@ -91,8 +92,7 @@ Widget productInfo({required OrderData order}) {
                                 spacing: 3,
                                 children: [
                                   commonText(
-                                    text:
-                                        'Qty:',
+                                    text: 'Qty:',
                                     fontSize: 12,
                                     color: Colors.blueAccent,
                                     fontWeight: FontWeight.w500,
@@ -102,18 +102,27 @@ Widget productInfo({required OrderData order}) {
                                       borderRadius: 5,
                                       color: colorBorder.withValues(alpha: 0.1),
                                     ),
-                                    padding: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 2,
+                                      horizontal: 5,
+                                    ),
                                     child: Row(
-                                      mainAxisSize: MainAxisSize.min, // important to shrink row
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center, // ensures vertical center
+                                      mainAxisSize: MainAxisSize.min,
+                                      // important to shrink row
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      // ensures vertical center
                                       children: [
                                         commonText(
-                                          text: '$rupeeIcon${data?.price ?? ''} ',
+                                          text:
+                                              '$rupeeIcon${data?.price ?? ''} ',
                                           fontSize: 10,
                                           fontWeight: FontWeight.w500,
                                         ),
-                                        SizedBox(width: 3), // spacing instead of Row.spacing
+                                        SizedBox(width: 3),
+                                        // spacing instead of Row.spacing
                                         commonText(
                                           text: "*",
                                           fontSize: 10,
@@ -166,46 +175,22 @@ Widget commonHeadingView({String? title, required bool isPayment}) {
             fontWeight: FontWeight.w600,
           ),
         ),
-        /*isPayment
-            ? Container(
-                decoration: commonBoxDecoration(color: colorBorder),
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                child: Row(
-                  children: [
-                    commonText(
-                      text: "Payment Status : ",
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    commonText(
-                      text: "Paid",
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ],
-                ),
-              )
-            : SizedBox.shrink(),*/
       ],
     ),
   );
 }
 
-
 Widget orderInfo({required OrderData order}) {
   final themeProvider = Provider.of<ThemeProvider>(
     navigatorKey.currentContext!,
   );
-  final provider = Provider.of<OrdersProvider>(
-    navigatorKey.currentContext!,
-  );
+  final provider = Provider.of<OrdersProvider>(navigatorKey.currentContext!);
   return Container(
     decoration: commonBoxDecoration(borderColor: colorBorder, borderRadius: 8),
     margin: const EdgeInsets.all(16),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Title
         commonHeadingView(title: "Order Information", isPayment: false),
 
         const Divider(height: 1),
@@ -219,7 +204,6 @@ Widget orderInfo({required OrderData order}) {
                 colorText: themeProvider.isDark ? Colors.white : colorLogo,
                 title: "Order No",
                 value: order.name ?? '',
-                // value: '#${order.orderId}',
                 fontWeight: FontWeight.w600,
               ),
               _buildRow(
@@ -227,31 +211,24 @@ Widget orderInfo({required OrderData order}) {
 
                 fontWeight: FontWeight.w600,
                 title: "Delivery Status",
-                // value: order.financialStatus.toString().toCapitalize(),
                 value: provider.getDeliveryStatus(order),
-                //colorText: orderProvider.getStatusColor(order.status),
               ),
               _buildRow(
                 fontSize: 14,
 
                 fontWeight: FontWeight.w600,
                 title: "Delivery Method",
-               // value: order.financialStatus.toString().toCapitalize(),
-                value: order.shippingLine != null && order.shippingLine?.isNotEmpty==true
+                value:
+                    order.shippingLine != null &&
+                        order.shippingLine?.isNotEmpty == true
                     ? order.shippingLine![0].title
                     : 'Shipping',
-                //colorText: orderProvider.getStatusColor(order.status),
               ),
-
 
               _buildRow(
                 title: "Payment Status",
                 value: provider.getPaymentStatus(order),
-                //   value: order.paymentStatus ?? '',
                 fontWeight: FontWeight.w600,
-                /*  colorText: orderProvider.getPaymentStatusColor(
-                  order.paymentStatus ?? '',
-                ),*/
               ),
             ],
           ),
@@ -280,11 +257,22 @@ Widget customerInfo({required OrderData order}) {
             children: [
               _buildRow(
                 title: "Name",
-                value:order.customer?.firstName!=null?
-                    '${order.customer?.firstName} ${order.customer?.lastName}':noCustomer,
+                value: order.customer?.firstName != null
+                    ? '${order.customer?.firstName} ${order.customer?.lastName}'
+                    : noCustomer,
               ),
-              _buildRow(title: "Email", value: order.customer?.email!=null ?'${order.customer?.email}':"-"),
-              _buildRow(title: "Mobile", value:order.customer?.phone!=null? '${order.customer?.phone}':"-"),
+              _buildRow(
+                title: "Email",
+                value: order.customer?.email != null
+                    ? '${order.customer?.email}'
+                    : "-",
+              ),
+              _buildRow(
+                title: "Mobile",
+                value: order.customer?.phone != null
+                    ? '${order.customer?.phone}'
+                    : "-",
+              ),
             ],
           ),
         ),
@@ -292,50 +280,60 @@ Widget customerInfo({required OrderData order}) {
         const Divider(height: 1),
 
         // Footer text
-        order.customer?.defaultAddress!=null?  Padding(
-          padding: EdgeInsets.all(12.0),
-          child: Column(
-            spacing: 5,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              commonText(text: "Shipping address", fontWeight: FontWeight.w600),
-              commonText(
-                text:
-                    '${order.customer?.defaultAddress?.company ?? ''}\n${order.customer?.defaultAddress?.address1 ?? ''} ${order.customer?.defaultAddress?.address2 ?? ''}\n${order.customer?.defaultAddress?.zip ?? ''} ${order.customer?.defaultAddress?.city ?? ''} ${order.customer?.defaultAddress?.province ?? ''}\n${order.customer?.defaultAddress?.country ?? ''}\n${order.customer?.defaultAddress?.phone ?? ''}',
+        order.customer?.defaultAddress != null
+            ? Padding(
+                padding: EdgeInsets.all(12.0),
+                child: Column(
+                  spacing: 5,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    commonText(
+                      text: "Shipping address",
+                      fontWeight: FontWeight.w600,
+                    ),
+                    commonText(
+                      text:
+                          '${order.customer?.defaultAddress?.company ?? ''}\n${order.customer?.defaultAddress?.address1 ?? ''} ${order.customer?.defaultAddress?.address2 ?? ''}\n${order.customer?.defaultAddress?.zip ?? ''} ${order.customer?.defaultAddress?.city ?? ''} ${order.customer?.defaultAddress?.province ?? ''}\n${order.customer?.defaultAddress?.country ?? ''}\n${order.customer?.defaultAddress?.phone ?? ''}',
 
-                fontSize: 12,
-              ),
-            ],
-          ),
-        ):SizedBox.shrink(),
-        order.billingAddress!=null?  Padding(
-          padding: EdgeInsets.all(12.0),
-          child: Column(
-            spacing: 5,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              commonText(text: "Billing address", fontWeight: FontWeight.w600),
-              commonText(
-                text:
-                    [
-                          order.billingAddress?.address1,
-                          order.billingAddress?.address2,
-                          order.billingAddress?.zip,
-                          order.billingAddress?.city,
-                          order.billingAddress?.province,
-                          order.billingAddress?.country,
-                        ]
-                        .where(
-                          (e) => e != null && e.trim().isNotEmpty,
-                        ) // null/empty remove
-                        .join(' '), // single line with space
-                fontSize: 12,
-              ),
-            ],
-          ),
-        ):SizedBox.shrink(),
+                      fontSize: 12,
+                    ),
+                  ],
+                ),
+              )
+            : SizedBox.shrink(),
+        order.billingAddress != null
+            ? Padding(
+                padding: EdgeInsets.all(12.0),
+                child: Column(
+                  spacing: 5,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    commonText(
+                      text: "Billing address",
+                      fontWeight: FontWeight.w600,
+                    ),
+                    commonText(
+                      text:
+                          [
+                                order.billingAddress?.address1,
+                                order.billingAddress?.address2,
+                                order.billingAddress?.zip,
+                                order.billingAddress?.city,
+                                order.billingAddress?.province,
+                                order.billingAddress?.country,
+                              ]
+                              .where(
+                                (e) => e != null && e.trim().isNotEmpty,
+                              ) // null/empty remove
+                              .join(' '), // single line with space
+                      fontSize: 12,
+                    ),
+                  ],
+                ),
+              )
+            : SizedBox.shrink(),
       ],
     ),
   );
@@ -360,36 +358,22 @@ Widget paymentSummery({required OrderData order}) {
             children: [
               _buildRowPayment(
                 title: "Subtotal",
-                amount: "$rupeeIcon${order.currentTotalPrice ??"0"}",
-                value: "${order.lineItems?.length??"0"} items",
+                amount: "$rupeeIcon${order.currentTotalPrice ?? "0"}",
+                value: "${order.lineItems?.length ?? "0"} items",
               ),
-              /*_buildRowPayment(
-                title: "Add discount",
-                amount: "\$0.00",
-                value: "-",
-              ),*/
-             /* _buildRowPayment(
-                title: "Add shipping or delivery",
-                amount: "\$0.00",
-                value: '-',
-              ),*/
-             /* _buildRowPayment(
-                title: "Estimated tax",
-                value: "Not calculated",
-                amount: "",
-              ),*/
+
               const SizedBox(height: 8),
               const Divider(),
               _buildRowPayment(
                 title: "Total",
                 fontWeight: FontWeight.w600,
-                amount: "$rupeeIcon${order.currentTotalPrice??"0"}",
+                amount: "$rupeeIcon${order.currentTotalPrice ?? "0"}",
                 fontSize: 14,
               ),
               _buildRowPayment(
                 title: "Paid",
                 fontWeight: FontWeight.w400,
-                amount: "$rupeeIcon${order.currentTotalPrice??"0"}",
+                amount: "$rupeeIcon${order.currentTotalPrice ?? "0"}",
                 fontSize: 14,
               ),
             ],

@@ -6,7 +6,6 @@ import 'package:neeknots/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../core/color/color_utils.dart';
-import '../core/component/animated_counter.dart';
 import '../core/component/date_utils.dart';
 import '../main.dart';
 import '../provider/order_provider.dart';
@@ -91,15 +90,11 @@ class _SalesDetailsScreenState extends State<SalesDetailsScreen> {
                                                 ? Colors.white
                                                 : colorLogo,
                                           ),
-                                          AnimatedCounter(
-                                            leftText: '',
-                                            endValue:
-                                                orderProvider
-                                                    .orderModelByDate
-                                                    ?.orders
-                                                    ?.length ??
-                                                0,
-                                            duration: Duration(seconds: 2),
+                                          commonText(
+                                            //   leftText: '',
+                                            text:
+                                                '${orderProvider.orderModelByDate?.orders?.length ?? 0}',
+                                            //  duration: Duration(seconds: 2),
                                             style: commonTextStyle(
                                               fontSize: 25,
                                               fontWeight: FontWeight.w600,
@@ -107,8 +102,8 @@ class _SalesDetailsScreenState extends State<SalesDetailsScreen> {
                                                   ? Colors.white
                                                   : colorTextDesc1,
                                             ),
-                                            prefix: "",
-                                            suffix: "",
+                                            /*  prefix: "",
+                                            suffix: "",*/
                                           ),
                                         ],
                                       ),
@@ -165,10 +160,15 @@ class _SalesDetailsScreenState extends State<SalesDetailsScreen> {
                             orderProvider.orderModelByDate?.orders?.length ?? 0,
                         // null to [] convert
                         itemBuilder: (context, index) {
-                          var data = orderProvider.orderModelByDate?.orders?[index];
+                          var data =
+                              orderProvider.orderModelByDate?.orders?[index];
                           return commonOrderView(
                             errorImageView: Container(
-                              margin: EdgeInsets.only(left: 5, top: 5, bottom: 5),
+                              margin: EdgeInsets.only(
+                                left: 5,
+                                top: 5,
+                                bottom: 5,
+                              ),
                               child: commonErrorBoxView(text: data?.name ?? ''),
                             ),
 
@@ -198,7 +198,7 @@ class _SalesDetailsScreenState extends State<SalesDetailsScreen> {
                             orderID: data?.customer?.firstName != null
                                 ? '${data?.customer?.firstName}  ${data?.customer?.lastName}'
                                 : noCustomer,
-                            image: data?.name??'',
+                            image: data?.name ?? '',
                             //productName:'${ data?.customer?.firstName}  ${ data?.customer?.lastName}',
                             productName: '${data?.lineItems?.length} Items',
                             status:
@@ -216,7 +216,7 @@ class _SalesDetailsScreenState extends State<SalesDetailsScreen> {
                   ),
                 ),
 
-                orderProvider.isFetching?showLoaderList():SizedBox.shrink()
+                orderProvider.isFetching ? showLoaderList() : SizedBox.shrink(),
               ],
             );
           },

@@ -15,6 +15,8 @@ const String icNetwork="$iconLoginPath/network.png";
 //const String icAppLogo="$iconLoginPath/app_logo.jpg";
 //const String icAppLogo="$iconLoginPath/applogo.png";
 const String icAppLogo="$iconLoginPath/ic_new_logo.png";
+const String icS1="$iconLoginPath/s1.jpg";
+const String icS2="$iconLoginPath/s2.jpg";
 
 //==============================dashboard=============================
 const String iconDashboardPath="$basePath/dashboard";

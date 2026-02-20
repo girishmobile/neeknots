@@ -4,25 +4,25 @@ import 'package:neeknots/core/image/image_utils.dart';
 import 'package:neeknots/provider/admin_dashboard_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/component/animated_counter.dart';
 import '../../../core/component/responsive.dart';
 
 class CommonAdminListView extends StatefulWidget {
-   const CommonAdminListView({super.key,required this.storeName});
+  const CommonAdminListView({super.key, required this.storeName});
 
-   final String  storeName;
+  final String storeName;
+
   @override
   State<CommonAdminListView> createState() => _CommonAdminListViewState();
 }
 
 class _CommonAdminListViewState extends State<CommonAdminListView> {
-
   final List<Map<String, dynamic>> dashboardItems = [
     {"title": "Users", "icon": icTotalUser},
     {"title": "Orders", "icon": icOrderMenu},
     {"title": "Products", "icon": icProductMenu},
     {"title": "Contacts", "icon": icContact},
   ];
+
   @override
   void initState() {
     super.initState();
@@ -31,12 +31,13 @@ class _CommonAdminListViewState extends State<CommonAdminListView> {
       provider.fetchStoreCounts(storeName: widget.storeName);
     });
   }
+
   @override
   Widget build(BuildContext context) {
     final homeProvider = context.watch<AdminDashboardProvider>();
     var isMobile = Responsive.isMobile(context);
-    return    Consumer<AdminDashboardProvider>(
-      builder: (context,provider,child) {
+    return Consumer<AdminDashboardProvider>(
+      builder: (context, provider, child) {
         return Stack(
           children: [
             LayoutBuilder(
@@ -58,7 +59,7 @@ class _CommonAdminListViewState extends State<CommonAdminListView> {
                     crossAxisCount: crossAxisCount,
                     crossAxisSpacing: 16,
                     mainAxisSpacing: 16,
-                    childAspectRatio: isMobile?0.9:1.1,
+                    childAspectRatio: isMobile ? 0.9 : 1.1,
                   ),
                   itemBuilder: (context, index) {
                     final item = dashboardItems[index];
@@ -70,35 +71,28 @@ class _CommonAdminListViewState extends State<CommonAdminListView> {
                     );
                     return InkWell(
                       onTap: () {
-
-                     /* setState(() {
-                        widget.selectedSection = item["title"];
-                      });*/
                         homeProvider.setSelectedSection(item["title"]);
-
-                        //  setState(() => widget.selectedSection = item["title"]);
                       },
                       borderRadius: BorderRadius.circular(12),
                       child: Container(
                         decoration: commonBoxDecoration(
                           color: storeColor.withValues(alpha: 0.03),
                           borderColor: storeColor,
-
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            commonAssetImage(
+                              item["icon"],
+                              width: isMobile ? 55 : 64,
+                              height: isMobile ? 55 : 64,
+                              color: storeColor,
+                            ),
 
-                            commonAssetImage(item["icon"],width:  isMobile?55:64,height: isMobile?55:64,color: storeColor),
-                          /*  Icon(
-                              item["icon"] as IconData,
-                              size: 40,
-                              color: Colors.black54,
-                            ),*/
                             const SizedBox(height: 10),
                             commonText(
                               text: item["title"].toString(),
-                              fontSize:  isMobile?14:16,
+                              fontSize: isMobile ? 14 : 16,
                               fontWeight: FontWeight.w600,
                               color: storeColor,
                             ),
@@ -116,20 +110,14 @@ class _CommonAdminListViewState extends State<CommonAdminListView> {
                                 ),
                               ),
                               child: Center(
-                                child: AnimatedCounter(
-                                  leftText: '',
-                                  rightText: '',
-                                  endValue: count,
-                                  duration: Duration(milliseconds: 200),
-                                  style: commonTextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500,
-                                    color: storeColor,
-                                  ),
+                                child: commonText(
+                                  text: '$count',
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                  color: storeColor,
                                 ),
                               ),
                             ),
-
                           ],
                         ),
                       ),
@@ -138,10 +126,10 @@ class _CommonAdminListViewState extends State<CommonAdminListView> {
                 );
               },
             ),
-            provider.isLoading?showLoaderList():SizedBox.shrink()
+            provider.isLoading ? showLoaderList() : SizedBox.shrink(),
           ],
         );
-      }
+      },
     );
   }
 }

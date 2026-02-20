@@ -26,11 +26,10 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void call(bool isTure){
-    if(isTure){
+  void call(bool isTure) {
+    if (isTure) {
       init();
     }
-
   }
 
   Future<void> init() async {
@@ -48,9 +47,8 @@ class _HomePageState extends State<HomePage> {
     DateTime startDate = DateTime(now.year, now.month, now.day, 0, 0, 0);
     DateTime endDate = DateTime(now.year, now.month, now.day, 23, 59, 59);
     productProvider.resetProducts();
-     Future.wait([
-
-      productProvider.getProductList(limit: 5,context: context),
+    Future.wait([
+      productProvider.getProductList(limit: 5, context: context),
       productProvider.getCountPendingRequest(),
       productProvider.getTotalProductCount(),
       orderProvider.getOrderList(limit: "5"),
@@ -58,16 +56,18 @@ class _HomePageState extends State<HomePage> {
       orderProvider.getTotalOrderCount(),
 
       orderProvider.getTotalSaleOrder(startDate: startDate, endDate: endDate),
-      orderProvider.getOrderByDate(startDate: startDate, endDate: endDate,isDashboard: true),
+      orderProvider.getOrderByDate(
+        startDate: startDate,
+        endDate: endDate,
+        isDashboard: true,
+      ),
     ]);
   }
-
-
 
   @override
   Widget build(BuildContext context) {
     return commonRefreshIndicator(
-      onRefresh: ()async {
+      onRefresh: () async {
         init();
       },
       child: Consumer3<OrdersProvider, ProductProvider, CustomerProvider>(
@@ -78,17 +78,15 @@ class _HomePageState extends State<HomePage> {
 
                 padding: EdgeInsets.all(12),
                 children: [
-                  SizedBox(height: 5),
+                  SizedBox(height: 16),
                   commonText(
                     text: "Select Store",
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),
                   SizedBox(height: 5),
-                  CommonAllStoreWidget(
-                    onStoreChanged:call
-                  ),
-                  SizedBox(height: 5),
+                  CommonAllStoreWidget(onStoreChanged: call),
+                  SizedBox(height: 16),
                   homeTopView(
                     totalPendingRequest: productProvider.pendingCount,
                     totalOrderPrice: orderProvider.totalOrderPrice,
@@ -98,13 +96,15 @@ class _HomePageState extends State<HomePage> {
                     totalSaleOrder: orderProvider.totalOrderSaleCount,
                   ),
                   SizedBox(height: 24),
-                  SizedBox(height: 300, child: homeGraphView(isSaleDetails: false)),
+                  SizedBox(
+                    height: 300,
+                    child: homeGraphView(isSaleDetails: false),
+                  ),
                   SizedBox(height: 24),
                   Consumer<DashboardProvider>(
                     builder: (context, provider, child) {
                       return commonTopProductListView(
                         onTap: () {
-
                           provider.setIndex(0);
                         },
                       );

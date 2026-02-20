@@ -53,15 +53,6 @@ class _AllUserListPageState extends State<AllUserListPage> {
                 children: [
                   SizedBox(height: 10),
 
-                  /*Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: commonTextField(
-                      hintText: 'Search by name or email',
-                      onChanged: (value) {
-                        provider.applySearch(value);
-                      },
-                    ),
-                  ),*/
                   Expanded(
                     child: ListView.builder(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -90,8 +81,10 @@ class _AllUserListPageState extends State<AllUserListPage> {
                                   imageUrl: data["logo_url"],
                                   placeholder: (context, url) => Center(
                                     child: SizedBox(
-                                      width: 20, // 👈 yahan size set kijiye
-                                      height: 20, // 👈 yahan size set kijiye
+                                      width: 20,
+                                      // 👈 yahan size set kijiye
+                                      height: 20,
+                                      // 👈 yahan size set kijiye
                                       child: CircularProgressIndicator(
                                         strokeWidth: 2,
                                       ),

@@ -21,8 +21,6 @@ class ApiConfig {
     final storeName = config['storeName'] ?? '';
     final versionCode = config['versionCode'] ?? '';
 
-    //print('==storeName===${storeName}');
-
     return "https://$storeName.myshopify.com/admin/api/$versionCode";
   }
 
