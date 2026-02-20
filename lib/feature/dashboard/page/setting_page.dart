@@ -69,16 +69,18 @@ class _SettingPageState extends State<SettingPage> {
                         width: 120,
                         fit: BoxFit.cover,
                         imageUrl: provider.userData?['logo_url'] ?? '',
-                        errorWidget: (context, url, error) => commonText(
-                          fontSize: 30,
-                          color: colorButton1,
-                          fontWeight: FontWeight.w700,
-                          text:
-                              ((provider.userData?['name'] ?? '')
-                                  .toString()
-                                  .isNotEmpty)
-                              ? provider.userData!['name'][0].toUpperCase()
-                              : '',
+                        errorWidget: (context, url, error) => Center(
+                          child: commonText(
+                            fontSize: 30,
+                            color: colorButton1,
+                            fontWeight: FontWeight.w700,
+                            text:
+                                ((provider.userData?['name'] ?? '')
+                                    .toString()
+                                    .isNotEmpty)
+                                ? provider.userData!['name'][0].toUpperCase()
+                                : '',
+                          ),
                         ),
                       ),
                     ),
@@ -197,7 +199,7 @@ class _SettingPageState extends State<SettingPage> {
 
                   const SizedBox(height: 18),
                   Row(
-                    spacing: 50,
+                    spacing: 20,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,

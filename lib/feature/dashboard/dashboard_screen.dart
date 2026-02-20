@@ -170,15 +170,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             width: 45,
                             fit: BoxFit.cover,
                             imageUrl: provider.userData?['logo_url'] ?? '',
-                            errorWidget: (context, url, error) => commonText(
-                              fontSize: 30,
-                              color: colorButton1,
-                              fontWeight: FontWeight.w700,
-                              text: ((provider.userData?['name'] ?? '')
-                                  .toString()
-                                  .isNotEmpty)
-                                  ? provider.userData!['name'][0].toUpperCase()
-                                  : '',
+                            errorWidget: (context, url, error) => Center(
+                              child: commonText(
+                                fontSize: 16,
+                                color: colorButton1,
+                                fontWeight: FontWeight.w700,
+                                text: ((provider.userData?['name'] ?? '')
+                                    .toString()
+                                    .isNotEmpty)
+                                    ? provider.userData!['name'][0].toUpperCase()
+                                    : '',
+                              ),
                             ),
                           ),
                         ),
