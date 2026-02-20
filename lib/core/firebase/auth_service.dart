@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -106,6 +107,8 @@ class AuthService {
     required String mobile,
     required String countryCode,
   }) async {
+
+
     try {
       final query = await _firestore
           .collection(storesCollection)
@@ -114,6 +117,7 @@ class AuthService {
           .where("country_code", isEqualTo: countryCode)
           .get();
 
+      print('query$query');
       if (query.docs.isEmpty) {
         throw "User not found";
       }
@@ -180,6 +184,9 @@ class AuthService {
     required String countryCode,
   }) async {
     try {
+      print('====e$email');
+      print('====e$mobile');
+      print('====e$countryCode');
       // Check Firestore for a document matching BOTH email and mobile
       final query = await _firestore
           .collection(storesCollection)

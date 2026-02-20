@@ -830,6 +830,7 @@ Widget commonHeadingText({
   return commonText(
     text: text ?? '',
     color: color,
+
     fontWeight: fontWeight ?? FontWeight.w800,
     fontSize: fontSize ?? 18,
   );

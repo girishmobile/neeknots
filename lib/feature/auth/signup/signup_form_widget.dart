@@ -1,5 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:neeknots/core/color/color_utils.dart';
 import 'package:neeknots/core/component/component.dart';
 import 'package:neeknots/core/image/image_utils.dart';
@@ -73,7 +75,36 @@ Widget commonSignUpView({
           ),
         ],
       ),*/
-    PhoneNumberField(
+
+      IntlPhoneField(
+        initialCountryCode: 'US',
+        controller: provider.tetPhone,
+
+        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+        style: commonTextStyle(
+          color: themeProvider.isDark ? Colors.white : Colors.black,
+        ),
+        decoration: InputDecoration(
+
+          hintText: "Phone Number",
+          hintStyle: commonTextStyle(color: Colors.grey),
+
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 14,
+          ),
+          border: commonTextFiledBorder(borderRadius: 12),
+          enabledBorder: commonTextFiledBorder(borderRadius: 12),
+          focusedBorder: commonTextFiledBorder(borderRadius: 12),
+        ),
+        onChanged: (phone) {
+          provider.tetCountryCodeController.text = phone.countryCode;
+        },
+        onCountryChanged: (value) {
+          provider.tetCountryCodeController.text = value.dialCode;
+        },
+      ),
+  /*  PhoneNumberField(
         phoneController: provider.tetPhone,
         countryCodeController: provider.tetCountryCodeController,
         prefixIcon: commonPrefixIcon(image: icPhone),
@@ -84,8 +115,8 @@ Widget commonSignUpView({
           return null;
         },
           isCountryCodeEditable: true, // fixed +1
-      ),
-      const SizedBox(height: 20),
+      ),*/
+      const SizedBox(height: 10),
       commonTextField(
         hintText: "Store Name/Website Url",
         controller: provider.tetStoreName,

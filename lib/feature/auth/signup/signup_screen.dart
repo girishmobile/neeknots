@@ -73,10 +73,11 @@ class _SignupScreenState extends State<SignupScreen> {
                                     const SizedBox(height: 30),
                                     Center(
                                       child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           commonHeadingText(
                                             text:
-                                                "Create your Ecommerce manager account",
+                                                "Create your\nEcommerce manager account",
                                             fontSize: 20,
                                             fontWeight: FontWeight.w600,
                                             color: themeProvider.isDark

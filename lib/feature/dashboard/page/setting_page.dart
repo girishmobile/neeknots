@@ -301,6 +301,10 @@ class _SettingPageState extends State<SettingPage> {
                       ),
                     ],
                   ),
+
+                /*  commonButton(text: "Admin", onPressed: (){
+                    Navigator.pushNamed(context, RouteName.adminLoginPage);
+                  }),*/
                   SizedBox(height: 18),
                 ],
               ),
