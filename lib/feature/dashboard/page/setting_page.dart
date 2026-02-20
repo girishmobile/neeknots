@@ -113,14 +113,16 @@ class _SettingPageState extends State<SettingPage> {
                   const SizedBox(height: 8),
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 0),
-                    padding: const EdgeInsets.symmetric(vertical: 18,horizontal: 10),
-                    decoration: BoxDecoration(
-                      color:const Color(0xffF4F6F8),
-                      border: Border.all(color: colorBorder),
-                      borderRadius: BorderRadius.circular(20),
-
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 18,
+                      horizontal: 10,
                     ),
-                   // p//adding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: const Color(0xffF4F6F8),
+                      border: Border.all(color: colorBorder),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    // p//adding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                     child: Column(
                       spacing: 20,
                       children: [
@@ -176,7 +178,9 @@ class _SettingPageState extends State<SettingPage> {
                                     child: commonText(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500,
-                                      color: isActive ? Colors.green : Colors.red,
+                                      color: isActive
+                                          ? Colors.green
+                                          : Colors.red,
                                       text: isActive ? "Active" : "Inactive",
                                     ),
                                   ),
@@ -230,10 +234,11 @@ class _SettingPageState extends State<SettingPage> {
                                     .read<LoginProvider>()
                                     .resetState();
                                 await AppConfigCache.clearConfig();
-                                navigatorKey.currentState?.pushNamedAndRemoveUntil(
-                                  RouteName.loginScreen,
-                                  (Route<dynamic> route) => false,
-                                );
+                                navigatorKey.currentState
+                                    ?.pushNamedAndRemoveUntil(
+                                      RouteName.loginScreen,
+                                      (Route<dynamic> route) => false,
+                                    );
                               },
                               cancelText: "No",
                               title: "Logout?",
@@ -318,6 +323,4 @@ class _SettingPageState extends State<SettingPage> {
       ),
     );
   }
-
-
 }
