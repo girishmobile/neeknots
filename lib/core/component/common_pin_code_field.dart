@@ -48,30 +48,34 @@ class CommonPinCodeField extends StatelessWidget {
         // Shape
         shape: MaterialPinShape.outlined,
         cellSize: Size(56, 64),
-        spacing: 8,
-        borderRadius: BorderRadius.circular(12),
+        spacing: 12,
+        borderRadius: BorderRadius.circular(borderRadius),
 
         // Border
         borderWidth: 1.5,
         focusedBorderWidth: 2.0,
         borderColor: Colors.grey,
-        focusedBorderColor: Colors.blue,
-        filledBorderColor: Colors.green,
+        focusedBorderColor: Colors.black54,
+        filledBorderColor: Colors.black,
         errorColor: Colors.red,
 
         // Fill
         fillColor: Colors.grey[100],
-        focusedFillColor: Colors.blue[50],
-        filledFillColor: Colors.green[50],
+        focusedFillColor: Colors.black45,
+        filledFillColor: Colors.black87,
 
         // Text
-        textStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        textGradient: LinearGradient(colors: [Colors.blue, Colors.purple]),
-        obscuringCharacter: '●',
+        textStyle: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+        // textGradient: LinearGradient(colors: [Colors.blue, Colors.purple]),
+        //obscuringCharacter: '●',
 
         // Cursor
         showCursor: true,
-        cursorColor: Colors.blue,
+        cursorColor: Colors.black,
         cursorWidth: 2,
         animateCursor: true,
 
