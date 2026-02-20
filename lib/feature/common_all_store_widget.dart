@@ -44,100 +44,95 @@ class _CommonAllStoreWidgetState extends State<CommonAllStoreWidget> {
         provider.setSelectedStore(index);
       }
     }
-    //final savedUid = await AppConfigCache.getSelectedStoreUid();
 
-    /*if (savedUid != null) {
-      final index = provider.storeCounts.indexWhere(
-        (e) => e['uid'].toString() == savedUid,
-      );
-
-      if (index != -1) {
-        provider.setSelectedStore(index);
-
-        final selectedStore = provider.storeCounts[index];
-
-        await AppConfigCache.saveConfig(
-          accessToken: selectedStore['accessToken'] ?? '',
-          storeName: selectedStore['store_name'] ?? '',
-          versionCode: selectedStore['version_code'] ?? '',
-          logoUrl: selectedStore['logo_url'] ?? '',
-        );
-
-        // 🔥 MOST IMPORTANT: Data refetch karo
-      }
-    }*/
   }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<AdminDashboardProvider>(
       builder: (context, provider, child) {
-        return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey.shade300),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton<int>(
-              dropdownColor: Colors.white,
-              isExpanded: true,
-              value: provider.selectedIndex,
-              hint: commonText(text: "Select Store"),
-              items: List.generate(provider.storeCounts.length, (index) {
-                final store = provider.storeCounts[index];
-                return DropdownMenuItem<int>(
-                  value: index,
-                  child: Row(
-                    children: [
-                      const Icon(Icons.storefront_outlined, size: 18),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: commonText(
-                          fontWeight: FontWeight.w500,
-                          text: store['store_name'].toString().toCapitalize(),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              }),
-              onChanged: (index) async {
-                if (index == null) return;
+        if (provider.storeCounts.length <= 1) {
+          return const SizedBox.shrink();
+        }
 
-                provider.setSelectedStore(index);
-                provider.setSelectedSection(null);
-
-                final selectedStore = provider.storeCounts[index];
-
-
-                /*
-                await AppConfigCache.saveSelectedStoreUid(
-                  selectedStore['uid'].toString(),
-                );*/
-
-                // ✅ Do async work OUTSIDE setState
-                await AppConfigCache.saveConfig(
-                  accessToken: selectedStore['accessToken'] ?? '',
-                  storeName: selectedStore['store_name'] ?? '',
-                  versionCode: selectedStore['version_code'] ?? '',
-                  logoUrl: selectedStore['logo_url'] ?? '',
-                );
-
-                if (widget.onStoreChanged != null) {
-                  widget.onStoreChanged!(true);
-                }
-                // ✅ Only call setState if UI needs update
-                setState(() {});
-
-                /*  await provider.fetchStoreCounts(
-                  storeName:
-                  provider.storeCounts[index]['store_name'],
-                );*/
-              },
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            commonText(
+              text: "Select Store",
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
             ),
-          ),
+            SizedBox(height: 5),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey.shade300),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<int>(
+                  dropdownColor: Colors.white,
+                  isExpanded: true,
+                  value: provider.selectedIndex,
+                  hint: commonText(text: "Select Store"),
+                  items: List.generate(provider.storeCounts.length, (index) {
+                    final store = provider.storeCounts[index];
+                    return DropdownMenuItem<int>(
+                      value: index,
+                      child: Row(
+                        children: [
+                          const Icon(Icons.storefront_outlined, size: 18),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: commonText(
+                              fontWeight: FontWeight.w500,
+                              text: store['store_name'].toString().toCapitalize(),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
+                  onChanged: (index) async {
+                    if (index == null) return;
+
+                    provider.setSelectedStore(index);
+                    provider.setSelectedSection(null);
+
+                    final selectedStore = provider.storeCounts[index];
+
+
+                    /*
+                    await AppConfigCache.saveSelectedStoreUid(
+                      selectedStore['uid'].toString(),
+                    );*/
+
+                    // ✅ Do async work OUTSIDE setState
+                    await AppConfigCache.saveConfig(
+                      accessToken: selectedStore['accessToken'] ?? '',
+                      storeName: selectedStore['store_name'] ?? '',
+                      versionCode: selectedStore['version_code'] ?? '',
+                      logoUrl: selectedStore['logo_url'] ?? '',
+                    );
+
+                    if (widget.onStoreChanged != null) {
+                      widget.onStoreChanged!(true);
+                    }
+                    // ✅ Only call setState if UI needs update
+                    setState(() {});
+
+                    /*  await provider.fetchStoreCounts(
+                      storeName:
+                      provider.storeCounts[index]['store_name'],
+                    );*/
+                  },
+                ),
+              ),
+            ),
+            SizedBox(height: 16),
+          ],
         );
       },
     );

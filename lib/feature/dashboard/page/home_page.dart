@@ -78,15 +78,10 @@ class _HomePageState extends State<HomePage> {
 
                 padding: EdgeInsets.all(12),
                 children: [
-                  SizedBox(height: 16),
-                  commonText(
-                    text: "Select Store",
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  SizedBox(height: 5),
+
+
                   CommonAllStoreWidget(onStoreChanged: call),
-                  SizedBox(height: 16),
+
                   homeTopView(
                     totalPendingRequest: productProvider.pendingCount,
                     totalOrderPrice: orderProvider.totalOrderPrice,
