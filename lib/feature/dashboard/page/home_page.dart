@@ -75,7 +75,6 @@ class _HomePageState extends State<HomePage> {
             (context, orderProvider, productProvider, customerProvider, child) {
               return ListView(
                 shrinkWrap: true,
-
                 padding: EdgeInsets.all(12),
                 children: [
 

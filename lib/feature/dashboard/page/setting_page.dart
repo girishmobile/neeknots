@@ -202,106 +202,102 @@ class _SettingPageState extends State<SettingPage> {
                   ),
 
                   const SizedBox(height: 18),
-                  Row(
+                  Column(
                     spacing: 20,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Expanded(
-                        child: commonInkWell(
-                          onTap: () {
-                            showCommonDialog(
-                              confirmText: "Yes",
-                              onPressed: () async {
-                                await AppConfigCache.clearAll();
-                                navigatorKey.currentContext!
-                                    .read<DashboardProvider>()
-                                    .resetTab();
-                                navigatorKey.currentContext!
-                                    .read<ProductProvider>()
-                                    .reset();
-                                navigatorKey.currentContext!
-                                    .read<OrdersProvider>()
-                                    .resetData();
-                                navigatorKey.currentContext!
-                                    .read<CustomerProvider>()
-                                    .reset();
-                                navigatorKey.currentContext!
-                                    .read<ProfileProvider>()
-                                    .resetState();
-                                navigatorKey.currentContext!
-                                    .read<LoginProvider>()
-                                    .resetState();
-                                await AppConfigCache.clearConfig();
-                                navigatorKey.currentState
-                                    ?.pushNamedAndRemoveUntil(
-                                      RouteName.loginScreen,
-                                      (Route<dynamic> route) => false,
-                                    );
-                              },
-                              cancelText: "No",
-                              title: "Logout?",
-                              context: context,
-                              content: "Are you sure want to logout",
-                            );
-                          },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 12,
-                              horizontal: 60,
-                            ),
-                            decoration: commonBoxDecoration(
+                      commonInkWell(
+                        onTap: () {
+                          showCommonDialog(
+                            confirmText: "Yes",
+                            onPressed: () async {
+                              await AppConfigCache.clearAll();
+                              navigatorKey.currentContext!
+                                  .read<DashboardProvider>()
+                                  .resetTab();
+                              navigatorKey.currentContext!
+                                  .read<ProductProvider>()
+                                  .reset();
+                              navigatorKey.currentContext!
+                                  .read<OrdersProvider>()
+                                  .resetData();
+                              navigatorKey.currentContext!
+                                  .read<CustomerProvider>()
+                                  .reset();
+                              navigatorKey.currentContext!
+                                  .read<ProfileProvider>()
+                                  .resetState();
+                              navigatorKey.currentContext!
+                                  .read<LoginProvider>()
+                                  .resetState();
+                              await AppConfigCache.clearConfig();
+                              navigatorKey.currentState
+                                  ?.pushNamedAndRemoveUntil(
+                                    RouteName.loginScreen,
+                                    (Route<dynamic> route) => false,
+                                  );
+                            },
+                            cancelText: "No",
+                            title: "Logout?",
+                            context: context,
+                            content: "Are you sure want to logout",
+                          );
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 12,
+                            horizontal: 60,
+                          ),
+                          decoration: commonBoxDecoration(
+                            color: themeProvider.isDark
+                                ? Colors.white
+                                : colorLogo,
+                          ),
+                          child: Center(
+                            child: commonText(
+                              text: "Logout".toUpperCase(),
                               color: themeProvider.isDark
-                                  ? Colors.white
-                                  : colorLogo,
-                            ),
-                            child: Center(
-                              child: commonText(
-                                text: "Logout".toUpperCase(),
-                                color: themeProvider.isDark
-                                    ? Colors.black
-                                    : Colors.white,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                              ),
+                                  ? Colors.black
+                                  : Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
                       ),
-                      Expanded(
-                        child: commonInkWell(
-                          onTap: () {
-                            showCommonDialog(
-                              title: "Delete",
-                              context: context,
-                              content: "Are you sure want to delete account",
-                              onPressed: () async {
-                                final authService = AuthService();
-                                await authService.deleteCurrentUser(
-                                  context: context,
-                                  uid: provider.userData?['id'] ?? '',
-                                );
-                              },
-                            );
-                          },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 12,
-                              horizontal: 30,
-                            ),
-                            decoration: commonBoxDecoration(
-                              color: themeProvider.isDark
-                                  ? Colors.white
-                                  : Colors.red,
-                            ),
-                            child: Center(
-                              child: commonText(
-                                text: "Delete Account".toUpperCase(),
-                                color: Colors.white,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                              ),
+                      commonInkWell(
+                        onTap: () {
+                          showCommonDialog(
+                            title: "Delete",
+                            context: context,
+                            content: "Are you sure want to delete account",
+                            onPressed: () async {
+                              final authService = AuthService();
+                              await authService.deleteCurrentUser(
+                                context: context,
+                                uid: provider.userData?['id'] ?? '',
+                              );
+                            },
+                          );
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 12,
+                            horizontal: 30,
+                          ),
+                          decoration: commonBoxDecoration(
+                            color: themeProvider.isDark
+                                ? Colors.white
+                                : Colors.red,
+                          ),
+                          child: Center(
+                            child: commonText(
+                              text: "Delete Account".toUpperCase(),
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
