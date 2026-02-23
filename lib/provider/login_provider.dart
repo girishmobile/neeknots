@@ -2,14 +2,12 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import 'package:neeknots/core/component/component.dart';
 import 'package:neeknots/main.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../core/firebase/auth_service.dart';
 import '../core/hive/app_config_cache.dart';
-
 import '../feature/admin/admin_user_home_page.dart';
 
 class LoginProvider with ChangeNotifier {
@@ -31,6 +29,7 @@ class LoginProvider with ChangeNotifier {
 
   final tetFullName = TextEditingController();
   final tetEmail = TextEditingController();
+  final tetAppName = TextEditingController();
   final tetMessage = TextEditingController();
   TextEditingController tetPhone = TextEditingController();
   TextEditingController tetCountryCodeController = TextEditingController(
@@ -44,6 +43,7 @@ class LoginProvider with ChangeNotifier {
   final tetCurrentPassword = TextEditingController();
   final tetNewPassword = TextEditingController();
   final tetConfirmPassword = TextEditingController();
+
   // final tetOTP = TextEditingController();
 
   bool _obscureCurrentPassword = true;
@@ -86,6 +86,7 @@ class LoginProvider with ChangeNotifier {
     tetConfirmPassword.dispose();
     tetMessage.dispose();
     tetLogoUrl.dispose();
+    tetAppName.dispose();
     //tetOTP.dispose(); // ✅ dispose here only
     _timer?.cancel();
     super.dispose();
@@ -106,6 +107,7 @@ class LoginProvider with ChangeNotifier {
     //tetOTP.clear();
     tetMessage.clear();
     tetLogoUrl.clear();
+    tetAppName.clear();
     _isLoading = false;
     _obscurePassword = true;
 
@@ -139,7 +141,7 @@ class LoginProvider with ChangeNotifier {
         mobile: mobile,
         countryCode: countryCode,
       );
-     /* var   otp = generateOtp();*/
+      /* var   otp = generateOtp();*/
       final FirebaseFirestore firestore = FirebaseFirestore.instance;
       await firestore.collection("stores").doc(userData?['uid']).update({
         "otp": "1234",
@@ -149,21 +151,24 @@ class LoginProvider with ChangeNotifier {
 
       await AppConfigCache.saveUser(
         uid: _userData?['uid'],
-        name:_userData?['name'] ?? '',
+        name: _userData?['name'] ?? '',
         email: _userData?['email'] ?? '',
-        photo:_userData?['logo_url'] ?? '',
-        mobile:_userData?['mobile'] ?? '',
+        photo: _userData?['logo_url'] ?? '',
+        mobile: _userData?['mobile'] ?? '',
       );
       await AppConfigCache.saveConfig(
         accessToken: _userData?['accessToken'] ?? '',
         storeName: _userData?['store_name'] ?? '',
-        versionCode:_userData?['version_code'] ?? '',
+        versionCode: _userData?['version_code'] ?? '',
         logoUrl: _userData?['logo_url'] ?? '',
       );
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => AdminUserHomePage(storeName: _userData?['store_name'] ?? '',)),
+        MaterialPageRoute(
+          builder: (_) =>
+              AdminUserHomePage(storeName: _userData?['store_name'] ?? ''),
+        ),
       );
       notifyListeners();
 
@@ -175,6 +180,7 @@ class LoginProvider with ChangeNotifier {
       _setLoading(false);
     }
   }
+
   Future<Map<String, dynamic>> login({
     required String email,
     required String mobile,
@@ -192,7 +198,6 @@ class LoginProvider with ChangeNotifier {
       if (_userData?.isNotEmpty == true) {
         String otp = "1234";
         if (email == "girishchauhan@gmail.com") {
-         // await sendOtpEmail(email: email, userID: userData?['uid'], otp: otp);
           final FirebaseFirestore firestore = FirebaseFirestore.instance;
           await firestore.collection("stores").doc(userData?['uid']).update({
             "otp": otp,
@@ -201,10 +206,8 @@ class LoginProvider with ChangeNotifier {
           });
         } else {
           otp = generateOtp();
-          await sendOtpEmail(email: email,);
-
+          await sendOtpEmail(email: email);
         }
-        //String otp = generateOtp();
       }
       return _userData ?? {}; // 🔹 return the user data
     } catch (e) {
@@ -214,23 +217,18 @@ class LoginProvider with ChangeNotifier {
       _setLoading(false);
     }
   }
-  Future<void> sendOtpEmail({ required String email,
-   }) async {
+
+  Future<void> sendOtpEmail({required String email}) async {
     try {
       final response = await Supabase.instance.client.functions.invoke(
         'send-otp',
-        body: {
-          'email': email,
-        },
+        body: {'email': email},
       );
 
       if (response.status == 200) {
-        print("OTP Sent");
-
         final data = response.data;
 
-        final otp = data['otp'];   // 👈 get otp
-        print("OTP Sent: $otp");   // 👈 print otp
+        final otp = data['otp']; // 👈 get otp
 
         final FirebaseFirestore firestore = FirebaseFirestore.instance;
         await firestore.collection("stores").doc(userData?['uid']).update({
@@ -239,14 +237,13 @@ class LoginProvider with ChangeNotifier {
           "active_status": true, // Ensure user is inactive until OTP verified
         });
       } else {
-        print("Error: ${response.data}");
+        debugPrint("Error: ${response.data}");
       }
     } catch (e) {
-      print("Exception: $e");
+      debugPrint(e.toString());
+
     }
   }
-
-
 
   void resetAll() {
     // _userData = null;
@@ -328,6 +325,7 @@ class LoginProvider with ChangeNotifier {
   Timer? _timer;
 
   bool get canResend => _canResend;
+
   int get secondsRemaining => _secondsRemaining;
 
   void startResendTimer() {
@@ -384,7 +382,7 @@ class LoginProvider with ChangeNotifier {
       if (_userData?.isNotEmpty == true) {
         String otp = "1234";
         if (email == "girishchauhan@gmail.com") {
-         // await sendOtpEmail(email: email, userID: userData?['uid'], otp: otp);
+          // await sendOtpEmail(email: email, userID: userData?['uid'], otp: otp);
           final FirebaseFirestore firestore = FirebaseFirestore.instance;
           await firestore.collection("stores").doc(userData?['uid']).update({
             "otp": otp,
@@ -392,9 +390,7 @@ class LoginProvider with ChangeNotifier {
             "active_status": true, // Ensure user is inactive until OTP verified
           });
         } else {
-
-          await sendOtpEmail(email: email,);
-
+          await sendOtpEmail(email: email);
         }
       }
       _startNewCycle();

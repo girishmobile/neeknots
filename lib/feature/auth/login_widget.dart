@@ -52,25 +52,17 @@ Widget commonLoginView({
           focusedBorder: commonTextFiledBorder(borderRadius: 12),
         ),
         onChanged: (phone) {
+          print('=-=====phone$phone');
           provider.tetCountryCodeController.text = phone.countryCode;
         },
         onCountryChanged: (value) {
+          print('=-=====value${value.dialCode}');
+          print('=-=====value${value.fullCountryCode}');
           provider.tetCountryCodeController.text = value.dialCode;
         },
       ),
 
-      // PhoneNumberField(
-      //   phoneController: provider.tetPhone,
-      //   countryCodeController: provider.tetCountryCodeController,
-      //   prefixIcon: commonPrefixIcon(image: icPhone),
-      //   validator: (value) {
-      //     if (value == null || value.length != 10) {
-      //       return "Enter valid phone number";
-      //     }
-      //     return null;
-      //   },
-      //   isCountryCodeEditable: true, // fixed +1
-      // ),
+
       const SizedBox(height: 40),
       commonButton(text: "Login", onPressed: onPressed),
       const SizedBox(height: 20),

@@ -156,8 +156,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                                 commonDescriptionText(
                                   textAlign: TextAlign.center,
                                   text:
-                                      "We have sent OTPs to your registered email (${widget.userData["email"]}) "
-                                      "and mobile number (${widget.userData["mobile"]}).\n"
+                                      "We have sent OTPs to your registered email (${widget.userData["email"]})\n"
+
                                       "Please enter them below to verify your account.",
                                 ),
                               ],

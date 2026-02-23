@@ -25,7 +25,6 @@ Future callPostMethod(String url, Map<String, dynamic> params) async {
 }
 
 Future callPatchMethod(String url, Map<String, dynamic> body) async {
-  debugPrint('==Patch Method==$url');
   return await http
       .patch(
         Uri.parse(url),
@@ -42,7 +41,6 @@ Future callPostMethodWithToken({
   required Map<String, dynamic> body,
   Map<String, String>? headers,
 }) async {
-  debugPrint('==Post Method==$url');
   return await http
       .post(
         Uri.parse(url),
@@ -59,7 +57,6 @@ Future callPutMethodWithToken({
   required Map<String, dynamic> params,
 }) async {
   final uri = Uri.parse(url);
-  debugPrint('==put Method==$url');
   final response = await http
       .put(
         uri,
@@ -70,7 +67,6 @@ Future callPutMethodWithToken({
 
   return getResponse(response);
 }
-
 
 Future callDeleteMethod({
   required String url,
@@ -87,7 +83,6 @@ Future callDeleteMethod({
 
   return getResponse(response);
 }
-
 
 Future callGETMethod({
   required String url,

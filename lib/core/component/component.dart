@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,7 +7,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:html/parser.dart' as html_parser;
 import 'package:intl_phone_field/countries.dart';
 import 'package:neeknots/core/color/color_utils.dart';
@@ -23,13 +21,6 @@ import '../../service/api_config.dart';
 import '../../service/gloable_status_code.dart';
 import '../../service/network_repository.dart';
 import 'common_dropdown.dart';
-
-String generateUniqueId() {
-  final random = Random();
-  final timestamp = DateTime.now().millisecondsSinceEpoch;
-  final randomNumber = random.nextInt(999999);
-  return "$timestamp$randomNumber";
-}
 
 AppBar commonAppBar({
   required final String title,
@@ -74,47 +65,6 @@ AppBar commonAppBar({
         borderRadius: BorderRadius.circular(0),
       ),
     ),
-  );
-}
-
-Column commonTextFieldView({
-  String? text,
-  String? hint,
-  Widget? prefixIcon,
-  Widget? suffixIcon,
-  String? initialValue,
-  TextInputType? keyboardType,
-  bool readOnly = false,
-  bool? obscureText,
-  void Function()? onTap,
-  String? Function(String?)? validator,
-  List<TextInputFormatter>? inputFormatters,
-  TextEditingController? controller,
-  int? maxLines,
-}) {
-  return Column(
-    mainAxisAlignment: MainAxisAlignment.start,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    spacing: 8,
-    children: [
-      commonText(text: text ?? "Email Id", fontSize: 13),
-      commonTextField(
-        onTap: onTap,
-        validator: validator,
-        controller: controller,
-        maxLines: maxLines ?? 1,
-        readOnly: readOnly,
-        textStyle: commonTextStyle(fontSize: 13),
-        hintStyle: commonTextStyle(fontSize: 13),
-        inputFormatters: inputFormatters,
-        keyboardType: keyboardType ?? TextInputType.text,
-        initialValue: initialValue,
-        obscureText: obscureText ?? false,
-        hintText: '',
-        prefixIcon: prefixIcon,
-        suffixIcon: suffixIcon,
-      ),
-    ],
   );
 }
 
@@ -450,28 +400,6 @@ Widget commonListViewBuilder<T>({
   );
 }
 
-Widget commonListViewBuilderSeparated<T>({
-  required List<T> items,
-  required Widget Function(BuildContext, int, T) itemBuilder,
-  Axis scrollDirection = Axis.vertical,
-  EdgeInsetsGeometry padding = const EdgeInsets.all(0),
-  bool shrinkWrap = false,
-  ScrollPhysics? physics,
-}) {
-  return ListView.separated(
-    itemCount: items.length,
-    shrinkWrap: shrinkWrap,
-
-    padding: padding,
-    scrollDirection: scrollDirection,
-    physics: physics ?? const BouncingScrollPhysics(),
-    itemBuilder: (context, index) => itemBuilder(context, index, items[index]),
-    separatorBuilder: (BuildContext context, int index) {
-      return Divider(thickness: 0.5, height: 0);
-    },
-  );
-}
-
 Widget commonScaffold({
   required Widget body,
   String? title,
@@ -483,15 +411,12 @@ Widget commonScaffold({
   bool resizeToAvoidBottomInset = true,
 }) {
   return Scaffold(
-
     appBar:
         appBar ??
         (title != null
             ? AppBar(title: commonText(text: title), centerTitle: true)
             : null),
-    body: Container(
-
-        child: body),
+    body: Container(child: body),
     backgroundColor: backgroundColor,
     floatingActionButton: floatingActionButton,
     drawer: drawer,
@@ -543,31 +468,6 @@ Widget commonCircleAssetImage(
   );
 }
 
-Widget showLoaderList1() {
-  return Center(
-    child: Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [colorLogo, colorLogo],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      padding: const EdgeInsets.all(17),
-      child: const CupertinoActivityIndicator(
-        radius: 15,
-        color: Colors.white,
-        animating: true,
-      ),
-    ),
-  );
-}
-
-List<TextInputFormatter> onlyNumberFormatter() {
-  return [FilteringTextInputFormatter.digitsOnly];
-}
-
 PopScope<Object> commonPopScope({
   required final Widget child,
   final VoidCallback? onBack,
@@ -606,27 +506,6 @@ Center commonErrorView({String? text}) {
 
 void hideKeyboard(BuildContext context) {
   FocusScope.of(context).unfocus();
-}
-
-Map<String, Map<String, dynamic>> buildNotificationPayload({
-  required String token,
-  required String title,
-  required String body,
-  Map<String, dynamic>? data,
-}) {
-  return {
-    "message": {
-      "token": token,
-      "notification": {"title": title, "body": body},
-      "android": {
-        "notification": {
-          "channel_id": "high_importance_channel",
-          "icon": "@mipmap/ic_launcher", // Optional: set launcher icon
-        },
-      },
-      "data": data ?? {},
-    },
-  };
 }
 
 void showCommonBottomSheet({
@@ -800,10 +679,6 @@ Widget showLoaderList11() {
   );
 }
 
-String cleanFirebaseError(String message) {
-  return message.replaceAll(RegExp(r"\[.*?\]\s*"), "");
-}
-
 Container commonAppBackground({required Widget child}) {
   var size = MediaQuery.of(navigatorKey.currentContext!).size;
   final themeProvider = Provider.of<ThemeProvider>(
@@ -833,22 +708,6 @@ Widget commonHeadingText({
 
     fontWeight: fontWeight ?? FontWeight.w800,
     fontSize: fontSize ?? 18,
-  );
-}
-
-Widget commonTitleText({String? text}) {
-  return commonText(
-    text: text ?? '',
-    fontWeight: FontWeight.w600,
-    fontSize: 16,
-  );
-}
-
-Widget commonSubTitleText({String? text}) {
-  return commonText(
-    text: text ?? '',
-    fontWeight: FontWeight.w500,
-    fontSize: 14,
   );
 }
 
@@ -882,7 +741,7 @@ Widget commonPrefixIcon({
 }
 
 class BottomNavItems {
-  static  List<BottomNavigationBarItem> items = [
+  static List<BottomNavigationBarItem> items = [
     BottomNavigationBarItem(
       icon: ImageIcon(AssetImage(icProductMenu)),
       label: 'Product',
@@ -1235,23 +1094,6 @@ Future<String?> fetchProductImage({
   }
 }
 
-Future<String?> fetchCustomerImage({required int customerID}) async {
-  final url = '${ApiConfig.getCustomerImage}/$customerID.json';
-  final response = await callGETMethod(url: url);
-  if (globalStatusCode == 200) {
-    final data = json.decode(response);
-    final customer = data['customer'];
-    if (customer != null && customer['avatar'] != null) {
-      return customer['avatar'] as String;
-    } else {
-      // return placeholder if no avatar exists
-      return '';
-    }
-  } else {
-    return null;
-  }
-}
-
 Widget commonRefreshIndicator({
   required final Future<void> Function() onRefresh,
   required final Widget child,
@@ -1294,11 +1136,11 @@ Widget commonTextRich({
     ),
   );
 }
+
 String formatPhone(String? code, String? number) {
   if (code == null || number == null) return "N/A";
 
-  final formattedCode =
-  code.startsWith("+") ? code : "+$code";
+  final formattedCode = code.startsWith("+") ? code : "+$code";
 
   return "$formattedCode$number";
 }
@@ -1309,15 +1151,14 @@ String getInitialCountryCode(String? dialCode) {
   }
 
   try {
-    final country = countries.firstWhere(
-          (c) => c.dialCode == dialCode,
-    );
+    final country = countries.firstWhere((c) => c.dialCode == dialCode);
 
     return country.code; // ISO code like IN, US, AE
   } catch (e) {
     return 'US'; // fallback if not found
   }
 }
+
 Widget infoRowBox({
   String? text,
   String? value,

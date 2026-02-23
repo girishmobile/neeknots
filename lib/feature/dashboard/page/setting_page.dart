@@ -71,9 +71,9 @@ class _SettingPageState extends State<SettingPage> {
                         imageUrl: provider.userData?['logo_url'] ?? '',
                         errorWidget: (context, url, error) => Center(
                           child: commonText(
-                            fontSize: 30,
+                            fontSize: 45,
                             color: colorButton1,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             text:
                                 ((provider.userData?['name'] ?? '')
                                     .toString()
@@ -138,7 +138,10 @@ class _SettingPageState extends State<SettingPage> {
                           text: "Mobile Number",
                           value: provider.userData?['mobile'] ?? '-',
                         ),
-
+                        infoRowBox(
+                          text: "App Name",
+                          value: provider.userData?['app_name'] ?? '-',
+                        ),
                         infoRowBox(
                           text: "Store Name",
                           value: provider.userData?['store_name'] ?? '-',
@@ -304,9 +307,9 @@ class _SettingPageState extends State<SettingPage> {
                     ],
                   ),
 
-                /*  commonButton(text: "Admin", onPressed: (){
+                commonButton(text: "Admin", onPressed: (){
                     Navigator.pushNamed(context, RouteName.adminLoginPage);
-                  }),*/
+                  }),
                   SizedBox(height: 18),
                 ],
               ),

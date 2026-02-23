@@ -101,6 +101,8 @@ class LoginScreen extends StatelessWidget {
                                           mobile: provider.tetPhone.text,
                                         );
 
+
+
                                         navigatorKey.currentState?.pushNamed(
                                           RouteName.otpVerificationScreen,
                                           arguments: userData,

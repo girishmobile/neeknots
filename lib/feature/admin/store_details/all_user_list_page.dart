@@ -82,9 +82,8 @@ class _AllUserListPageState extends State<AllUserListPage> {
                                   placeholder: (context, url) => Center(
                                     child: SizedBox(
                                       width: 20,
-                                      // 👈 yahan size set kijiye
+
                                       height: 20,
-                                      // 👈 yahan size set kijiye
                                       child: CircularProgressIndicator(
                                         strokeWidth: 2,
                                       ),

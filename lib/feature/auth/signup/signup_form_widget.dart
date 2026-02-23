@@ -9,7 +9,6 @@ import 'package:neeknots/core/validation/validation.dart';
 import 'package:neeknots/provider/login_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/component/phone_number_field.dart';
 import '../../../main.dart';
 import '../../../provider/theme_provider.dart';
 
@@ -18,7 +17,9 @@ Widget commonSignUpView({
   required void Function() onPressed,
   GestureRecognizer? onPressSignUp,
 }) {
-  final themeProvider = Provider.of<ThemeProvider>(navigatorKey.currentContext!);
+  final themeProvider = Provider.of<ThemeProvider>(
+    navigatorKey.currentContext!,
+  );
   return Column(
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
@@ -41,40 +42,7 @@ Widget commonSignUpView({
         hintText: "Email Address",
       ),
 
-     const SizedBox(height: 20),
-      /*  commonTextField(
-        hintText: "Phone No",
-        controller: provider.tetPhone,
-
-        maxLines: 1,
-
-        keyboardType: TextInputType.phone,
-        validator: validateTenDigitPhone,
-        prefixIcon: commonPrefixIcon(image: icPhone),
-      ),*/
-      /* Row(
-        children: [
-          SizedBox(
-            width: 70,
-            child: commonTextField(
-              initialValue: "+1",
-              keyboardType: TextInputType.phone, hintText: '',
-
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: commonTextField(
-              hintText: "Phone No",
-              controller: provider.tetPhone,
-              maxLines: 1,
-              keyboardType: TextInputType.phone,
-              validator: validateTenDigitPhone,
-              prefixIcon: commonPrefixIcon(image: icPhone),
-            ),
-          ),
-        ],
-      ),*/
+      const SizedBox(height: 20),
 
       IntlPhoneField(
         initialCountryCode: 'US',
@@ -85,7 +53,6 @@ Widget commonSignUpView({
           color: themeProvider.isDark ? Colors.white : Colors.black,
         ),
         decoration: InputDecoration(
-
           hintText: "Phone Number",
           hintStyle: commonTextStyle(color: Colors.grey),
 
@@ -104,19 +71,17 @@ Widget commonSignUpView({
           provider.tetCountryCodeController.text = value.dialCode;
         },
       ),
-  /*  PhoneNumberField(
-        phoneController: provider.tetPhone,
-        countryCodeController: provider.tetCountryCodeController,
-        prefixIcon: commonPrefixIcon(image: icPhone),
-        validator: (value) {
-          if (value == null || value.length != 10) {
-            return "Enter 10 digit phone number";
-          }
-          return null;
-        },
-          isCountryCodeEditable: true, // fixed +1
-      ),*/
       const SizedBox(height: 10),
+      commonTextField(
+        keyboardType: TextInputType.name,
+        validator: (value) =>
+            emptyError(value, errorMessage: "App Name is required"),
+
+        prefixIcon: commonPrefixIcon(image: icStore),
+        controller: provider.tetAppName,
+        hintText: "App Name",
+      ),
+      const SizedBox(height: 20),
       commonTextField(
         hintText: "Store Name/Website Url",
         controller: provider.tetStoreName,
@@ -128,30 +93,7 @@ Widget commonSignUpView({
 
         prefixIcon: commonPrefixIcon(image: icStore),
       ),
-     /* const SizedBox(height: 20),
-      commonTextField(
-        hintText: "Logo Url",
 
-        controller: provider.tetLogoUrl,
-
-        maxLines: 1,
-
-        keyboardType: TextInputType.url,
-
-        prefixIcon: commonPrefixIcon(image: icNetwork),
-      ),*/
-     /* const SizedBox(height: 20),
-      commonTextField(
-        hintText: "Website Url",
-
-        controller: provider.tetWebsiteUrl,
-
-        maxLines: 1,
-
-        keyboardType: TextInputType.url,
-
-        prefixIcon: commonPrefixIcon(image: icNetwork),
-      ),*/
       const SizedBox(height: 50),
       commonButton(text: "Create", onPressed: onPressed),
       const SizedBox(height: 20),
@@ -159,9 +101,11 @@ Widget commonSignUpView({
         onTap: onPressSignUp,
         text1: "Already have an account? ",
         text2: "Login",
-        textStyle1: commonTextStyle(color: themeProvider.isDark?Colors.white:Colors.black),
+        textStyle1: commonTextStyle(
+          color: themeProvider.isDark ? Colors.white : Colors.black,
+        ),
         textStyle2: commonTextStyle(
-          color: themeProvider.isDark?Colors.white:colorLogo,
+          color: themeProvider.isDark ? Colors.white : colorLogo,
           fontWeight: FontWeight.w600,
         ),
       ),

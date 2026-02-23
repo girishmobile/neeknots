@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:neeknots/core/component/component.dart';
 import 'package:neeknots/provider/login_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../core/component/phone_number_field.dart';
 import '../core/image/image_utils.dart';
 import '../core/validation/validation.dart';
 
@@ -76,17 +77,6 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                           validator: validateEmail,
                         ),
 
-                        /*commonView(
-                          controller: provider.tetPhone,
-                          keyboardType: TextInputType.phone,
-                          title: "Phone Number",
-                          validator: (value) {
-                            if (value == null || value.length != 10) {
-                              return "Enter 10 digit phone number";
-                            }
-                            return null;
-                          },
-                        ),*/
                         Align(
                           alignment: Alignment.topLeft,
                           child: commonText(
@@ -95,19 +85,40 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                             textAlign: TextAlign.left,
                           ),
                         ),
-                        PhoneNumberField(
-                          phoneController: provider.tetPhone,
-                          countryCodeController:
-                              provider.tetCountryCodeController,
-                          prefixIcon: commonPrefixIcon(image: icPhone),
-                          validator: (value) {
-                            if (value == null || value.length != 10) {
-                              return "Enter 10 digit phone number";
-                            }
-                            return null;
+
+                        IntlPhoneField(
+                          initialCountryCode: 'US',
+                          controller: provider.tetPhone,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
+                          style: commonTextStyle(color: Colors.black),
+                          decoration: InputDecoration(
+                            hintText: "Phone Number",
+                            hintStyle: commonTextStyle(color: Colors.grey),
+
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 14,
+                            ),
+                            border: commonTextFiledBorder(borderRadius: 12),
+                            enabledBorder: commonTextFiledBorder(
+                              borderRadius: 12,
+                            ),
+                            focusedBorder: commonTextFiledBorder(
+                              borderRadius: 12,
+                            ),
+                          ),
+                          onChanged: (phone) {
+                            provider.tetCountryCodeController.text =
+                                phone.countryCode;
                           },
-                          isCountryCodeEditable: true, // fixed +1
+                          onCountryChanged: (value) {
+                            provider.tetCountryCodeController.text =
+                                value.dialCode;
+                          },
                         ),
+
                         _commonView(
                           controller: provider.tetMessage,
                           validator: (value) {

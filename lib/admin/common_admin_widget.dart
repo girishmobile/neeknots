@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:neeknots/core/component/CommonSwitch.dart';
 import 'package:neeknots/provider/admin_dashboard_provider.dart';
@@ -8,7 +7,6 @@ import 'package:provider/provider.dart';
 
 import '../core/color/color_utils.dart';
 import '../core/component/component.dart';
-import '../core/component/phone_number_field.dart';
 import '../core/image/image_utils.dart';
 import '../core/validation/validation.dart';
 import '../main.dart';
@@ -30,8 +28,6 @@ class CommonAdminWidget extends StatefulWidget {
   final VoidCallback onPressed;
   final bool isEdit;
 
-
-
   @override
   State<CommonAdminWidget> createState() => _State();
 }
@@ -51,17 +47,51 @@ class _State extends State<CommonAdminWidget> {
       widget.provider.tetVersionCode.text = widget.data["version_code"];
       widget.provider.tetAppLogo.text = widget.data["logo_url"] ?? '';
       widget.provider.tetWebsiteUrl.text = widget.data["website_url"];
+      widget.provider.tetAppName.text = widget.data["app_name"] ?? '';
       WidgetsBinding.instance.addPostFrameCallback((_) {
         widget.provider.setStatus(widget.data["active_status"] ?? false);
       });
-    }else
-      {
-        widget.provider.tetStoreName.text = widget.data["store_name"];
-        widget.provider.tetAccessToken.text = widget.data["accessToken"];
-        widget.provider.tetVersionCode.text = widget.data["version_code"];
-      }
+    } else {
+      widget.provider.tetStoreName.text = widget.data["store_name"];
+      widget.provider.tetAccessToken.text = widget.data["accessToken"];
+      widget.provider.tetVersionCode.text = widget.data["version_code"];
+      widget.provider.tetAppName.text = widget.data["app_name"] ?? '';
+    }
   }
 
+  Widget commonFormView({
+    TextInputType? keyboardType,
+    Widget? prefixIcon,
+    Widget? view,
+    String? Function(String?)? validator,
+    TextEditingController? controller,
+    bool readOnly = false,
+    bool filled = false,
+    int? maxLines,
+    String? text,
+    Color? fillColor,
+  }) {
+    return Column(
+      spacing: 10,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        commonText(text: text ?? "Name", fontWeight: FontWeight.w500),
+
+        view ??
+            commonTextField(
+              validator: validator,
+              readOnly: false,
+              filled: filled,
+              maxLines: maxLines,
+              fillColor: fillColor,
+              keyboardType: keyboardType ?? TextInputType.name,
+              prefixIcon: prefixIcon ?? commonPrefixIcon(image: icUser),
+              controller: controller ?? widget.provider.tetFullName,
+              hintText: "",
+            ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,17 +100,19 @@ class _State extends State<CommonAdminWidget> {
         return Stack(
           children: [
             Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              spacing: 10,
+              crossAxisAlignment: CrossAxisAlignment.start,
+
               children: [
-                commonTextField(
+                commonFormView(
+                  text: "Full Name",
                   keyboardType: TextInputType.name,
                   prefixIcon: commonPrefixIcon(image: icUser),
                   controller: widget.provider.tetFullName,
-                  hintText: "Full Name",
                 ),
-                const SizedBox(height: 20),
 
-                commonTextField(
+                commonFormView(
+                  text: "Email Address",
                   keyboardType: TextInputType.emailAddress,
                   validator: validateEmail,
                   readOnly: widget.isEdit ? true : false,
@@ -89,45 +121,59 @@ class _State extends State<CommonAdminWidget> {
 
                   prefixIcon: commonPrefixIcon(image: icEmail),
                   controller: widget.provider.tetEmail,
-                  hintText: "Email Address",
                 ),
 
-                const SizedBox(height: 20),
-                IntlPhoneField(
+                commonFormView(
+                  text: "Phone Number",
+                  keyboardType: TextInputType.emailAddress,
+                  validator: validateEmail,
+                  view: IntlPhoneField(
+                    initialCountryCode: widget.isEdit
+                        ? getInitialCountryCode(widget.data["country_code"])
+                        : 'US',
+                    controller: provider.tetPhone,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    style: commonTextStyle(color: Colors.black),
+                    decoration: InputDecoration(
+                      hintText: "Phone Number",
+                      hintStyle: commonTextStyle(color: Colors.grey),
 
-
-                  initialCountryCode: widget.isEdit
-                      ? getInitialCountryCode(widget.data["country_code"])
-                      : 'US',
-                  controller: provider.tetPhone,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  style: commonTextStyle(
-                    color:  Colors.black,
-                  ),
-                  decoration: InputDecoration(
-                    hintText: "Phone Number",
-                    hintStyle: commonTextStyle(color: Colors.grey),
-
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 14,
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 14,
+                      ),
+                      border: commonTextFiledBorder(borderRadius: 12),
+                      enabledBorder: commonTextFiledBorder(borderRadius: 12),
+                      focusedBorder: commonTextFiledBorder(borderRadius: 12),
                     ),
-                    border: commonTextFiledBorder(borderRadius: 12),
-                    enabledBorder: commonTextFiledBorder(borderRadius: 12),
-                    focusedBorder: commonTextFiledBorder(borderRadius: 12),
+                    onChanged: (phone) {
+                      provider.tetCountryCodeController.text =
+                          phone.countryCode;
+                    },
+                    onCountryChanged: (value) {
+                      provider.tetCountryCodeController.text = value.dialCode;
+                    },
                   ),
-                  onChanged: (phone) {
-                    provider.tetCountryCodeController.text = phone.countryCode;
-                  },
-                  onCountryChanged: (value) {
-                    provider.tetCountryCodeController.text = value.dialCode;
-                  },
+                  readOnly: widget.isEdit ? true : false,
+                  fillColor: Colors.grey.withValues(alpha: 0.1),
+                  filled: widget.isEdit ? true : false,
+
+                  prefixIcon: commonPrefixIcon(image: icEmail),
+                  controller: widget.provider.tetEmail,
+
                 ),
 
-                const SizedBox(height: 20),
-                commonTextField(
-                  hintText: "Store Name",
+                commonFormView(
+                  text: "Store Name",
                   controller: widget.provider.tetStoreName,
+                  maxLines: 1,
+                  keyboardType: TextInputType.text,
+                  prefixIcon: commonPrefixIcon(image: icStore),
+                ),
+
+                commonFormView(
+                  text: "App Name",
+                  controller: widget.provider.tetAppName,
 
                   maxLines: 1,
 
@@ -135,56 +181,44 @@ class _State extends State<CommonAdminWidget> {
 
                   prefixIcon: commonPrefixIcon(image: icStore),
                 ),
-                const SizedBox(height: 20),
-                commonTextField(
-                  hintText: "Access Token",
+
+                commonFormView(
+                  text: "Access Token",
                   controller: widget.provider.tetAccessToken,
-
                   maxLines: 1,
-
                   keyboardType: TextInputType.text,
-
                   prefixIcon: commonPrefixIcon(image: icAccessToken),
                 ),
 
-                const SizedBox(height: 20),
-                commonTextField(
-                  hintText: "App Version Code",
+                commonFormView(
+                  text: "App Version Code",
                   controller: widget.provider.tetVersionCode,
-
                   maxLines: 1,
-
                   keyboardType: TextInputType.text,
-
                   prefixIcon: commonPrefixIcon(image: icVersionCode),
                 ),
-                const SizedBox(height: 20),
-                commonTextField(
-                  hintText: "App Logo Url",
+                commonFormView(
+                  text: "App Logo Url",
                   controller: widget.provider.tetAppLogo,
-
                   maxLines: 1,
-
                   keyboardType: TextInputType.text,
-
                   prefixIcon: commonPrefixIcon(image: icAppLogoImage),
                 ),
-                const SizedBox(height: 20),
-                commonTextField(
-                  hintText: "Website Url",
+                commonFormView(
+                  text: "Website Url",
                   controller: widget.provider.tetWebsiteUrl,
-
                   maxLines: 1,
-
                   keyboardType: TextInputType.url,
-
                   prefixIcon: commonPrefixIcon(image: icNetwork),
                 ),
-                const SizedBox(height: 20),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    commonText(text: "Account Status:"),
+                    commonText(
+                      text: "Account Status:",
+                      fontWeight: FontWeight.w500,
+                    ),
                     Consumer<AdminDashboardProvider>(
                       builder: (context, provider, child) {
                         return CommonSwitch(
@@ -198,7 +232,6 @@ class _State extends State<CommonAdminWidget> {
                   ],
                 ),
 
-                const SizedBox(height: 20),
                 commonButton(
                   text: widget.isEdit ? "Update" : "Add User",
                   width: MediaQuery.sizeOf(context).width,
@@ -211,29 +244,27 @@ class _State extends State<CommonAdminWidget> {
                         token: widget.data['fcm_token'],
                       );
                     } else {
-
                       final signUpProvider = Provider.of<SignupProvider>(
                         context,
                         listen: false,
                       );
                       await signUpProvider.signup(
-                        versionCode: widget.provider.tetVersionCode
-                            .text,
-                        accessToken: widget.provider.tetAccessToken
-                            .text,
-                        logoUrl: widget.provider.tetAppLogo
-                            .text,
-                        countryCode:    widget.provider.tetCountryCodeController.text,
-                        email:  widget.provider.tetEmail.text,
+                        appName: widget.provider.tetAppName.text,
+                        versionCode: widget.provider.tetVersionCode.text,
+                        accessToken: widget.provider.tetAccessToken.text,
+                        logoUrl: widget.provider.tetAppLogo.text,
+                        countryCode:
+                            widget.provider.tetCountryCodeController.text,
+                        email: widget.provider.tetEmail.text,
 
                         storeName: widget.provider.tetStoreName.text,
                         websiteUrl: widget.provider.tetAppLogo.text,
                         mobile: widget.provider.tetPhone.text,
                         name: widget.provider.tetFullName.text,
-
                       );
-                     widget.provider.getUsersByStoreName(widget.provider.tetStoreName.text.trim(),);
-
+                      widget.provider.getUsersByStoreName(
+                        widget.provider.tetStoreName.text.trim(),
+                      );
                     }
 
                     //widget.provider.updateUser( widget.data["uid"]);
@@ -267,7 +298,7 @@ Widget notificationWidget({String? value, void Function()? onTap}) {
               image: icNotification,
               width: 24,
               height: 24,
-              colorIcon:colorText,
+              colorIcon: colorText,
             ),
 
             Positioned(

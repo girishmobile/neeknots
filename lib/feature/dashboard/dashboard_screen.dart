@@ -119,9 +119,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         return Stack(
           children: [
             commonScaffold(
-            /*  backgroundColor: themeProvider.isDark
-                  ? colorDarkBgColor
-                  : Colors.white,*/
+
               appBar: commonAppBar(
                 backgroundColor: themeProvider.isDark
                     ? colorDarkBgColor
@@ -147,7 +145,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     onTap: () {
                       navigatorKey.currentState?.pushNamed(
                         RouteName.notificationScreen,
-                  /*      arguments: {'uid': "sa"},*/
                       );
                     },
                   ),
@@ -157,29 +154,34 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 context: context,
                 leading:
                 Consumer<ProfileProvider>(
-                  builder: (context,provider,child) {
+                  builder: (context,profileProvider,child) {
                     return Container(
 
                       padding: EdgeInsets.only(left: 10),
-                      child: CircleAvatar(
-                        radius: 100,
-                        backgroundColor: colorButton1.withValues(alpha: 0.09),
-                        child: ClipOval(
-                          child: CachedNetworkImage(
-                            height: 45,
-                            width: 45,
-                            fit: BoxFit.cover,
-                            imageUrl: provider.userData?['logo_url'] ?? '',
-                            errorWidget: (context, url, error) => Center(
-                              child: commonText(
-                                fontSize: 16,
-                                color: colorButton1,
-                                fontWeight: FontWeight.w700,
-                                text: ((provider.userData?['name'] ?? '')
-                                    .toString()
-                                    .isNotEmpty)
-                                    ? provider.userData!['name'][0].toUpperCase()
-                                    : '',
+                      child: commonInkWell(
+                        onTap: (){
+                        provider.setIndex(4);
+                        },
+                        child: CircleAvatar(
+                          radius: 100,
+                          backgroundColor: colorButton1.withValues(alpha: 0.09),
+                          child: ClipOval(
+                            child: CachedNetworkImage(
+                              height: 45,
+                              width: 45,
+                              fit: BoxFit.cover,
+                              imageUrl: profileProvider.userData?['logo_url'] ?? '',
+                              errorWidget: (context, url, error) => Center(
+                                child: commonText(
+                                  fontSize: 18,
+                                  color: colorButton1,
+                                  fontWeight: FontWeight.w500,
+                                  text: ((profileProvider.userData?['name'] ?? '')
+                                      .toString()
+                                      .isNotEmpty)
+                                      ? profileProvider.userData!['name'][0].toUpperCase()
+                                      : '',
+                                ),
                               ),
                             ),
                           ),

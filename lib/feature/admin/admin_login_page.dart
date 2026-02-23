@@ -177,6 +177,7 @@ class AdminLoginPage extends StatelessWidget {
     final email = provider.tetEmail.text.trim();
     final mobile = '${provider.tetCountryCodeController.text.trim()}${provider.tetPhone.text.trim()}';
 
+
     if (email.isEmpty || mobile.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Please enter email and mobile number")),
@@ -191,13 +192,14 @@ class AdminLoginPage extends StatelessWidget {
       );
       provider.resetState();
     } else {
-      final userData = await provider.adminUserLogin(
+
+      await provider.adminUserLogin(
         context: context,
         countryCode: provider
             .tetCountryCodeController
             .text,
         email: provider.tetEmail.text.trim(),
-        mobile: provider.tetPhone.text,
+        mobile: provider.tetPhone.text.trim(),
       );
 
 

@@ -655,10 +655,9 @@ class OrdersProvider with ChangeNotifier {
       );
 
       final data = json.decode(response.body);
+      final ordersJson = data['orders'] as List? ?? [];
 
-      final orders = (data['orders'] as List)
-          .map((e) => Order.fromJson(e))
-          .toList();
+      final orders = ordersJson.map((e) => Order.fromJson(e)).toList();
 
       String? nextPageInfo;
       final linkHeader = response.headers['link'];

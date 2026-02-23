@@ -16,6 +16,7 @@ class AdminDashboardProvider with ChangeNotifier {
   final tetWebsiteUrl = TextEditingController();
   final tetAccessToken = TextEditingController();
   final tetVersionCode = TextEditingController();
+  final tetAppName = TextEditingController();
   final tetAppLogo = TextEditingController();
   bool _status = false;
 
@@ -85,6 +86,7 @@ class AdminDashboardProvider with ChangeNotifier {
     tetAccessToken.clear();
     tetVersionCode.clear();
     tetAppLogo.clear();
+    tetAppName.clear();
 
     _status = false; // also reset switch/checkbox if needed
 
@@ -118,6 +120,7 @@ class AdminDashboardProvider with ChangeNotifier {
             "name": tetFullName.text.trim(),
             "email": tetEmail.text.trim(),
             "mobile": tetPhone.text.trim(),
+            "app_name": tetAppName.text.trim(),
             "country_code": tetCountryCodeController.text.trim(),
             "store_name": tetStoreName.text.trim(),
             "accessToken": tetAccessToken.text.trim(),

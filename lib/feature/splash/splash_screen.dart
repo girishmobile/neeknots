@@ -1,15 +1,11 @@
 import 'dart:async';
 
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import 'package:neeknots/core/component/component.dart';
 import 'package:neeknots/core/image/image_utils.dart';
 import 'package:neeknots/main.dart';
-import 'package:neeknots/provider/theme_provider.dart';
 import 'package:neeknots/routes/app_routes.dart';
-import 'package:provider/provider.dart';
 
 import '../../core/firebase/auth_service.dart';
 import '../../core/hive/app_config_cache.dart';
@@ -27,6 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    print("Splash initState called");
     WidgetsBinding.instance.addPostFrameCallback((_) {
       init();
     });
@@ -38,19 +35,15 @@ class _SplashScreenState extends State<SplashScreen> {
     if (kIsWeb) {
       navigatorKey.currentState?.pushNamedAndRemoveUntil(
         RouteName.adminLoginPage,
-            (Route<dynamic> route) => false,
+        (Route<dynamic> route) => false,
       );
-    }else
-      {
-        if (storedEmailOrMobile?.isNotEmpty == true) {
-          checkStatus();
-        } else {
-          redirectToIntro();
-        }
+    } else {
+      if (storedEmailOrMobile?.isNotEmpty == true) {
+        checkStatus();
+      } else {
+        redirectToIntro();
       }
-
-
-
+    }
   }
 
   void checkStatus() async {
@@ -88,9 +81,8 @@ class _SplashScreenState extends State<SplashScreen> {
           logoUrl: userData['logo_url'] ?? '',
         );
 
-        navigatorKey.currentState?.pushNamedAndRemoveUntil(
+        navigatorKey.currentState?.pushReplacementNamed(
           RouteName.dashboardScreen,
-          (Route<dynamic> route) => false,
         );
       } else {
         Timer(const Duration(seconds: 3), () {
@@ -100,14 +92,6 @@ class _SplashScreenState extends State<SplashScreen> {
           );
         });
       }
-
-
-    /*  Timer(const Duration(seconds: 3), () {
-        navigatorKey.currentState?.pushNamedAndRemoveUntil(
-          RouteName.dashboardScreen,
-          (Route<dynamic> route) => false,
-        );
-      });*/
     } catch (e) {
       String errorMessage = e.toString().split(": ").last;
       if (e.toString() == "User not found") {
@@ -143,27 +127,23 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
     return commonScaffold(
-      body: Consumer<ThemeProvider>(
-        builder: (context, provider, child) {
-          return commonAppBackground(
-            child: Center(
-              child: commonNetworkImage(
-                decoration: BoxDecoration(),
-                errorWidget: Center(
-                  child: commonAssetImage(
-                    icAppLogo,
-                    width: size.width * 0.7,
+      body: commonAppBackground(
+        child: Center(
+          child: commonNetworkImage(
+            decoration: BoxDecoration(),
+            errorWidget: Center(
+              child: commonAssetImage(
+                icAppLogo,
+                width: size.width * 0.7,
 
-                    height: 72,
-                  ),
-                ),
-                fit: BoxFit.scaleDown,
-                _logoUrl ?? '',
-                size: size.width * 0.7,
+                height: 72,
               ),
             ),
-          );
-        },
+            fit: BoxFit.scaleDown,
+            _logoUrl ?? '',
+            size: size.width * 0.7,
+          ),
+        ),
       ),
     );
   }

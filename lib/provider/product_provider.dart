@@ -22,8 +22,6 @@ class ProductProvider with ChangeNotifier {
 
   List<Images> productImages = [];
 
-  //Girsh - 24-Sept-2025
-  // dynamic controllers mapped by variant id
   final Map<int, TextEditingController> qtyControllers = {};
   final Map<int, TextEditingController> priceControllers = {};
 
@@ -256,20 +254,17 @@ class ProductProvider with ChangeNotifier {
 
             _lastId = newItems.last.id;
             _currentPage++;
-
           } else {
             // No new items → stop pagination
             _hasMore = false;
-
           }
         } else {
           _hasMore = false;
-
         }
         // stop fetching if we have loaded all 278
         if (_products.length >= 278) {
           _hasMore = false;
-       //   debugPrint("✅ Loaded all 278 products.");
+          //   debugPrint("✅ Loaded all 278 products.");
         }
 
         notifyListeners();
@@ -296,6 +291,7 @@ class ProductProvider with ChangeNotifier {
 
       String url =
           '${await ApiConfig.productsUrl}?limit=$effectiveLimit&order=id+asc';
+
       if (status != null && status.isNotEmpty) {
         final encodedTitle = "&status=$status";
         url += encodedTitle;
@@ -376,8 +372,10 @@ class ProductProvider with ChangeNotifier {
   Future<void> getTotalProductCount() async {
     _isFetching = true;
     notifyListeners();
-    try{
-      final response = await callGETMethod(url: await ApiConfig.totalProductUrl);
+    try {
+      final response = await callGETMethod(
+        url: await ApiConfig.totalProductUrl,
+      );
 
       if (globalStatusCode == 200) {
         final data = json.decode(response);
@@ -386,10 +384,8 @@ class ProductProvider with ChangeNotifier {
         _isFetching = false;
         notifyListeners();
       }
-
-    }
-    catch(e){
-      _totalProductCount =  0;
+    } catch (e) {
+      _totalProductCount = 0;
       _isFetching = false;
       notifyListeners();
     }
@@ -490,8 +486,7 @@ class ProductProvider with ChangeNotifier {
     required String uid,
     required String title,
   }) async {
-
-    try{
+    try {
       final productCollection = await _authService.getStoreSubCollection(
         _authService.productCollection,
       );
@@ -500,25 +495,20 @@ class ProductProvider with ChangeNotifier {
         //"approved_date": DateTime.now(), // optional
         title: DateTime.now(), // optional
       });
-   //   await getAllPendingRequest();
-
-    }
-
-    catch(e){
+      //   await getAllPendingRequest();
+    } catch (e) {
       debugPrint(e.toString());
-
     }
-
   }
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   Future<void> updateProductStatusWeb({
     required String uid,
     required String storeName, // you must pass the store name or store docId
     required String title,
   }) async {
-    try{
-
+    try {
       /*final productCollection = await _authService.getStoreSubCollection(
         _authService.productCollection,
       );*/
@@ -528,7 +518,6 @@ class ProductProvider with ChangeNotifier {
           .collection(_authService.productCollection)
           .doc(uid); // actual product document ID
 
-
       /*await productCollection.update({
         "status": true,
         title: DateTime.now(),
@@ -536,12 +525,9 @@ class ProductProvider with ChangeNotifier {
       print("✅ Product $uid approved successfully");*/
       await productCollection.delete();
       //   await getAllPendingRequest();
-    }
-
-    catch(e){
+    } catch (e) {
       debugPrint(e.toString());
     }
-
   }
 
   Future<void> uploadProductImageViaAdmin({
@@ -586,6 +572,7 @@ class ProductProvider with ChangeNotifier {
       notifyListeners();
     }
   }
+
   Future<void> uploadProductImageViaAdminWeb({
     required String imagePath,
     required int productId,
@@ -595,7 +582,7 @@ class ProductProvider with ChangeNotifier {
     _isImageUpdating = true;
     notifyListeners();
 
-    try{
+    try {
       final urlString =
           "${await ApiConfig.baseUrl}/products/$productId/images.json";
 
@@ -614,7 +601,11 @@ class ProductProvider with ChangeNotifier {
           ),
         );
 
-        await updateProductStatusWeb(uid: uid, title: "approved_date",storeName: storeRoom);
+        await updateProductStatusWeb(
+          uid: uid,
+          title: "approved_date",
+          storeName: storeRoom,
+        );
 
         final data = json.decode(response);
         final imageJson = data["image"];
@@ -629,12 +620,11 @@ class ProductProvider with ChangeNotifier {
         _isImageUpdating = false;
         notifyListeners();
       }
-    }
-    catch(e){
+    } catch (e) {
       showCommonDialog(title: "e$e", context: navigatorKey.currentContext!);
     }
-
   }
+
   Future<void> deleteProductImage({
     required int imageId,
     required int productId,
@@ -746,7 +736,7 @@ class ProductProvider with ChangeNotifier {
   }
 
   int _pendingCount = 0; // Provider me variable define karo
-  int get   pendingCount => _pendingCount;
+  int get pendingCount => _pendingCount;
 
   Future<void> getCountPendingRequest() async {
     _setLoading(true);
@@ -763,7 +753,7 @@ class ProductProvider with ChangeNotifier {
       _setLoading(false);
       notifyListeners();
     } catch (e) {
-      _pendingCount=0;
+      _pendingCount = 0;
       _setLoading(false);
       notifyListeners();
       debugPrint("Error fetching pending products: $e");

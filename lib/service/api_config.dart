@@ -8,7 +8,6 @@ class ApiConfig {
 
   static Future<Map<String, String>> getCommonHeaders() async {
     final token = await accessToken;
-
     return {
       'Content-Type': 'application/json',
       'accept': '*/*',

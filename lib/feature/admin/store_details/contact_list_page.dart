@@ -55,15 +55,7 @@ class _StoreCollectionTabState extends State<ContactListPage> {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: isMobile ? 1 : 3,
-                  crossAxisSpacing: 5,
-                  mainAxisSpacing: 12,
-                  childAspectRatio: isMobile
-                      ? 1.7
-                      : 3.1, // adjust roughly for initial layout
-                ),
+              child: ListView.builder(
                 itemCount: provider.contacts.length,
                 physics: BouncingScrollPhysics(),
                 itemBuilder: (context, index) {

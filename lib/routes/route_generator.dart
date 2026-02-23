@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:neeknots/admin/admin_dashboad.dart';
 import 'package:neeknots/contact_us/contact_us_screen.dart';
+import 'package:neeknots/core/image/image_utils.dart';
 import 'package:neeknots/feature/admin/admin_home_page.dart';
 import 'package:neeknots/feature/admin/admin_login_page.dart';
 import 'package:neeknots/feature/auth/otp_verification_screen.dart';
@@ -17,11 +18,12 @@ import 'package:neeknots/feature/product_details/add_product_screen.dart';
 import 'package:neeknots/feature/product_details/product_details_screen.dart';
 import 'package:neeknots/feature/sales_details_screen.dart';
 import 'package:neeknots/feature/total_order_screen.dart';
+import 'package:neeknots/main.dart';
 import 'package:neeknots/models/customer_model.dart';
 
+import '../core/component/component.dart';
 import '../feature/auth/login_screen.dart';
 import '../feature/dashboard/dashboard_screen.dart';
-
 import '../feature/splash/splash_screen.dart';
 import '../feature/total_customer_screen.dart';
 import '../feature/total_product_screen.dart';
@@ -105,7 +107,22 @@ class RouteGenerate {
         return MaterialPageRoute(builder: (_) => const AdminHomePage());
 
       default:
-        return MaterialPageRoute(builder: (_) => const SplashScreen());
+        return MaterialPageRoute(
+          builder: (_) => Scaffold(
+            body: commonAppBackground(
+              child: Center(
+                child: Image.asset(
+                  icAppLogo,
+                  width:
+                      MediaQuery.sizeOf(navigatorKey.currentContext!).width *
+                      0.7,
+
+                  height: 72,
+                ),
+              ),
+            ),
+          ),
+        );
     }
   }
 }

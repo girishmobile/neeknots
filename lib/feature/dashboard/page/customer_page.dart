@@ -166,7 +166,7 @@ class _CustomersPageState extends State<CustomersPage> {
                 : SizedBox(
                     width: MediaQuery.sizeOf(context).width,
                     height: MediaQuery.sizeOf(context).height * 0.7,
-                    child: commonErrorView(text: "Customer Not Fount."),
+                    child: commonErrorView(text: "Customer Not Found"),
                   ),
           ),
         ],

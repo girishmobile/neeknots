@@ -50,6 +50,7 @@ class AuthService {
     required String mobile,
     required String logoUrl,
     required String name,
+    required String appName,
     String? countryCode,
     String? accessToken,
     String? versionCode,
@@ -82,6 +83,7 @@ class AuthService {
       Map<String, dynamic> userData = {
         "store_name": storeName,
         "website_url": websiteUrl,
+        "app_name": appName,
         "email": email,
         "mobile": mobile,
         "name": name,

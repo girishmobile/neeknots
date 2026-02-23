@@ -30,6 +30,7 @@ class SignupProvider extends ChangeNotifier {
     required String countryCode,
     required String logoUrl,
     required String name,
+    required String appName,
 
     String ?accessToken,
     String ?versionCode,
@@ -44,6 +45,7 @@ class SignupProvider extends ChangeNotifier {
         websiteUrl: websiteUrl,
         countryCode:countryCode ,
         mobile: mobile,
+        appName: appName,
         name: name,
         accessToken: accessToken,
         versionCode: versionCode,

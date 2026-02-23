@@ -106,15 +106,7 @@ class AppConfigCache {
     await prefs.remove(_versionCodeKey);
     await prefs.remove(_logoUrlKey);
   }
-/*  static Future<void> saveSelectedStoreUid(String uid) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_selectedStoreKey, uid);
-  }
 
-  static Future<String?> getSelectedStoreUid() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(_selectedStoreKey);
-  }*/
   /// Clear All
   static Future<void> clearAll() async {
     final prefs = await SharedPreferences.getInstance();

@@ -118,6 +118,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                             true) {
                                           try {
                                             await signUpProvider.signup(
+                                              appName: provider.tetAppName.text,
                                               logoUrl:  provider
                                                   .tetLogoUrl
                                                   .text,

@@ -8,7 +8,6 @@ import 'package:neeknots/provider/admin_home_provider.dart';
 import 'package:neeknots/provider/admin_menu_provider.dart';
 import 'package:neeknots/provider/customer_provider.dart';
 import 'package:neeknots/provider/image_picker_provider.dart';
-import 'package:neeknots/provider/internet_provider.dart';
 import 'package:neeknots/provider/login_provider.dart';
 import 'package:neeknots/provider/notification_provider.dart';
 import 'package:neeknots/provider/order_provider.dart';
@@ -57,7 +56,6 @@ List<SingleChildWidget> providers = [
     create: (_) => NotificationProvider(),
   ),
 
-  ChangeNotifierProvider<InternetProvider>(create: (_) => InternetProvider()),
   ChangeNotifierProvider<AdminDashboardProvider>(
     create: (_) => AdminDashboardProvider(),
   ),
@@ -97,7 +95,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
+   // final themeProvider = Provider.of<ThemeProvider>(context);
     return MaterialApp(
       scaffoldMessengerKey: rootScaffoldMessengerKey,
       navigatorKey: navigatorKey,
@@ -105,9 +103,9 @@ class MyApp extends StatelessWidget {
       title: appName,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      themeMode: themeProvider.isDark ? ThemeMode.dark : ThemeMode.light,
+      themeMode: ThemeMode.light,
       initialRoute: RouteName.splashScreen,
-      // home: AdminDashboardScreen(),
+
       onGenerateRoute: RouteGenerate.onGenerateRoute,
     );
   }
