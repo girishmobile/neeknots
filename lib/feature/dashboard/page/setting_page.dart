@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:neeknots/core/color/color_utils.dart';
 import 'package:neeknots/core/component/component.dart';
+import 'package:neeknots/feature/auth/signup/bio_metric_view.dart';
 import 'package:neeknots/provider/dashboard_provider.dart';
 import 'package:neeknots/provider/login_provider.dart';
 import 'package:neeknots/provider/profile_provider.dart';
@@ -124,7 +125,7 @@ class _SettingPageState extends State<SettingPage> {
                     ),
                     // p//adding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                     child: Column(
-                      spacing: 20,
+                      spacing: 24,
                       children: [
                         infoRowBox(
                           text: "Full Name",
@@ -189,6 +190,7 @@ class _SettingPageState extends State<SettingPage> {
                             },
                           ),
                         ),
+                        BioMetricView(),
                       ],
                     ),
                   ),
@@ -305,7 +307,7 @@ class _SettingPageState extends State<SettingPage> {
                     ],
                   ),
 
-                /*  commonButton(text: "Admin", onPressed: (){
+                  /*  commonButton(text: "Admin", onPressed: (){
                     Navigator.pushNamed(context, RouteName.adminLoginPage);
                   }),*/
                   SizedBox(height: 18),

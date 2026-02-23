@@ -97,7 +97,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
+    //final themeProvider = Provider.of<ThemeProvider>(context);
+
     return MaterialApp(
       scaffoldMessengerKey: rootScaffoldMessengerKey,
       navigatorKey: navigatorKey,
@@ -105,7 +106,7 @@ class MyApp extends StatelessWidget {
       title: appName,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      themeMode: themeProvider.isDark ? ThemeMode.dark : ThemeMode.light,
+      themeMode: ThemeMode.light,
       initialRoute: RouteName.splashScreen,
       // home: AdminDashboardScreen(),
       onGenerateRoute: RouteGenerate.onGenerateRoute,

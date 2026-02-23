@@ -1,11 +1,12 @@
 import 'dart:async';
 
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:neeknots/core/component/component.dart';
 import 'package:neeknots/core/image/image_utils.dart';
+import 'package:neeknots/feature/auth/app_lock_services.dart';
+import 'package:neeknots/feature/auth/app_lock_storage.dart';
 import 'package:neeknots/main.dart';
 import 'package:neeknots/provider/theme_provider.dart';
 import 'package:neeknots/routes/app_routes.dart';
@@ -24,33 +25,57 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   String? _logoUrl;
 
+  //Face lock
+  bool _authCancelled = false;
+  final _biometric = AppLockServices();
+  final _storage = AppLockStorage();
+
   @override
   void initState() {
     super.initState();
+    print("🔥 Splash initState called");
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      init();
+      initSlash();
     });
   }
 
-  Future<void> init() async {
+  Future<void> initSlash() async {
     String? storedEmailOrMobile = await AppConfigCache.getStoredEmailOrMobile();
 
     if (kIsWeb) {
       navigatorKey.currentState?.pushNamedAndRemoveUntil(
         RouteName.adminLoginPage,
-            (Route<dynamic> route) => false,
+        (Route<dynamic> route) => false,
       );
-    }else
-      {
-        if (storedEmailOrMobile?.isNotEmpty == true) {
-          checkStatus();
-        } else {
-          redirectToIntro();
-        }
+    } else {
+      if (storedEmailOrMobile?.isNotEmpty == true) {
+        _handleAppLock();
+        // checkStatus();
+      } else {
+        redirectToIntro();
       }
+    }
+  }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
-
+  Future<void> _handleAppLock() async {
+    final enabled = await _storage.isEnabled();
+    if (enabled) {
+      final authenticated = await _biometric.authenticate();
+      if (!authenticated) {
+        // App stays locked – user can retry or background app
+        setState(() {
+          _authCancelled = true;
+        });
+        return;
+      }
+    }
+    if (!mounted) return;
+    checkStatus();
   }
 
   void checkStatus() async {
@@ -101,8 +126,7 @@ class _SplashScreenState extends State<SplashScreen> {
         });
       }
 
-
-    /*  Timer(const Duration(seconds: 3), () {
+      /*  Timer(const Duration(seconds: 3), () {
         navigatorKey.currentState?.pushNamedAndRemoveUntil(
           RouteName.dashboardScreen,
           (Route<dynamic> route) => false,
@@ -146,21 +170,53 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Consumer<ThemeProvider>(
         builder: (context, provider, child) {
           return commonAppBackground(
-            child: Center(
-              child: commonNetworkImage(
-                decoration: BoxDecoration(),
-                errorWidget: Center(
-                  child: commonAssetImage(
-                    icAppLogo,
-                    width: size.width * 0.7,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: commonNetworkImage(
+                    decoration: BoxDecoration(),
+                    errorWidget: Center(
+                      child: commonAssetImage(
+                        icAppLogo,
+                        width: size.width * 0.7,
 
-                    height: 72,
+                        height: 72,
+                      ),
+                    ),
+                    fit: BoxFit.scaleDown,
+                    _logoUrl ?? '',
+                    size: size.width * 0.7,
                   ),
                 ),
-                fit: BoxFit.scaleDown,
-                _logoUrl ?? '',
-                size: size.width * 0.7,
-              ),
+                if (_authCancelled) ...[
+                  const Text(
+                    'Authentication required',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  const SizedBox(height: 12),
+
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        _authCancelled = false;
+                      });
+                      _handleAppLock();
+                    },
+                    child: const Text('Try Again'),
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  TextButton(
+                    onPressed: () {
+                      // Optional: exit app
+                      // SystemNavigator.pop();
+                    },
+                    child: const Text('Cancel'),
+                  ),
+                ],
+              ],
             ),
           );
         },
