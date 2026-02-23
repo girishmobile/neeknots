@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:neeknots/core/color/color_utils.dart';
 import 'package:neeknots/core/component/component.dart';
+import 'package:neeknots/feature/auth/signup/bio_metric_view.dart';
 import 'package:neeknots/provider/dashboard_provider.dart';
 import 'package:neeknots/provider/login_provider.dart';
 import 'package:neeknots/provider/profile_provider.dart';
@@ -113,16 +114,18 @@ class _SettingPageState extends State<SettingPage> {
                   const SizedBox(height: 8),
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 0),
-                    padding: const EdgeInsets.symmetric(vertical: 18,horizontal: 10),
-                    decoration: BoxDecoration(
-                      color:const Color(0xffF4F6F8),
-                      border: Border.all(color: colorBorder),
-                      borderRadius: BorderRadius.circular(20),
-
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 18,
+                      horizontal: 10,
                     ),
-                   // p//adding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: const Color(0xffF4F6F8),
+                      border: Border.all(color: colorBorder),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    // p//adding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                     child: Column(
-                      spacing: 20,
+                      spacing: 24,
                       children: [
                         infoRowBox(
                           text: "Full Name",
@@ -179,7 +182,9 @@ class _SettingPageState extends State<SettingPage> {
                                     child: commonText(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500,
-                                      color: isActive ? Colors.green : Colors.red,
+                                      color: isActive
+                                          ? Colors.green
+                                          : Colors.red,
                                       text: isActive ? "Active" : "Inactive",
                                     ),
                                   ),
@@ -188,6 +193,7 @@ class _SettingPageState extends State<SettingPage> {
                             },
                           ),
                         ),
+                        BioMetricView(),
                       ],
                     ),
                   ),
@@ -201,105 +207,102 @@ class _SettingPageState extends State<SettingPage> {
                   ),
 
                   const SizedBox(height: 18),
-                  Row(
+                  Column(
                     spacing: 20,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Expanded(
-                        child: commonInkWell(
-                          onTap: () {
-                            showCommonDialog(
-                              confirmText: "Yes",
-                              onPressed: () async {
-                                await AppConfigCache.clearAll();
-                                navigatorKey.currentContext!
-                                    .read<DashboardProvider>()
-                                    .resetTab();
-                                navigatorKey.currentContext!
-                                    .read<ProductProvider>()
-                                    .reset();
-                                navigatorKey.currentContext!
-                                    .read<OrdersProvider>()
-                                    .resetData();
-                                navigatorKey.currentContext!
-                                    .read<CustomerProvider>()
-                                    .reset();
-                                navigatorKey.currentContext!
-                                    .read<ProfileProvider>()
-                                    .resetState();
-                                navigatorKey.currentContext!
-                                    .read<LoginProvider>()
-                                    .resetState();
-                                await AppConfigCache.clearConfig();
-                                navigatorKey.currentState?.pushNamedAndRemoveUntil(
-                                  RouteName.loginScreen,
-                                  (Route<dynamic> route) => false,
-                                );
-                              },
-                              cancelText: "No",
-                              title: "Logout?",
-                              context: context,
-                              content: "Are you sure want to logout",
-                            );
-                          },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 12,
-                              horizontal: 60,
-                            ),
-                            decoration: commonBoxDecoration(
+                      commonInkWell(
+                        onTap: () {
+                          showCommonDialog(
+                            confirmText: "Yes",
+                            onPressed: () async {
+                              await AppConfigCache.clearAll();
+                              navigatorKey.currentContext!
+                                  .read<DashboardProvider>()
+                                  .resetTab();
+                              navigatorKey.currentContext!
+                                  .read<ProductProvider>()
+                                  .reset();
+                              navigatorKey.currentContext!
+                                  .read<OrdersProvider>()
+                                  .resetData();
+                              navigatorKey.currentContext!
+                                  .read<CustomerProvider>()
+                                  .reset();
+                              navigatorKey.currentContext!
+                                  .read<ProfileProvider>()
+                                  .resetState();
+                              navigatorKey.currentContext!
+                                  .read<LoginProvider>()
+                                  .resetState();
+                              await AppConfigCache.clearConfig();
+                              navigatorKey.currentState
+                                  ?.pushNamedAndRemoveUntil(
+                                    RouteName.loginScreen,
+                                    (Route<dynamic> route) => false,
+                                  );
+                            },
+                            cancelText: "No",
+                            title: "Logout?",
+                            context: context,
+                            content: "Are you sure want to logout",
+                          );
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 12,
+                            horizontal: 60,
+                          ),
+                          decoration: commonBoxDecoration(
+                            color: themeProvider.isDark
+                                ? Colors.white
+                                : colorLogo,
+                          ),
+                          child: Center(
+                            child: commonText(
+                              text: "Logout".toUpperCase(),
                               color: themeProvider.isDark
-                                  ? Colors.white
-                                  : colorLogo,
-                            ),
-                            child: Center(
-                              child: commonText(
-                                text: "Logout".toUpperCase(),
-                                color: themeProvider.isDark
-                                    ? Colors.black
-                                    : Colors.white,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                              ),
+                                  ? Colors.black
+                                  : Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
                       ),
-                      Expanded(
-                        child: commonInkWell(
-                          onTap: () {
-                            showCommonDialog(
-                              title: "Delete",
-                              context: context,
-                              content: "Are you sure want to delete account",
-                              onPressed: () async {
-                                final authService = AuthService();
-                                await authService.deleteCurrentUser(
-                                  context: context,
-                                  uid: provider.userData?['id'] ?? '',
-                                );
-                              },
-                            );
-                          },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 12,
-                              horizontal: 30,
-                            ),
-                            decoration: commonBoxDecoration(
-                              color: themeProvider.isDark
-                                  ? Colors.white
-                                  : Colors.red,
-                            ),
-                            child: Center(
-                              child: commonText(
-                                text: "Delete Account".toUpperCase(),
-                                color: Colors.white,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                              ),
+                      commonInkWell(
+                        onTap: () {
+                          showCommonDialog(
+                            title: "Delete",
+                            context: context,
+                            content: "Are you sure want to delete account",
+                            onPressed: () async {
+                              final authService = AuthService();
+                              await authService.deleteCurrentUser(
+                                context: context,
+                                uid: provider.userData?['id'] ?? '',
+                              );
+                            },
+                          );
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 12,
+                            horizontal: 30,
+                          ),
+                          decoration: commonBoxDecoration(
+                            color: themeProvider.isDark
+                                ? Colors.white
+                                : Colors.red,
+                          ),
+                          child: Center(
+                            child: commonText(
+                              text: "Delete Account".toUpperCase(),
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
@@ -307,9 +310,9 @@ class _SettingPageState extends State<SettingPage> {
                     ],
                   ),
 
-                commonButton(text: "Admin", onPressed: (){
+                  /*  commonButton(text: "Admin", onPressed: (){
                     Navigator.pushNamed(context, RouteName.adminLoginPage);
-                  }),
+                  }),*/
                   SizedBox(height: 18),
                 ],
               ),
@@ -321,6 +324,4 @@ class _SettingPageState extends State<SettingPage> {
       ),
     );
   }
-
-
 }

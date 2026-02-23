@@ -36,6 +36,10 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSBiometricUsageDescription</key>
+	<string>This app uses biometric authentication to secure your account</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>This app uses Face ID to securely unlock your account</string>
 	<key>NSCameraUsageDescription</key>
 	<string>The camera is used to capture product photos and upload images for managing your store and listings.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

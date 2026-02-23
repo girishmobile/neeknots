@@ -2,10 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 import 'package:neeknots/core/component/component.dart';
 import 'package:neeknots/core/image/image_utils.dart';
+import 'package:neeknots/feature/auth/app_lock_services.dart';
+import 'package:neeknots/feature/auth/app_lock_storage.dart';
 import 'package:neeknots/main.dart';
+import 'package:neeknots/provider/theme_provider.dart';
 import 'package:neeknots/routes/app_routes.dart';
+import 'package:provider/provider.dart';
 
 import '../../core/firebase/auth_service.dart';
 import '../../core/hive/app_config_cache.dart';
@@ -20,16 +25,21 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   String? _logoUrl;
 
+  //Face lock
+  bool _authCancelled = false;
+  final _biometric = AppLockServices();
+  final _storage = AppLockStorage();
+
   @override
   void initState() {
     super.initState();
-    print("Splash initState called");
+    print("🔥 Splash initState called");
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      init();
+      initSlash();
     });
   }
 
-  Future<void> init() async {
+  Future<void> initSlash() async {
     String? storedEmailOrMobile = await AppConfigCache.getStoredEmailOrMobile();
 
     if (kIsWeb) {
@@ -39,11 +49,33 @@ class _SplashScreenState extends State<SplashScreen> {
       );
     } else {
       if (storedEmailOrMobile?.isNotEmpty == true) {
-        checkStatus();
+        _handleAppLock();
+        // checkStatus();
       } else {
         redirectToIntro();
       }
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  Future<void> _handleAppLock() async {
+    final enabled = await _storage.isEnabled();
+    if (enabled) {
+      final authenticated = await _biometric.authenticate();
+      if (!authenticated) {
+        // App stays locked – user can retry or background app
+        setState(() {
+          _authCancelled = true;
+        });
+        return;
+      }
+    }
+    if (!mounted) return;
+    checkStatus();
   }
 
   void checkStatus() async {
@@ -81,8 +113,9 @@ class _SplashScreenState extends State<SplashScreen> {
           logoUrl: userData['logo_url'] ?? '',
         );
 
-        navigatorKey.currentState?.pushReplacementNamed(
+        navigatorKey.currentState?.pushNamedAndRemoveUntil(
           RouteName.dashboardScreen,
+          (Route<dynamic> route) => false,
         );
       } else {
         Timer(const Duration(seconds: 3), () {
@@ -92,6 +125,13 @@ class _SplashScreenState extends State<SplashScreen> {
           );
         });
       }
+
+      /*  Timer(const Duration(seconds: 3), () {
+        navigatorKey.currentState?.pushNamedAndRemoveUntil(
+          RouteName.dashboardScreen,
+          (Route<dynamic> route) => false,
+        );
+      });*/
     } catch (e) {
       String errorMessage = e.toString().split(": ").last;
       if (e.toString() == "User not found") {
@@ -127,23 +167,59 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
     return commonScaffold(
-      body: commonAppBackground(
-        child: Center(
-          child: commonNetworkImage(
-            decoration: BoxDecoration(),
-            errorWidget: Center(
-              child: commonAssetImage(
-                icAppLogo,
-                width: size.width * 0.7,
+      body: Consumer<ThemeProvider>(
+        builder: (context, provider, child) {
+          return commonAppBackground(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: commonNetworkImage(
+                    decoration: BoxDecoration(),
+                    errorWidget: Center(
+                      child: commonAssetImage(
+                        icAppLogo,
+                        width: size.width * 0.7,
 
-                height: 72,
-              ),
+                        height: 72,
+                      ),
+                    ),
+                    fit: BoxFit.scaleDown,
+                    _logoUrl ?? '',
+                    size: size.width * 0.7,
+                  ),
+                ),
+                if (_authCancelled) ...[
+                  const Text(
+                    'Authentication required',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  const SizedBox(height: 12),
+
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        _authCancelled = false;
+                      });
+                      _handleAppLock();
+                    },
+                    child: const Text('Try Again'),
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  TextButton(
+                    onPressed: () {
+                      // Optional: exit app
+                      // SystemNavigator.pop();
+                    },
+                    child: const Text('Cancel'),
+                  ),
+                ],
+              ],
             ),
-            fit: BoxFit.scaleDown,
-            _logoUrl ?? '',
-            size: size.width * 0.7,
-          ),
-        ),
+          );
+        },
       ),
     );
   }

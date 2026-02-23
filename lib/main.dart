@@ -8,6 +8,7 @@ import 'package:neeknots/provider/admin_home_provider.dart';
 import 'package:neeknots/provider/admin_menu_provider.dart';
 import 'package:neeknots/provider/customer_provider.dart';
 import 'package:neeknots/provider/image_picker_provider.dart';
+import 'package:neeknots/provider/internet_provider.dart';
 import 'package:neeknots/provider/login_provider.dart';
 import 'package:neeknots/provider/notification_provider.dart';
 import 'package:neeknots/provider/order_provider.dart';
@@ -95,7 +96,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   // final themeProvider = Provider.of<ThemeProvider>(context);
+    //final themeProvider = Provider.of<ThemeProvider>(context);
+
     return MaterialApp(
       scaffoldMessengerKey: rootScaffoldMessengerKey,
       navigatorKey: navigatorKey,
