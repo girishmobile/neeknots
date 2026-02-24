@@ -328,9 +328,9 @@ class ShippingLine {
         .toList(),
     priceSet: PriceSet.fromJson(json['price_set']),
     discountedPriceSet: PriceSet.fromJson(json['discounted_price_set']),
-    custom: json['custom'],
+    custom: json['custom'] ?? false,        // 🔥 FIX
     isRemoved: json['is_removed'],
-    shippingRateHandle: json['shipping_rate_handle'],
+    shippingRateHandle: json['shipping_rate_handle']??''
   );
 
   Map<String, dynamic> toJson() => {

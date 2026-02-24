@@ -34,6 +34,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     );
     await customerProvider.clearOrderDetailsData();
     await customerProvider.getOrderById(orderID: widget.orderID);
+
   }
 
   @override
