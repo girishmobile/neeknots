@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import '../../../core/color/color_utils.dart';
 import '../../../core/component/component.dart';
 import '../../../core/component/date_utils.dart';
-import '../../../core/component/responsive.dart';
 import '../../../core/component/url_launcher_service.dart';
 import '../../../provider/admin_dashboard_provider.dart';
 import '../../../provider/theme_provider.dart';
