@@ -14,30 +14,25 @@ Future<void> sendPushNotification({
   try {
     final response = await http.post(
       Uri.parse(supabaseUrl),
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer $publicKey",
-        },
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $publicKey",
+      },
       body: jsonEncode({
-        "token": "c5qBB-LkSV6eyhSOdTJ6Cc:APA91bFRNHBYpHWYTHu4Q44UaUZ84AJhfF_lCOp-bL-C4KuMbkFPaKaLxU-4JYc467IINbK6A6RpZctThsIYSDUMYy4RzvjKBdiX7Lrnjk1cD6SAZ8FBqao",
+        "token":
+            "c5qBB-LkSV6eyhSOdTJ6Cc:APA91bFRNHBYpHWYTHu4Q44UaUZ84AJhfF_lCOp-bL-C4KuMbkFPaKaLxU-4JYc467IINbK6A6RpZctThsIYSDUMYy4RzvjKBdiX7Lrnjk1cD6SAZ8FBqao",
         "title": "Hello",
         "body": "This is a test notification",
-        "data": { "key1": "value1", "key2": "value2" }
+        "data": {"key1": "value1", "key2": "value2"},
+
         /*"token": "c5qBB-LkSV6eyhSOdTJ6Cc:APA91bFRNHBYpHWYTHu4Q44UaUZ84AJhfF_lCOp-bL-C4KuMbkFPaKaLxU-4JYc467IINbK6A6RpZctThsIYSDUMYy4RzvjKBdiX7Lrnjk1cD6SAZ8FBqao",
         "title": title,
         "body": body,*/
-
       }),
     );
 
     if (response.statusCode == 200) {
-      print("Notification Sent Successfully");
-     // print(response.body);
-    } else {
-      print("Error: ${response.statusCode}");
-      print(response.body);
-    }
-  } catch (e) {
-    print("Exception: $e");
-  }
+      // print(response.body);
+    } else {}
+  } catch (e) {}
 }
