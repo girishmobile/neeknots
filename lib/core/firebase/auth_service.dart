@@ -288,15 +288,12 @@ class AuthService {
         ),
       );
 
-      // 2️⃣ Wait a short moment to show the message
+     /* // 2️⃣ Wait a short moment to show the message
       await Future.delayed(Duration(seconds: 2));
 
-      await AppConfigCache.clearConfig();
+      await AppConfigCache.clearConfig();*/
       // 3️⃣ Redirect to login screen
-      navigatorKey.currentState?.pushNamedAndRemoveUntil(
-        RouteName.loginScreen,
-        (Route<dynamic> route) => false,
-      );
+
     } catch (e) {
       // Show error message
       ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(

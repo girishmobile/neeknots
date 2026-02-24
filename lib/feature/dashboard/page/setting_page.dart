@@ -215,7 +215,8 @@ class _SettingPageState extends State<SettingPage> {
                     children: [
                       commonInkWell(
                         onTap: () {
-                          showCommonDialog(
+                          _handleLogout();
+                          /*showCommonDialog(
                             confirmText: "Yes",
                             onPressed: () async {
                               await AppConfigCache.clearAll();
@@ -248,7 +249,7 @@ class _SettingPageState extends State<SettingPage> {
                             title: "Logout?",
                             context: context,
                             content: "Are you sure want to logout",
-                          );
+                          );*/
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(
@@ -282,8 +283,36 @@ class _SettingPageState extends State<SettingPage> {
                               final authService = AuthService();
                               await authService.deleteCurrentUser(
                                 context: context,
-                                uid: provider.userData?['id'] ?? '',
+                                uid: provider.userData?['uid'] ?? '',
                               );
+                              await _clearAppState();
+                              /*await AppConfigCache.clearAll();
+                              navigatorKey.currentContext!
+                                  .read<DashboardProvider>()
+                                  .resetTab();
+                              navigatorKey.currentContext!
+                                  .read<ProductProvider>()
+                                  .reset();
+                              navigatorKey.currentContext!
+                                  .read<OrdersProvider>()
+                                  .resetData();
+                              navigatorKey.currentContext!
+                                  .read<CustomerProvider>()
+                                  .reset();
+                              navigatorKey.currentContext!
+                                  .read<ProfileProvider>()
+                                  .resetState();
+                              navigatorKey.currentContext!
+                                  .read<LoginProvider>()
+                                  .resetState();
+                              await AppConfigCache.clearConfig();
+
+                              navigatorKey.currentState
+                                  ?.pushNamedAndRemoveUntil(
+                                RouteName.loginScreen,
+                                    (Route<dynamic> route) => false,
+                              );*/
+
                             },
                           );
                         },
@@ -310,9 +339,12 @@ class _SettingPageState extends State<SettingPage> {
                     ],
                   ),
 
-                   commonButton(text: "Admin", onPressed: (){
-                    Navigator.pushNamed(context, RouteName.adminLoginPage);
-                  }),
+                  commonButton(
+                    text: "Admin",
+                    onPressed: () {
+                      Navigator.pushNamed(context, RouteName.adminLoginPage);
+                    },
+                  ),
                   SizedBox(height: 18),
                 ],
               ),
@@ -322,6 +354,34 @@ class _SettingPageState extends State<SettingPage> {
           );
         },
       ),
+    );
+  }
+  void _handleLogout() {
+    showCommonDialog(
+      context: context,
+      title: "Logout?",
+      content: "Are you sure want to logout",
+      confirmText: "Yes",
+      cancelText: "No",
+      onPressed: _clearAppState,
+    );
+  }
+  Future<void> _clearAppState() async {
+    await AppConfigCache.clearAll();
+    await AppConfigCache.clearConfig();
+
+    final context = navigatorKey.currentContext!;
+
+    context.read<DashboardProvider>().resetTab();
+    context.read<ProductProvider>().reset();
+    context.read<OrdersProvider>().resetData();
+    context.read<CustomerProvider>().reset();
+    context.read<ProfileProvider>().resetState();
+    context.read<LoginProvider>().resetState();
+
+    navigatorKey.currentState?.pushNamedAndRemoveUntil(
+      RouteName.loginScreen,
+          (route) => false,
     );
   }
 }
