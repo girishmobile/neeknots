@@ -208,7 +208,7 @@ class _SettingPageState extends State<SettingPage> {
 
                   const SizedBox(height: 18),
                   Column(
-                    spacing: 20,
+                    spacing: 16,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
@@ -278,13 +278,10 @@ class _SettingPageState extends State<SettingPage> {
                     ],
                   ),
 
-                  commonButton(
-                    text: "Admin",
-                    onPressed: () {
-                      Navigator.pushNamed(context, RouteName.adminLoginPage);
-                    },
-                  ),
-                  SizedBox(height: 18),
+                  //  commonButton(text: "Admin", onPressed: (){
+                  //   Navigator.pushNamed(context, RouteName.adminLoginPage);
+                  // }),
+                  SizedBox(height: 16),
                 ],
               ),
 

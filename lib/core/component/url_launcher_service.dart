@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:neeknots/main.dart';
 
-
 import 'package:url_launcher/url_launcher.dart';
 import 'component.dart';
 
@@ -14,7 +13,8 @@ class UrlLauncherService {
         showCancel: false,
 
         title: "Error",
-        content: "Oops! This URL doesn’t seem to be working.", context: navigatorKey.currentContext!,
+        content: "Oops! This URL doesn’t seem to be working.",
+        context: navigatorKey.currentContext!,
       );
     } else {
       if (!url.startsWith('http://') && !url.startsWith('https://')) {
@@ -27,7 +27,7 @@ class UrlLauncherService {
         showCommonDialog(
           confirmText: "Close",
           showCancel: false,
-context:  navigatorKey.currentContext!,
+          context: navigatorKey.currentContext!,
           title: "Error",
           content: "Oops! This URL doesn’t seem to be working.",
         );
@@ -61,10 +61,10 @@ context:  navigatorKey.currentContext!,
   }
 
   static Future<void> launchEmail(
-      String email, {
-        String? subject,
-        String? body,
-      }) async {
+    String email, {
+    String? subject,
+    String? body,
+  }) async {
     final Uri uri = Uri(
       scheme: 'mailto',
       path: email,
@@ -94,13 +94,12 @@ context:  navigatorKey.currentContext!,
       await launchUrl(whatsappUrl);
     } else {
       showCommonDialog(
-        context:  navigatorKey.currentContext!,
+        context: navigatorKey.currentContext!,
         showCancel: false,
         confirmText: "Close",
         title: "Error",
         content: "WhatsApp is not installed.",
       );
-      //print("WhatsApp is not installed.");
     }
   }
 
@@ -120,9 +119,7 @@ context:  navigatorKey.currentContext!,
     final gmailUrl = Uri.parse("mailto:?subject=$subject&body=$body");
     if (await canLaunchUrl(gmailUrl)) {
       await launchUrl(gmailUrl);
-    } else {
-      //print("Could not launch Gmail");
-    }
+    } else {}
   }
 
   /*  static Future<void> openMap({

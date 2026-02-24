@@ -62,7 +62,7 @@ class AuthService {
           .collection(storesCollection)
           .where("email", isEqualTo: email)
           .get();
-    /*  if (existing.docs.isNotEmpty) {
+      /*  if (existing.docs.isNotEmpty) {
         throw "Email already exists";
       }*/
 
@@ -87,7 +87,7 @@ class AuthService {
         "email": email,
         "mobile": mobile,
         "name": name,
-        "accessToken":accessToken,
+        "accessToken": accessToken,
         "version_code": versionCode,
         "logo_url": '',
         "photo": '',
@@ -104,13 +104,12 @@ class AuthService {
       throw Exception("Signup failed: $e");
     }
   }
+
   Future<Map<String, dynamic>> adminLoginUser({
     required String email,
     required String mobile,
     required String countryCode,
   }) async {
-
-
     try {
       final query = await _firestore
           .collection(storesCollection)
@@ -119,7 +118,6 @@ class AuthService {
           .where("country_code", isEqualTo: countryCode)
           .get();
 
-      print('query$query');
       if (query.docs.isEmpty) {
         throw "User not found";
       }
@@ -134,7 +132,7 @@ class AuthService {
       data["uid"] = doc.id;
 
       // ✅ Save store_name in cache
-     /* await AppConfigCache.saveConfig({
+      /* await AppConfigCache.saveConfig({
         "uid": doc.id,
         "storeName": data["store_name"],
         "role": data["role"] ?? "user"
@@ -154,6 +152,7 @@ class AuthService {
       throw Exception("Login failed: $e");
     }
   }
+
   Future<List<Map<String, dynamic>>> getAdminStoreUsers() async {
     try {
       final config = await AppConfigCache.loadConfig();
@@ -179,16 +178,14 @@ class AuthService {
       throw Exception("Failed to fetch store users: $e");
     }
   }
+
   /// 🔹 Login User with Email + Mobile
-  Future<Map<String, dynamic>>  loginUser({
+  Future<Map<String, dynamic>> loginUser({
     required String email,
     required String mobile,
     required String countryCode,
   }) async {
     try {
-      print('====e$email');
-      print('====e$mobile');
-      print('====e$countryCode');
       // Check Firestore for a document matching BOTH email and mobile
       final query = await _firestore
           .collection(storesCollection)
