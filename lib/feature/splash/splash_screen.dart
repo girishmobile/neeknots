@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 
 import '../../core/firebase/auth_service.dart';
 import '../../core/hive/app_config_cache.dart';
-
+//https://neeknots-a8758.web.app
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
