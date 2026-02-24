@@ -216,40 +216,6 @@ class _SettingPageState extends State<SettingPage> {
                       commonInkWell(
                         onTap: () {
                           _handleLogout();
-                          /*showCommonDialog(
-                            confirmText: "Yes",
-                            onPressed: () async {
-                              await AppConfigCache.clearAll();
-                              navigatorKey.currentContext!
-                                  .read<DashboardProvider>()
-                                  .resetTab();
-                              navigatorKey.currentContext!
-                                  .read<ProductProvider>()
-                                  .reset();
-                              navigatorKey.currentContext!
-                                  .read<OrdersProvider>()
-                                  .resetData();
-                              navigatorKey.currentContext!
-                                  .read<CustomerProvider>()
-                                  .reset();
-                              navigatorKey.currentContext!
-                                  .read<ProfileProvider>()
-                                  .resetState();
-                              navigatorKey.currentContext!
-                                  .read<LoginProvider>()
-                                  .resetState();
-                              await AppConfigCache.clearConfig();
-                              navigatorKey.currentState
-                                  ?.pushNamedAndRemoveUntil(
-                                    RouteName.loginScreen,
-                                    (Route<dynamic> route) => false,
-                                  );
-                            },
-                            cancelText: "No",
-                            title: "Logout?",
-                            context: context,
-                            content: "Are you sure want to logout",
-                          );*/
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(
@@ -286,33 +252,6 @@ class _SettingPageState extends State<SettingPage> {
                                 uid: provider.userData?['uid'] ?? '',
                               );
                               await _clearAppState();
-                              /*await AppConfigCache.clearAll();
-                              navigatorKey.currentContext!
-                                  .read<DashboardProvider>()
-                                  .resetTab();
-                              navigatorKey.currentContext!
-                                  .read<ProductProvider>()
-                                  .reset();
-                              navigatorKey.currentContext!
-                                  .read<OrdersProvider>()
-                                  .resetData();
-                              navigatorKey.currentContext!
-                                  .read<CustomerProvider>()
-                                  .reset();
-                              navigatorKey.currentContext!
-                                  .read<ProfileProvider>()
-                                  .resetState();
-                              navigatorKey.currentContext!
-                                  .read<LoginProvider>()
-                                  .resetState();
-                              await AppConfigCache.clearConfig();
-
-                              navigatorKey.currentState
-                                  ?.pushNamedAndRemoveUntil(
-                                RouteName.loginScreen,
-                                    (Route<dynamic> route) => false,
-                              );*/
-
                             },
                           );
                         },
@@ -356,6 +295,7 @@ class _SettingPageState extends State<SettingPage> {
       ),
     );
   }
+
   void _handleLogout() {
     showCommonDialog(
       context: context,
@@ -366,6 +306,7 @@ class _SettingPageState extends State<SettingPage> {
       onPressed: _clearAppState,
     );
   }
+
   Future<void> _clearAppState() async {
     await AppConfigCache.clearAll();
     await AppConfigCache.clearConfig();
@@ -381,7 +322,7 @@ class _SettingPageState extends State<SettingPage> {
 
     navigatorKey.currentState?.pushNamedAndRemoveUntil(
       RouteName.loginScreen,
-          (route) => false,
+      (route) => false,
     );
   }
 }
