@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:neeknots/core/component/component.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class CommonPinCodeField extends StatelessWidget {

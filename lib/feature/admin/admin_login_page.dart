@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:neeknots/core/color/color_utils.dart';
 import 'package:neeknots/core/component/component.dart';
 import 'package:neeknots/core/image/image_utils.dart';
@@ -8,6 +6,7 @@ import 'package:neeknots/core/validation/validation.dart';
 import 'package:neeknots/provider/login_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../core/component/common_intl_phone_field.dart';
 import '../../core/component/responsive.dart';
 import 'admin_home_page.dart';
 
@@ -100,30 +99,17 @@ class AdminLoginPage extends StatelessWidget {
                                   prefixIcon: commonPrefixIcon(image: icEmail),
                                 ),
                                 const SizedBox(height: 24),
-                                IntlPhoneField(
-                                  initialCountryCode: 'US',
-                                  controller: provider.tetPhone,
-                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                  style: commonTextStyle(
-                                    color:  Colors.black,
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: "Phone Number",
-                                    hintStyle: commonTextStyle(color: Colors.grey),
-
-                                    contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 16,
-                                      vertical: 14,
-                                    ),
-                                    border: commonTextFiledBorder(borderRadius: 12),
-                                    enabledBorder: commonTextFiledBorder(borderRadius: 12),
-                                    focusedBorder: commonTextFiledBorder(borderRadius: 12),
-                                  ),
-                                  onChanged: (phone) {
-                                    provider.tetCountryCodeController.text = phone.countryCode;
-                                  },
+                                CommonIntlPhoneField(
+                                  phoneController: provider.tetPhone,
                                   onCountryChanged: (value) {
-                                    provider.tetCountryCodeController.text = value.dialCode;
+                                    final dialCode = "+${value.dialCode}";
+
+                                    provider.tetCountryCodeController.text =
+                                        dialCode;
+                                  },
+                                  onChanged: (phone) {
+                                    provider.tetCountryCodeController.text =
+                                        phone.countryCode;
                                   },
                                 ),
 
@@ -134,9 +120,11 @@ class AdminLoginPage extends StatelessWidget {
                                   onPressed: () {
                                     if (formLoginKey.currentState?.validate() ==
                                         true) {
-
-                                      login(context: context,provider: provider);
-                                   /*   Navigator.pushNamedAndRemoveUntil(
+                                      login(
+                                        context: context,
+                                        provider: provider,
+                                      );
+                                      /*   Navigator.pushNamedAndRemoveUntil(
                                         context,
                                         RouteName.adminHomePage,
                                             (Route<dynamic> route) => false,
@@ -153,7 +141,6 @@ class AdminLoginPage extends StatelessWidget {
                                             content: "Invalid credentials",
                                           );
                                       }*/
-
                                     }
                                   },
                                 ),
@@ -173,10 +160,14 @@ class AdminLoginPage extends StatelessWidget {
       ),
     );
   }
-  Future<void> login({required BuildContext context, required LoginProvider provider}) async {
-    final email = provider.tetEmail.text.trim();
-    final mobile = '${provider.tetCountryCodeController.text.trim()}${provider.tetPhone.text.trim()}';
 
+  Future<void> login({
+    required BuildContext context,
+    required LoginProvider provider,
+  }) async {
+    final email = provider.tetEmail.text.trim();
+    final mobile =
+        '${provider.tetCountryCodeController.text.trim()}${provider.tetPhone.text.trim()}';
 
     if (email.isEmpty || mobile.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -192,19 +183,12 @@ class AdminLoginPage extends StatelessWidget {
       );
       provider.resetState();
     } else {
-
       await provider.adminUserLogin(
         context: context,
-        countryCode: provider
-            .tetCountryCodeController
-            .text,
+        countryCode: provider.tetCountryCodeController.text,
         email: provider.tetEmail.text.trim(),
         mobile: provider.tetPhone.text.trim(),
       );
-
-
-
     }
   }
-
 }

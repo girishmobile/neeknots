@@ -1,16 +1,16 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:neeknots/core/color/color_utils.dart';
 import 'package:neeknots/core/component/component.dart';
 import 'package:neeknots/core/image/image_utils.dart';
 import 'package:neeknots/provider/login_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../core/component/common_intl_phone_field.dart';
 import '../../core/validation/validation.dart';
 import '../../main.dart';
 import '../../provider/theme_provider.dart';
+
 //https://neeknots-a8758.web.app
 Widget commonLoginView({
   required LoginProvider provider,
@@ -32,36 +32,17 @@ Widget commonLoginView({
       ),
       const SizedBox(height: 20),
 
-      IntlPhoneField(
-        initialCountryCode: 'US',
-        controller: provider.tetPhone,
-        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-        style: commonTextStyle(
-          color: themeProvider.isDark ? Colors.white : Colors.black,
-        ),
-        decoration: InputDecoration(
-          hintText: "Phone Number",
-          hintStyle: commonTextStyle(color: Colors.grey),
+      CommonIntlPhoneField(
+        phoneController: provider.tetPhone,
+        onCountryChanged: (value) {
+          final dialCode = "+${value.dialCode}";
 
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 14,
-          ),
-          border: commonTextFiledBorder(borderRadius: 12),
-          enabledBorder: commonTextFiledBorder(borderRadius: 12),
-          focusedBorder: commonTextFiledBorder(borderRadius: 12),
-        ),
+          provider.tetCountryCodeController.text = dialCode;
+        },
         onChanged: (phone) {
-          print('=-=====phone$phone');
           provider.tetCountryCodeController.text = phone.countryCode;
         },
-        onCountryChanged: (value) {
-          print('=-=====value${value.dialCode}');
-          print('=-=====value${value.fullCountryCode}');
-          provider.tetCountryCodeController.text = value.dialCode;
-        },
       ),
-
 
       const SizedBox(height: 40),
       commonButton(text: "Login", onPressed: onPressed),

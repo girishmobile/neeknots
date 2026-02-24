@@ -1147,15 +1147,20 @@ String formatPhone(String? code, String? number) {
 
 String getInitialCountryCode(String? dialCode) {
   if (dialCode == null || dialCode.isEmpty) {
-    return 'US'; // fallback
+    return 'US';
   }
 
   try {
-    final country = countries.firstWhere((c) => c.dialCode == dialCode);
+    // remove "+" if present
+    final cleanDialCode = dialCode.replaceAll('+', '');
 
-    return country.code; // ISO code like IN, US, AE
+    final country = countries.firstWhere(
+          (c) => c.dialCode == cleanDialCode,
+    );
+
+    return country.code; // ISO code like IN, US, AO
   } catch (e) {
-    return 'US'; // fallback if not found
+    return 'US';
   }
 }
 

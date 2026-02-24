@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:neeknots/core/component/CommonSwitch.dart';
 import 'package:neeknots/provider/admin_dashboard_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../core/color/color_utils.dart';
+import '../core/component/common_intl_phone_field.dart';
 import '../core/component/component.dart';
 import '../core/image/image_utils.dart';
 import '../core/validation/validation.dart';
@@ -127,40 +126,28 @@ class _State extends State<CommonAdminWidget> {
                   text: "Phone Number",
                   keyboardType: TextInputType.emailAddress,
                   validator: validateEmail,
-                  view: IntlPhoneField(
+                  view: CommonIntlPhoneField(
                     initialCountryCode: widget.isEdit
                         ? getInitialCountryCode(widget.data["country_code"])
                         : 'US',
-                    controller: provider.tetPhone,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    style: commonTextStyle(color: Colors.black),
-                    decoration: InputDecoration(
-                      hintText: "Phone Number",
-                      hintStyle: commonTextStyle(color: Colors.grey),
+                    phoneController: provider.tetPhone,
+                    onCountryChanged: (value) {
+                      final dialCode = "+${value.dialCode}";
 
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 14,
-                      ),
-                      border: commonTextFiledBorder(borderRadius: 12),
-                      enabledBorder: commonTextFiledBorder(borderRadius: 12),
-                      focusedBorder: commonTextFiledBorder(borderRadius: 12),
-                    ),
+                      provider.tetCountryCodeController.text = dialCode;
+                    },
                     onChanged: (phone) {
                       provider.tetCountryCodeController.text =
                           phone.countryCode;
                     },
-                    onCountryChanged: (value) {
-                      provider.tetCountryCodeController.text = value.dialCode;
-                    },
                   ),
+
                   readOnly: widget.isEdit ? true : false,
                   fillColor: Colors.grey.withValues(alpha: 0.1),
                   filled: widget.isEdit ? true : false,
 
                   prefixIcon: commonPrefixIcon(image: icEmail),
                   controller: widget.provider.tetEmail,
-
                 ),
 
                 commonFormView(
