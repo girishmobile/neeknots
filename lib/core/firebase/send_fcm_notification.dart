@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 import '../string/string_utils.dart';
@@ -24,10 +25,6 @@ Future<void> sendPushNotification({
         "title": "Hello",
         "body": "This is a test notification",
         "data": {"key1": "value1", "key2": "value2"},
-
-        /*"token": "c5qBB-LkSV6eyhSOdTJ6Cc:APA91bFRNHBYpHWYTHu4Q44UaUZ84AJhfF_lCOp-bL-C4KuMbkFPaKaLxU-4JYc467IINbK6A6RpZctThsIYSDUMYy4RzvjKBdiX7Lrnjk1cD6SAZ8FBqao",
-        "title": title,
-        "body": body,*/
       }),
     );
 

@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:neeknots/main.dart';
 
-import '../core/firebase/FcmService.dart';
+import '../core/firebase/fcm_service.dart';
 import '../core/firebase/auth_service.dart';
 import '../core/hive/app_config_cache.dart';
 import '../feature/admin/admin_home_page.dart';

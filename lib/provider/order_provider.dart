@@ -30,20 +30,6 @@ class OrdersProvider with ChangeNotifier {
 
   String get selectedStatus => _selectedStatus;
 
-  /// 🏷️ Filter by status (Pending, Shipped, Delivered, or All)
-
-  /*  void filterByStatus(String status) {
-    String apiStatus = status.toLowerCase().replaceAll(' ', '_');
-    if (status == "all") {
-      getOrderList(financialStatus: null);
-    } else {
-      getOrderList(financialStatus: apiStatus);
-    }
-
-    _selectedStatus = status;
-    notifyListeners();
-    //_applyFilters();
-  }*/
 
   bool _isFetching = false;
 
@@ -93,9 +79,6 @@ class OrdersProvider with ChangeNotifier {
 
   Map<String, List<Order>> get ordersByStatus => _ordersByStatus;
 
-  // selected tab orders
-  /*List<Order> get selectedOrders =>
-      _ordersByStatus[selectedTab.toLowerCase()] ?? [];*/
   int todaysOrderCount = 0;
   int openOrderCount = 0;
   var closedOrderCount = 0;
@@ -105,102 +88,7 @@ class OrdersProvider with ChangeNotifier {
   int awaitingReturnCount = 0;
   int completedCount = 0;
 
-  Future<void> orderCountStatusValue1({
-    int? limit,
-    String? financialStatus,
-  }) async {
-    _isFetching = true;
-    notifyListeners();
-    final effectiveLimit = limit ?? _limit;
 
-    try {
-      String url =
-          '${await ApiConfig.ordersUrl}?status=any&limit=$effectiveLimit&order=id+asc';
-      if (financialStatus != null && financialStatus.isNotEmpty) {
-        final encodedTitle = "&financial_status=$financialStatus";
-        url += encodedTitle;
-      }
-
-      final response = await callGETMethod(url: url);
-      if (globalStatusCode == 200) {
-        final data = json.decode(response); // ✅ now .body works
-
-        final fetchedOrders = OrderModel.fromJson(data).orders ?? [];
-
-        final todayStart = DateTime.now().toUtc().subtract(
-          Duration(
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute,
-            seconds: DateTime.now().second,
-          ),
-        );
-        final todayEnd = todayStart.add(const Duration(days: 1));
-
-        for (var order in fetchedOrders) {
-          final status = order.financialStatus?.toLowerCase() ?? 'unknown';
-          final createdAt = DateTime.parse(
-            order.createdAt ?? DateTime.now().toString(),
-          );
-
-          // Total counts by financial status
-          if (status == 'paid') totalPaid++;
-          if (status == 'pending') totalPending++;
-          if (status == 'refunded') totalRefunded++;
-          if (status == 'shipping') totalShipping++;
-          if (status == 'cancelled') totalCancel++;
-
-          // Custom status counts
-          if (createdAt.isAfter(todayStart) && createdAt.isBefore(todayEnd)) {
-            todaysOrderCount++;
-          }
-          if (status == 'pending') pendingToChargeCount++; // example mapping
-          if (status == 'shipping') pendingShipmentCount++;
-          if (status == 'shipped') shippedCount++;
-          if (status == 'completed') completedCount++;
-          // Map awaiting return depending on your data, example:
-          if (status == 'awaiting_return') awaitingReturnCount++;
-          // Closed Orders example: maybe cancelled + refunded
-          if (status == 'cancelled' || status == 'refunded') closedOrderCount++;
-          // Open Orders: all others that are not closed
-          if (!(status == 'cancelled' ||
-              status == 'refunded' ||
-              status == 'completed')) {
-            openOrderCount++;
-          }
-        }
-
-        totalPaid = fetchedOrders
-            .where((e) => e.financialStatus?.toLowerCase() == 'paid')
-            .length;
-        totalPending = fetchedOrders
-            .where((e) => e.financialStatus?.toLowerCase() == 'pending')
-            .length;
-        totalRefunded = fetchedOrders
-            .where((e) => e.financialStatus?.toLowerCase() == 'refunded')
-            .length;
-        totalShipping = fetchedOrders
-            .where((e) => e.financialStatus?.toLowerCase() == 'shipping')
-            .length;
-        totalCancel = fetchedOrders
-            .where((e) => e.financialStatus?.toLowerCase() == 'cancelled')
-            .length;
-        _ordersByStatus.clear(); // ✅ naya fetch hote hi purana clear karo
-        for (var order in fetchedOrders) {
-          final status = order.financialStatus?.toLowerCase() ?? 'unknown';
-          _ordersByStatus.putIfAbsent(status, () => []);
-          _ordersByStatus[status]!.add(order);
-        }
-
-        _isFetching = false;
-        notifyListeners();
-      }
-    } catch (e) {
-      debugPrint('Error fetching orders: $e');
-    } finally {
-      _isFetching = false;
-      notifyListeners();
-    }
-  }
 
   Map<String, int> orderStatusCounts = {
     "Today’s Order": 0,
@@ -323,28 +211,7 @@ class OrdersProvider with ChangeNotifier {
 
   int get totalOrderCount => _totalOrderCount;
 
-  /* Future<void> getTotalOrderCount({
-    DateTime? startDate,
-    DateTime? endDate,
-  }) async {
-    _isFetching = true;
-    notifyListeners();
 
-    final response =  callGETMethod(
-      url: '${ApiConfig.totalOrderUrl}?status=any',
-    );
-
-    if (globalStatusCode == 200) {
-      final data = json.decode(await response);
-
-      _totalOrderCount = data["count"] ?? 0;
-      _isFetching = false;
-      notifyListeners();
-    }
-
-    _isFetching = false;
-    notifyListeners();
-  }*/
 
   Future<void> getTotalOrderCount({
     DateTime? startDate,

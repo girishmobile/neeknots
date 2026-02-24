@@ -4,7 +4,7 @@ import 'package:neeknots/main.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/color/color_utils.dart';
-import '../../../core/component/CommonSwitch.dart';
+import '../../../core/component/common_switch.dart';
 import '../../../core/component/component.dart';
 import '../../../core/component/responsive.dart';
 import '../../../provider/admin_dashboard_provider.dart';

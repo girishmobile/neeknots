@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:neeknots/core/component/CommonSwitch.dart';
+import 'package:neeknots/core/component/common_switch.dart';
 import 'package:neeknots/provider/admin_dashboard_provider.dart';
 import 'package:provider/provider.dart';
 

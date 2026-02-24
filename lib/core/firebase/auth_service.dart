@@ -1,15 +1,12 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-
 import 'package:flutter/material.dart';
 import 'package:neeknots/core/hive/app_config_cache.dart';
 
 import '../../main.dart';
-import '../../routes/app_routes.dart';
 import '../component/component.dart';
 
 class AuthService {
@@ -284,13 +281,6 @@ class AuthService {
           backgroundColor: Colors.green,
         ),
       );
-
-     /* // 2️⃣ Wait a short moment to show the message
-      await Future.delayed(Duration(seconds: 2));
-
-      await AppConfigCache.clearConfig();*/
-      // 3️⃣ Redirect to login screen
-
     } catch (e) {
       // Show error message
       ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(

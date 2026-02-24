@@ -48,7 +48,7 @@ class _StoreCollectionTabState extends State<ContactListPage> {
 
   @override
   Widget build(BuildContext context) {
-    var isMobile = Responsive.isMobile(context);
+
     return Consumer2<AdminDashboardProvider, ThemeProvider>(
       builder: (context, provider, themeProvider, child) {
         return Stack(

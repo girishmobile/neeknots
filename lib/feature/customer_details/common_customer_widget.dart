@@ -4,7 +4,6 @@ import 'package:neeknots/core/component/component.dart';
 import 'package:neeknots/core/component/context_extension.dart';
 import 'package:neeknots/core/string/string_utils.dart';
 import 'package:neeknots/feature/order_details/order_common_widget.dart';
-
 import 'package:neeknots/provider/order_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -12,7 +11,6 @@ import '../../core/component/date_utils.dart';
 import '../../models/customer_model.dart';
 
 Widget customerDetailsInfo({required Customer customer}) {
-
   return Container(
     decoration: commonBoxDecoration(borderColor: colorBorder, borderRadius: 8),
     margin: EdgeInsets.only(left: 16, right: 16, top: 16),
@@ -30,7 +28,7 @@ Widget customerDetailsInfo({required Customer customer}) {
                 title: "Name",
                 value: "${customer.firstName} ${customer.lastName}",
               ),
-              _buildRow(title: "email", value: customer.email??'-'),
+              _buildRow(title: "email", value: customer.email ?? '-'),
               _buildRow(
                 title: "Customer Since",
                 value: timeAgo(customer.createdAt ?? DateTime.now().toString()),
@@ -41,24 +39,6 @@ Widget customerDetailsInfo({required Customer customer}) {
                 value: "$rupeeIcon${"${customer.totalSpent}"}",
               ),
               _buildRow(title: "Order", value: '${customer.ordersCount}'),
-             /* _buildRow(
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                colorText: provider.getStatusColor(
-                  customer.emailMarketingConsent?.state ?? '',
-                ),
-                fontSize: 10,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4),
-                  color: provider
-                      .getStatusColor(
-                        customer.emailMarketingConsent?.state ?? '',
-                      )
-                      .withValues(alpha: 0.1),
-                ),
-                title: "Status",
-                value:
-                    '${customer.emailMarketingConsent?.state.toString().toCapitalize().replaceAll("_", " ")}',
-              ),*/
             ],
           ),
         ),
@@ -143,7 +123,7 @@ Widget customerProductInfo({required Customer customer}) {
                       spacing: 20,
                       children: [
                         commonText(
-                          text: customer.lastOrderName??"",
+                          text: customer.lastOrderName ?? "",
                           fontWeight: FontWeight.w600,
                         ),
                         Container(
@@ -218,7 +198,7 @@ Widget customerProductInfo({required Customer customer}) {
                     children: [
                       commonText(
                         text:
-                            "$rupeeIcon${provider.orderDetailsModel?.orderData?.currentTotalPrice??"0"}",
+                            "$rupeeIcon${provider.orderDetailsModel?.orderData?.currentTotalPrice ?? "0"}",
                         color: Colors.blueAccent,
                         fontWeight: FontWeight.w600,
                       ),

@@ -4,10 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:neeknots/provider/admin_dashboard_provider.dart';
-import 'package:neeknots/provider/admin_home_provider.dart';
-import 'package:neeknots/provider/admin_menu_provider.dart';
 import 'package:neeknots/provider/customer_provider.dart';
-import 'package:neeknots/provider/image_picker_provider.dart';
 import 'package:neeknots/provider/login_provider.dart';
 import 'package:neeknots/provider/notification_provider.dart';
 import 'package:neeknots/provider/order_provider.dart';
@@ -49,9 +46,7 @@ List<SingleChildWidget> providers = [
   ChangeNotifierProvider<CustomerProvider>(create: (_) => CustomerProvider()),
   ChangeNotifierProvider<ProfileProvider>(create: (_) => ProfileProvider()),
   ChangeNotifierProvider<SignupProvider>(create: (_) => SignupProvider()),
-  ChangeNotifierProvider<ImagePickerProvider>(
-    create: (_) => ImagePickerProvider(),
-  ),
+
   ChangeNotifierProvider<NotificationProvider>(
     create: (_) => NotificationProvider(),
   ),
@@ -59,8 +54,6 @@ List<SingleChildWidget> providers = [
   ChangeNotifierProvider<AdminDashboardProvider>(
     create: (_) => AdminDashboardProvider(),
   ),
-  ChangeNotifierProvider<AdminMenuProvider>(create: (_) => AdminMenuProvider()),
-  ChangeNotifierProvider<AdminHomeProvider>(create: (_) => AdminHomeProvider()),
 ];
 
 Future<void> main() async {

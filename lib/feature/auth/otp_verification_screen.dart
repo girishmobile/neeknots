@@ -23,17 +23,6 @@ class OtpVerificationScreen extends StatefulWidget {
 }
 
 class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
-  /*final TextEditingController _emailOtpController = TextEditingController();
-  final TextEditingController _phoneOtpController = TextEditingController();*/
-  /*@override
-  void dispose() {
-    _emailOtpController.dispose();
-    _phoneOtpController.dispose();
-    super.dispose();
-  }*/
-
-  //late final TextEditingController tetOTP = TextEditingController();
-
   late final PinInputController tetOTP = PinInputController();
 
   @override
@@ -54,11 +43,6 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   }
 
   Future<void> _validateOtp() async {
-    /* String emailOtp = _emailOtpController.text.trim();
-    String phoneOtp = _phoneOtpController.text.trim();*/
-
-    // Email OTP validation
-
     final provider = Provider.of<LoginProvider>(context, listen: false);
 
     String emailOtp = tetOTP.text.trim();
@@ -157,26 +141,13 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                                   textAlign: TextAlign.center,
                                   text:
                                       "We have sent OTPs to your registered email (${widget.userData["email"]})\n"
-
                                       "Please enter them below to verify your account.",
                                 ),
                               ],
                             ),
-                            SizedBox(height: 0),
 
-                            /*commonTextField(
-                              controller: _emailOtpController,
-                              hintText: "Email OTP",
-                            ),
-                            commonTextField(
-                              controller: _mobileOtpController,
-                              hintText: "Mobile OTP",
-                            ),
-                      */
                             Container(
-                              decoration: commonBoxDecoration(
-                                //  borderColor: colorBorder,
-                              ),
+                              decoration: commonBoxDecoration(),
                               child: Padding(
                                 padding: const EdgeInsets.all(0.0),
                                 child: Column(
@@ -210,48 +181,11 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                                       ),
                                     ),
 
-                                    /*    Padding(
-                                      padding: const EdgeInsets.only(
-                                        top: 10.0,
-                                        bottom: 20,
-                                      ),
-                                      child: commonText(
-                                        text: "Enter Phone OTP",
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                      */
-                                    /*CommonPinCodeField(
-                                      controller: _phoneOtpController,
-                                      activeFillColor: colorLogo,
-                                      inactiveFillColor: colorBorder,
-                                      selectedFillColor: colorLogo.withValues(
-                                        alpha: 0.2,
-                                      ),
-                                      onCompleted: (code) {
-                                        print("Entered OTP: $code");
-                                      },
-                                      onChanged: (val) {
-                                        print("Changed: $val");
-                                      },
-                                    ),*/
                                   ],
                                 ),
                               ),
                             ),
-                            SizedBox(height: 0),
-                            /*commonTextRich(
-                              text1: "If you didn’t receive a code! ",
-                              text2: "Resend",
-                              onTap: TapGestureRecognizer()..onTap = () {},
 
-                              textStyle1: commonTextStyle(color: themeProvider.isDark?Colors.white:Colors.black),
-                              textStyle2: commonTextStyle(
-                                color: themeProvider.isDark?Colors.white:colorLogo,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),*/
                             Consumer<LoginProvider>(
                               builder: (context, provider, _) {
                                 return commonTextRich(

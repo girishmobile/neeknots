@@ -31,7 +31,7 @@ class CommonBottomNavBar extends StatelessWidget {
                     : colorLogo.withValues(alpha: 0.5),
                 spreadRadius: 0,
                 blurRadius: 6,
-                offset: const Offset(0, -3), // shadow upar ki taraf
+                offset: const Offset(0, -3),
               ),
             ],
           ),
@@ -53,7 +53,6 @@ class CommonBottomNavBar extends StatelessWidget {
             iconSize: 20,
             type: BottomNavigationBarType.fixed,
             selectedItemColor: themeProvider.isDark ? Colors.white : colorLogo,
-            // aap apna colorButton laga sakte ho
             unselectedItemColor: Colors.grey,
             currentIndex: currentIndex,
             onTap: onTap,

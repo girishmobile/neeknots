@@ -162,7 +162,6 @@ class _PendingRequestScreenState extends State<PendingRequestScreen> {
                                                     uid: data['uid'],
                                                     title: "disapproved_date",
                                                   );
-                                                  //provider.uploadProductImageViaAdmin(imagePath: data['image'], productId: data['product_id'],uid:  data['uid']);
                                                 },
                                                 context: context,
                                                 content:
@@ -177,12 +176,6 @@ class _PendingRequestScreenState extends State<PendingRequestScreen> {
                                   ),
                                 ),
 
-                                /* Row(
-                            children: [
-                              Expanded(child: commonText(text: "Product Name")),
-                              commonText(text: "Product Name"),
-                            ],
-                          ),*/
                               ],
                             ),
                           );

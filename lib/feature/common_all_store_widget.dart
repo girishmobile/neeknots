@@ -104,11 +104,6 @@ class _CommonAllStoreWidgetState extends State<CommonAllStoreWidget> {
                     final selectedStore = provider.storeCounts[index];
 
 
-                    /*
-                    await AppConfigCache.saveSelectedStoreUid(
-                      selectedStore['uid'].toString(),
-                    );*/
-
                     // ✅ Do async work OUTSIDE setState
                     await AppConfigCache.saveConfig(
                       accessToken: selectedStore['accessToken'] ?? '',
@@ -123,10 +118,6 @@ class _CommonAllStoreWidgetState extends State<CommonAllStoreWidget> {
                     // ✅ Only call setState if UI needs update
                     setState(() {});
 
-                    /*  await provider.fetchStoreCounts(
-                      storeName:
-                      provider.storeCounts[index]['store_name'],
-                    );*/
                   },
                 ),
               ),

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import 'package:neeknots/core/component/component.dart';
 import 'package:neeknots/core/image/image_utils.dart';
 import 'package:neeknots/feature/auth/app_lock_services.dart';
@@ -14,6 +13,7 @@ import 'package:provider/provider.dart';
 
 import '../../core/firebase/auth_service.dart';
 import '../../core/hive/app_config_cache.dart';
+
 //https://neeknots-a8758.web.app
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

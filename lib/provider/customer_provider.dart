@@ -8,15 +8,7 @@ import '../service/gloable_status_code.dart';
 import '../service/network_repository.dart';
 
 class CustomerProvider with ChangeNotifier {
-  Color getStatusColor(String status) {
-    switch (status) {
-      case "Subscribed":
-        return Colors.green;
 
-      default:
-        return Colors.red;
-    }
-  }
 
   void reset() {
     _searchQuery = "";

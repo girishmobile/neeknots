@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:neeknots/core/color/color_utils.dart';
 import 'package:neeknots/core/component/component.dart';
 import 'package:neeknots/core/image/image_utils.dart';
-import 'package:neeknots/provider/image_picker_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/component/common_dropdown.dart';
@@ -155,8 +154,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   Widget uploadImageView({String? title, int? maxLine}) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    return Consumer2<ProductProvider, ImagePickerProvider>(
-      builder: (context, provider, imageProvider, child) {
+    return Consumer<ProductProvider>(
+      builder: (context, provider, child) {
         return Column(
           spacing: 10,
           crossAxisAlignment: CrossAxisAlignment.start,

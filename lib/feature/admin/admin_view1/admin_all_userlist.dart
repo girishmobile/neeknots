@@ -5,7 +5,7 @@ import 'package:neeknots/core/component/component.dart';
 import 'package:provider/provider.dart';
 
 import '../../../admin/common_admin_widget.dart';
-import '../../../core/component/CommonSwitch.dart';
+import '../../../core/component/common_switch.dart';
 import '../../../core/component/responsive.dart';
 import '../../../core/image/image_utils.dart';
 import '../../../provider/admin_dashboard_provider.dart';

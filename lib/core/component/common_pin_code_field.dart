@@ -16,6 +16,7 @@ class CommonPinCodeField extends StatelessWidget {
   final double fieldWidth;
   final double borderRadius;
   final PinInputController? pinController;
+
   const CommonPinCodeField({
     super.key,
 
@@ -69,10 +70,7 @@ class CommonPinCodeField extends StatelessWidget {
           fontWeight: FontWeight.bold,
           color: Colors.white,
         ),
-        // textGradient: LinearGradient(colors: [Colors.blue, Colors.purple]),
-        //obscuringCharacter: '●',
 
-        // Cursor
         showCursor: true,
         cursorColor: Colors.black,
         cursorWidth: 2,
@@ -90,42 +88,3 @@ class CommonPinCodeField extends StatelessWidget {
     );
   }
 }
-/**
- * PinCodeTextField(
-      appContext: context,
-      length: 4,
-
-      controller: controller,
-      autoDisposeControllers: false,
-      mainAxisAlignment: MainAxisAlignment.center,
-      keyboardType: TextInputType.number,
-      animationType: AnimationType.fade,
-      textStyle:
-          textStyle ??
-          commonTextStyle(
-            fontSize: 16,
-            color: Colors.white,
-            fontWeight: FontWeight.w500,
-          ),
-      hintStyle: hintStyle ?? const TextStyle(color: Colors.grey),
-      pinTheme: PinTheme(
-        shape: PinCodeFieldShape.box,
-        fieldOuterPadding: EdgeInsets.symmetric(horizontal: 20),
-        borderRadius: BorderRadius.circular(borderRadius),
-        fieldHeight: fieldHeight,
-        fieldWidth: fieldWidth,
-        activeFillColor: activeFillColor,
-        inactiveFillColor: inactiveFillColor,
-        selectedFillColor: selectedFillColor,
-        inactiveColor: inactiveBorderColor,
-        selectedColor: selectedBorderColor,
-        activeColor: activeBorderColor,
-        borderWidth: 0.5,
-      ),
-      animationDuration: const Duration(milliseconds: 300),
-      enableActiveFill: true,
-      onCompleted: onCompleted,
-      onChanged: onChanged,
-      beforeTextPaste: (text) => true,
-    );
- */

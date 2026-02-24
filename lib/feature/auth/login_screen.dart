@@ -80,8 +80,6 @@ class LoginScreen extends StatelessWidget {
                                     },
 
                                   onPressed: () async {
-                                    /*  EmailSender emailSender = EmailSender();
-                                    var response = await emailsender.sendOtp("pathansameerahmed@gmail.com", 123456);*/
 
                                     hideKeyboard(context);
 

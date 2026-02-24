@@ -67,7 +67,6 @@ class _StoreGridViewState extends State<AllStorePage> {
 
                         return commonInkWell(
                           onTap: () {
-                            // Navigator.push(context, MaterialPageRoute(builder: (context)=>StoreDetailsScreen(storeName:  store['store_name'].toString())));
                             showCommonBottomSheet(
                               context: context,
                               content: SizedBox(

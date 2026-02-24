@@ -32,7 +32,6 @@ AppBar commonAppBar({
   final IconThemeData? iconTheme,
   final List<Color>? gradientColors,
 }) {
-  final themeProvider = Provider.of<ThemeProvider>(context);
   return AppBar(
     surfaceTintColor: Colors.transparent,
     iconTheme: iconTheme,

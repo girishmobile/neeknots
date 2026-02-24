@@ -42,8 +42,7 @@ Widget commonBannerView({
                 enableInfiniteScroll:
                     images.length > 1, // ek hi image ho to scroll band
                 autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                // viewportFraction: 0.7,
-                // viewportFraction: 0.7,
+
                 onPageChanged: (index, reason) {
                   provider.setCurrentIndex(index); // update providercdvs
                 },

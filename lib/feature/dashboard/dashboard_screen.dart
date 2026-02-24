@@ -92,8 +92,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
         // 🔹 Step 3: Now safely get FCM token
         String? fcmToken = await messaging.getToken();
 
-       // debugPrint('🔥 FCM Token: $fcmToken');
-        // 🔹 Step 4: Save token to backend
         final authService = AuthService();
         await authService.updateFcm(userID: id ?? '', fcmToken: fcmToken ?? '');
       } else {
@@ -119,7 +117,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
         return Stack(
           children: [
             commonScaffold(
-
               appBar: commonAppBar(
                 backgroundColor: themeProvider.isDark
                     ? colorDarkBgColor
@@ -152,15 +149,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ],
                 title: provider.appbarTitle ?? "Home",
                 context: context,
-                leading:
-                Consumer<ProfileProvider>(
-                  builder: (context,profileProvider,child) {
+                leading: Consumer<ProfileProvider>(
+                  builder: (context, profileProvider, child) {
                     return Container(
-
                       padding: EdgeInsets.only(left: 10),
                       child: commonInkWell(
-                        onTap: (){
-                        provider.setIndex(4);
+                        onTap: () {
+                          provider.setIndex(4);
                         },
                         child: CircleAvatar(
                           radius: 100,
@@ -170,16 +165,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               height: 45,
                               width: 45,
                               fit: BoxFit.cover,
-                              imageUrl: profileProvider.userData?['logo_url'] ?? '',
+                              imageUrl:
+                                  profileProvider.userData?['logo_url'] ?? '',
                               errorWidget: (context, url, error) => Center(
                                 child: commonText(
                                   fontSize: 18,
                                   color: colorButton1,
                                   fontWeight: FontWeight.w500,
-                                  text: ((profileProvider.userData?['name'] ?? '')
-                                      .toString()
-                                      .isNotEmpty)
-                                      ? profileProvider.userData!['name'][0].toUpperCase()
+                                  text:
+                                      ((profileProvider.userData?['name'] ?? '')
+                                          .toString()
+                                          .isNotEmpty)
+                                      ? profileProvider.userData!['name'][0]
+                                            .toUpperCase()
                                       : '',
                                 ),
                               ),
@@ -188,7 +186,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         ),
                       ),
                     );
-                  }
+                  },
                 ),
               ),
 
