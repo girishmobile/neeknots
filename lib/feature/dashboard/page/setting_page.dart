@@ -61,26 +61,39 @@ class _SettingPageState extends State<SettingPage> {
                 children: [
                   const SizedBox(height: 50),
 
-                  CircleAvatar(
-                    radius: 60,
-                    backgroundColor: colorButton1.withValues(alpha: 0.09),
-                    child: ClipOval(
-                      child: CachedNetworkImage(
-                        height: 120,
-                        width: 120,
-                        fit: BoxFit.cover,
-                        imageUrl: provider.userData?['logo_url'] ?? '',
-                        errorWidget: (context, url, error) => Center(
-                          child: commonText(
-                            fontSize: 45,
-                            color: colorButton1,
-                            fontWeight: FontWeight.w600,
-                            text:
-                                ((provider.userData?['name'] ?? '')
-                                    .toString()
-                                    .isNotEmpty)
-                                ? provider.userData!['name'][0].toUpperCase()
-                                : '',
+                  Container(
+                    padding: const EdgeInsets.all(2), // 👈 border thickness
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: themeProvider.isDark
+                            ? Colors.white
+                            : colorButton1,
+                        width: 3, // 👈 border width
+                      ),
+                    ),
+                    child: CircleAvatar(
+
+                      radius: 60,
+                      backgroundColor: colorButton1.withValues(alpha: 0.09),
+                      child: ClipOval(
+                        child: CachedNetworkImage(
+                          height: 120,
+                          width: 120,
+                          fit: BoxFit.cover,
+                          imageUrl: provider.userData?['logo_url'] ?? '',
+                          errorWidget: (context, url, error) => Center(
+                            child: commonText(
+                              fontSize: 45,
+                              color: colorButton1,
+                              fontWeight: FontWeight.w600,
+                              text:
+                                  ((provider.userData?['name'] ?? '')
+                                      .toString()
+                                      .isNotEmpty)
+                                  ? provider.userData!['name'][0].toUpperCase()
+                                  : '',
+                            ),
                           ),
                         ),
                       ),
