@@ -147,7 +147,6 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
     int? maxLine,
     String? title,
     String? prefixIcon,
-
     TextInputType? keyboardType,
     TextEditingController? controller,
     String? Function(String?)? validator,
@@ -167,7 +166,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
           contentPadding: prefixIcon?.isNotEmpty == false
               ? EdgeInsetsGeometry.zero
               : EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-          //prefixIcon:prefixIcon?.isNotEmpty==true? commonPrefixIcon(image: prefixIcon??icUser):SizedBox(width: 0,),
+
           maxLines: maxLine ?? 1,
           controller: controller,
         ),

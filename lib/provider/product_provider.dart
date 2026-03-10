@@ -495,7 +495,8 @@ class ProductProvider with ChangeNotifier {
         //"approved_date": DateTime.now(), // optional
         title: DateTime.now(), // optional
       });
-      //   await getAllPendingRequest();
+         await getAllPendingRequest();
+         notifyListeners();
     } catch (e) {
       debugPrint(e.toString());
     }
