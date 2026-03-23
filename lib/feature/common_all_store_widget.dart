@@ -36,16 +36,15 @@ class _CommonAllStoreWidgetState extends State<CommonAllStoreWidget> {
     // 🔥 Saved store name getUserStoresByEmail
     final savedStoreName = await AppConfigCache.getStoreName();
 
-    if (savedStoreName != null && savedStoreName.isNotEmpty) {
+    if (savedStoreName.isNotEmpty) {
       final index = provider.storeCounts.indexWhere(
-            (e) => e['store_name'] == savedStoreName,
+        (e) => e['store_name'] == savedStoreName,
       );
 
       if (index != -1) {
         provider.setSelectedStore(index);
       }
     }
-
   }
 
   @override
@@ -89,7 +88,9 @@ class _CommonAllStoreWidgetState extends State<CommonAllStoreWidget> {
                           Expanded(
                             child: commonText(
                               fontWeight: FontWeight.w500,
-                              text: store['store_name'].toString().toCapitalize(),
+                              text: store['store_name']
+                                  .toString()
+                                  .toCapitalize(),
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
@@ -105,7 +106,6 @@ class _CommonAllStoreWidgetState extends State<CommonAllStoreWidget> {
 
                     final selectedStore = provider.storeCounts[index];
 
-
                     // ✅ Do async work OUTSIDE setState
                     await AppConfigCache.saveConfig(
                       accessToken: selectedStore['accessToken'] ?? '',
@@ -119,7 +119,6 @@ class _CommonAllStoreWidgetState extends State<CommonAllStoreWidget> {
                     }
                     // ✅ Only call setState if UI needs update
                     setState(() {});
-
                   },
                 ),
               ),
