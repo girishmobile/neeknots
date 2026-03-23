@@ -48,259 +48,259 @@ class _SettingPageState extends State<SettingPage> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.sizeOf(context);
-    return Container(
-      color: Colors.white,
-      child: Consumer2<ThemeProvider, ProfileProvider>(
-        builder: (context, themeProvider, provider, child) {
-          return Stack(
-            children: [
-              ListView(
-                physics: BouncingScrollPhysics(),
-                padding: EdgeInsets.all(16),
-                children: [
-                  const SizedBox(height: 50),
+    MediaQuery.sizeOf(context);
+    return Consumer2<ThemeProvider, ProfileProvider>(
+      builder: (context, themeProvider, provider, child) {
+        return Stack(
+          children: [
+            ListView(
+              padding: EdgeInsets.only(left: 16,right: 16,bottom: 80,top: 10),
+              physics: BouncingScrollPhysics(),
 
-                  Container(
-                    padding: const EdgeInsets.all(2), // 👈 border thickness
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: themeProvider.isDark
-                            ? Colors.white
-                            : colorButton1,
-                        width: 3, // 👈 border width
-                      ),
+              children: [
+                const SizedBox(height: 45),
+
+                Container(
+                  padding: const EdgeInsets.all(2), // 👈 border thickness
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: themeProvider.isDark
+                          ? Colors.white
+                          :  Colors.black54,
+                      width: 3, // 👈 border width
                     ),
-                    child: CircleAvatar(
+                  ),
+                  child: CircleAvatar(
 
-                      radius: 60,
-                      backgroundColor: colorButton1.withValues(alpha: 0.09),
-                      child: ClipOval(
-                        child: CachedNetworkImage(
-                          height: 120,
-                          width: 120,
-                          fit: BoxFit.cover,
-                          imageUrl: provider.userData?['logo_url'] ?? '',
-                          errorWidget: (context, url, error) => Center(
-                            child: commonText(
-                              fontSize: 45,
-                              color: colorButton1,
-                              fontWeight: FontWeight.w600,
-                              text:
-                                  ((provider.userData?['name'] ?? '')
-                                      .toString()
-                                      .isNotEmpty)
-                                  ? provider.userData!['name'][0].toUpperCase()
-                                  : '',
-                            ),
+                    radius: 60,
+                   backgroundColor: Colors.white,
+                   // backgroundColor: colorButton1.withValues(alpha: 0.09),
+                    child: ClipOval(
+                      child: CachedNetworkImage(
+                        height: 120,
+                        width: 120,
+                        fit: BoxFit.cover,
+                        imageUrl: provider.userData?['logo_url'] ?? '',
+                        errorWidget: (context, url, error) => Center(
+                          child: commonText(
+                            fontSize: 45,
+                            color:  Colors.black,
+                            fontWeight: FontWeight.w600,
+                            text:
+                                ((provider.userData?['name'] ?? '')
+                                    .toString()
+                                    .isNotEmpty)
+                                ? provider.userData!['name'][0].toUpperCase()
+                                : '',
                           ),
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  commonText(
-                    textAlign: TextAlign.center,
-                    text: provider.userData?['name'] ?? '',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    color: themeProvider.isDark ? Colors.white : colorLogo,
+                ),
+                const SizedBox(height: 20),
+                commonText(
+                  textAlign: TextAlign.center,
+                  text: provider.userData?['name'] ?? '',
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: themeProvider.isDark ? Colors.white : colorLogo,
+                ),
+                const SizedBox(height: 4),
+                commonText(
+                  textAlign: TextAlign.center,
+                  text: provider.userData?['email'] ?? '',
+                  fontSize: 13,
+                  fontWeight: FontWeight.w400,
+                  color: themeProvider.isDark
+                      ? Colors.white
+                      : Colors.black.withValues(alpha: 0.8),
+                ),
+                const SizedBox(height: 36),
+                commonText(
+                  text: "Personal Details",
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                  color: Colors.black87,
+                ),
+                const SizedBox(height: 8),
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 0),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 18,
+                    horizontal: 10,
                   ),
-                  const SizedBox(height: 4),
-                  commonText(
-                    textAlign: TextAlign.center,
-                    text: provider.userData?['email'] ?? '',
-                    fontSize: 13,
-                    fontWeight: FontWeight.w400,
-                    color: themeProvider.isDark
-                        ? Colors.white
-                        : Colors.black.withValues(alpha: 0.8),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.3),
+                //    color: const Color(0xffF4F6F8),
+                    border: Border.all(color: colorBorder),
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  const SizedBox(height: 36),
-                  commonText(
-                    text: "Personal Details",
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
-                    color: colorButton1,
-                  ),
-                  const SizedBox(height: 8),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 0),
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 18,
-                      horizontal: 10,
-                    ),
-                    decoration: BoxDecoration(
-                      color: const Color(0xffF4F6F8),
-                      border: Border.all(color: colorBorder),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    // p//adding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                    child: Column(
-                      spacing: 24,
-                      children: [
-                        infoRowBox(
-                          text: "Full Name",
-                          value: '${provider.userData?['name'] ?? '-'}',
-                        ),
-
-                        infoRowBox(
-                          text: "Email",
-                          value: provider.userData?['email'] ?? '-',
-                        ),
-
-                        infoRowBox(
-                          text: "Mobile Number",
-                          value: provider.userData?['mobile'] ?? '-',
-                        ),
-                        infoRowBox(
-                          text: "App Name",
-                          value: provider.userData?['app_name'] ?? '-',
-                        ),
-                        infoRowBox(
-                          text: "Store Name",
-                          value: provider.userData?['store_name'] ?? '-',
-                        ),
-                        infoRowBox(
-                          text: "Version Name",
-                          value: provider.userData?['version_code'] ?? '-',
-                        ),
-
-                        infoRowBox(
-                          value: '',
-                          text: "Status",
-                          valueView: Builder(
-                            builder: (_) {
-                              final isActive =
-                                  provider.userData?['active_status'] ?? false;
-
-                              return Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 14,
-                                      vertical: 5,
-                                    ),
-                                    decoration: commonBoxDecoration(
-                                      color:
-                                          (isActive ? Colors.green : Colors.red)
-                                              .withValues(alpha: 0.09),
-                                      borderColor: isActive
-                                          ? Colors.green
-                                          : Colors.red,
-                                      borderRadius: 8,
-                                    ),
-                                    child: commonText(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: isActive
-                                          ? Colors.green
-                                          : Colors.red,
-                                      text: isActive ? "Active" : "Inactive",
-                                    ),
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
-                        ),
-                        BioMetricView(),
-                      ],
-                    ),
-                  ),
-
-                  const SizedBox(height: 30),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [],
-                  ),
-
-                  const SizedBox(height: 18),
-                  Column(
-                    spacing: 16,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
+                  // p//adding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  child: Column(
+                    spacing: 24,
                     children: [
-                      commonInkWell(
-                        onTap: () {
-                          _handleLogout();
-                        },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            vertical: 12,
-                            horizontal: 60,
-                          ),
-                          decoration: commonBoxDecoration(
-                            color: themeProvider.isDark
-                                ? Colors.white
-                                : colorLogo,
-                          ),
-                          child: Center(
-                            child: commonText(
-                              text: "Logout".toUpperCase(),
-                              color: themeProvider.isDark
-                                  ? Colors.black
-                                  : Colors.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
+                      infoRowBox(
+                        text: "Full Name",
+                        value: '${provider.userData?['name'] ?? '-'}',
+                      ),
+
+                      infoRowBox(
+                        text: "Email",
+                        value: provider.userData?['email'] ?? '-',
+                      ),
+
+                      infoRowBox(
+                        text: "Mobile Number",
+                        value: provider.userData?['mobile'] ?? '-',
+                      ),
+                      infoRowBox(
+                        text: "App Name",
+                        value: provider.userData?['app_name'] ?? '-',
+                      ),
+                      infoRowBox(
+                        text: "Store Name",
+                        value: provider.userData?['store_name'] ?? '-',
+                      ),
+                      infoRowBox(
+                        text: "Version Name",
+                        value: provider.userData?['version_code'] ?? '-',
+                      ),
+
+                      infoRowBox(
+                        value: '',
+                        text: "Status",
+                        valueView: Builder(
+                          builder: (_) {
+                            final isActive =
+                                provider.userData?['active_status'] ?? false;
+
+                            return Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 14,
+                                    vertical: 5,
+                                  ),
+                                  decoration: commonBoxDecoration(
+                                    color:
+                                        (isActive ? Colors.green : Colors.red)
+                                            .withValues(alpha: 0.09),
+                                    borderColor: isActive
+                                        ? Colors.green
+                                        : Colors.red,
+                                    borderRadius: 8,
+                                  ),
+                                  child: commonText(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    color: isActive
+                                        ? Colors.green
+                                        : Colors.red,
+                                    text: isActive ? "Active" : "Inactive",
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
                         ),
                       ),
-                      commonInkWell(
-                        onTap: () {
-                          showCommonDialog(
-                            title: "Delete",
-                            context: context,
-                            content: "Are you sure want to delete account",
-                            onPressed: () async {
-                              final authService = AuthService();
-                              await authService.deleteCurrentUser(
-                                context: context,
-                                uid: provider.userData?['uid'] ?? '',
-                              );
-                              await _clearAppState();
-                            },
-                          );
-                        },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            vertical: 12,
-                            horizontal: 30,
-                          ),
-                          decoration: commonBoxDecoration(
-                            color: themeProvider.isDark
-                                ? Colors.white
-                                : Colors.red,
-                          ),
-                          child: Center(
-                            child: commonText(
-                              text: "Delete Account".toUpperCase(),
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ),
+                      BioMetricView(),
                     ],
                   ),
+                ),
+
+                const SizedBox(height: 30),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [],
+                ),
+
+                const SizedBox(height: 18),
+                Column(
+                  spacing: 16,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    commonInkWell(
+                      onTap: () {
+                        _handleLogout();
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 12,
+                          horizontal: 60,
+                        ),
+                        decoration: commonBoxDecoration(
+                          color: themeProvider.isDark
+                              ? Colors.white
+                              : colorLogo,
+                        ),
+                        child: Center(
+                          child: commonText(
+                            text: "Logout".toUpperCase(),
+                            color: themeProvider.isDark
+                                ? Colors.black
+                                : Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                    commonInkWell(
+                      onTap: () {
+                        showCommonDialog(
+                          title: "Delete",
+                          context: context,
+                          content: "Are you sure want to delete account",
+                          onPressed: () async {
+                            final authService = AuthService();
+                            await authService.deleteCurrentUser(
+                              context: context,
+                              uid: provider.userData?['uid'] ?? '',
+                            );
+                            await _clearAppState();
+                          },
+                        );
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 12,
+                          horizontal: 30,
+                        ),
+                        decoration: commonBoxDecoration(
+                          color: themeProvider.isDark
+                              ? Colors.white
+                              : Colors.red,
+                        ),
+                        child: Center(
+                          child: commonText(
+                            text: "Delete Account".toUpperCase(),
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
 
 
-                  SizedBox(height: 16),
-                ],
-              ),
+                SizedBox(height: 16),
+              ],
+            ),
 
-              provider.isLoading ? showLoaderList() : SizedBox.shrink(),
-            ],
-          );
-        },
-      ),
+            provider.isLoading ? showLoaderList() : SizedBox.shrink(),
+          ],
+        );
+      },
     );
   }
 

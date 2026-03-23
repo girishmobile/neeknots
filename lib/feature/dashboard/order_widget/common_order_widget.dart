@@ -25,7 +25,7 @@ Widget commonOrderView({
     builder: (context, provider, child) {
       return Container(
         width: width, // 👈 fix width for horizontal card
-        decoration: commonBoxDecoration(borderColor: colorBorder),
+        decoration: commonBoxDecoration(borderColor: colorBorder,color: colorBgNew),
         margin:
             margin ?? const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
         child: commonInkWell(

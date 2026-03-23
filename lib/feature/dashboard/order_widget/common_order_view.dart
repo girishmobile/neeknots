@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
+import '../../../core/color/color_utils.dart';
 import '../../../core/component/component.dart';
 import '../../../core/component/context_extension.dart';
 import '../../../core/component/date_utils.dart';
@@ -63,124 +64,123 @@ class _CommonOrderViewState extends State<CommonOrderView> {
   Widget build(BuildContext context) {
     return Consumer<OrdersProvider>(
       builder: (context, provider, child) {
-        final list = provider.filterOrderList;
+
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: EdgeInsets.only(left: 16,right: 16,bottom: 80),
           child: Column(
             children: [
               SizedBox(height: 8),
 
 
-              Padding(
-                padding: const EdgeInsets.only(top: 0.0, left: 0, right: 0),
-                child: commonTextField(
-                  hintText: "Search by Order ID",
-                  prefixIcon: commonPrefixIcon(
-                    image: icProductSearch,
-                    width: 16,
-                    height: 16,
-                  ),
-
-                  suffixIcon: IconButton(
-                    icon: commonPrefixIcon(
-                      image: icProductFilter,
-                      width: 20,
-                      height: 20,
-                    ),
-
-                    onPressed: () {
-                      final activeFilters =
-                          provider.activeFilters; // from OrdersProvider
-
-                      if (activeFilters.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("No active filters available"),
-                          ),
-                        );
-                        return;
-                      }
-                      final options = [
-                        "All",
-                        ...activeFilters
-                            .map((f) => f["title"].toString())
-                            .where((t) => t != "All"),
-                      ];
-                      // Convert to FilterItem options
-                      final filterItem = FilterItem(
-                        label: "Status",
-                        options: options,
-                        selectedValue: provider.selectedStatus
-                            .toString()
-                            .toCapitalize(),
-                      );
-
-                      showCommonFilterDialog(
-                        context: context,
-                        title: "Filter Orders",
-                        filters: [filterItem],
-                        onReset: () {
-                          provider.getOrderList(
-                            loadMore: false,
-                            financialStatus: null,
-                            createdMinDate: null,
-                            createdMaxDate: null,
-                            status: null,
-                            fulfillmentStatus: null,
-                          );
-                        },
-                        onApply: () {
-                          final selectedStatus = filterItem.selectedValue
-                              .toLowerCase()
-                              .trim();
-
-                          final now = DateTime.now().toUtc();
-                          final todayStart =
-                              "${now.toIso8601String().split("T")[0]}T00:00:00Z";
-                          final todayEnd =
-                              "${now.toIso8601String().split("T")[0]}T23:59:59Z";
-
-                          final statusMap = {
-                            "closed orders": {"status": "closed"},
-                            "open order": {"status": "open"},
-                            "today's order": {
-                              "createdMinDate": todayStart,
-                              "createdMaxDate": todayEnd,
-                            },
-                            "today’s order": {
-                              "createdMinDate": todayStart,
-                              "createdMaxDate": todayEnd,
-                            },
-                            "pending to charge": {"financialStatus": "pending"},
-                            "pending shipment": {
-                              "status": "open",
-                              "fulfillmentStatus": "unshipped,partial",
-                            },
-                            "shipped": {"fulfillmentStatus": "fulfilled"},
-                            "awaiting return": {"financialStatus": "refunded"},
-                            "completed": {
-                              "financialStatus": "paid",
-                              "fulfillmentStatus": "fulfilled",
-                            },
-                          };
-
-                          final params = statusMap[selectedStatus];
-                          if (params != null) {
-                            provider.filterByStatus(
-                              value: selectedStatus,
-                              status: params["status"],
-                              financialStatus: params["financialStatus"],
-                              fulfillmentStatus: params["fulfillmentStatus"],
-                              createdMinDate: params["createdMinDate"],
-                              createdMaxDate: params["createdMaxDate"],
-                            );
-                          }
-                        },
-                      );
-                    },
-                  ),
-                  onChanged: (value) => provider.setSearchQuery(value),
+              commonTextField(
+                filled: true,
+                fillColor: colorBgNew,
+                hintText: "Search by Order ID",
+                prefixIcon: commonPrefixIcon(
+                  image: icProductSearch,
+                  width: 16,
+                  height: 16,
                 ),
+
+                suffixIcon: IconButton(
+                  icon: commonPrefixIcon(
+                    image: icProductFilter,
+                    width: 20,
+                    height: 20,
+                  ),
+
+                  onPressed: () {
+                    final activeFilters =
+                        provider.activeFilters; // from OrdersProvider
+
+                    if (activeFilters.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("No active filters available"),
+                        ),
+                      );
+                      return;
+                    }
+                    final options = [
+                      "All",
+                      ...activeFilters
+                          .map((f) => f["title"].toString())
+                          .where((t) => t != "All"),
+                    ];
+                    // Convert to FilterItem options
+                    final filterItem = FilterItem(
+                      label: "Status",
+                      options: options,
+                      selectedValue: provider.selectedStatus
+                          .toString()
+                          .toCapitalize(),
+                    );
+
+                    showCommonFilterDialog(
+                      context: context,
+                      title: "Filter Orders",
+                      filters: [filterItem],
+                      onReset: () {
+                        provider.getOrderList(
+                          loadMore: false,
+                          financialStatus: null,
+                          createdMinDate: null,
+                          createdMaxDate: null,
+                          status: null,
+                          fulfillmentStatus: null,
+                        );
+                      },
+                      onApply: () {
+                        final selectedStatus = filterItem.selectedValue
+                            .toLowerCase()
+                            .trim();
+
+                        final now = DateTime.now().toUtc();
+                        final todayStart =
+                            "${now.toIso8601String().split("T")[0]}T00:00:00Z";
+                        final todayEnd =
+                            "${now.toIso8601String().split("T")[0]}T23:59:59Z";
+
+                        final statusMap = {
+                          "closed orders": {"status": "closed"},
+                          "open order": {"status": "open"},
+                          "today's order": {
+                            "createdMinDate": todayStart,
+                            "createdMaxDate": todayEnd,
+                          },
+                          "today’s order": {
+                            "createdMinDate": todayStart,
+                            "createdMaxDate": todayEnd,
+                          },
+                          "pending to charge": {"financialStatus": "pending"},
+                          "pending shipment": {
+                            "status": "open",
+                            "fulfillmentStatus": "unshipped,partial",
+                          },
+                          "shipped": {"fulfillmentStatus": "fulfilled"},
+                          "awaiting return": {"financialStatus": "refunded"},
+                          "completed": {
+                            "financialStatus": "paid",
+                            "fulfillmentStatus": "fulfilled",
+                          },
+                        };
+
+                        final params = statusMap[selectedStatus];
+                        if (params != null) {
+                          provider.filterByStatus(
+                            value: selectedStatus,
+                            status: params["status"],
+                            financialStatus: params["financialStatus"],
+                            fulfillmentStatus: params["fulfillmentStatus"],
+                            createdMinDate: params["createdMinDate"],
+                            createdMaxDate: params["createdMaxDate"],
+                          );
+                        }
+                      },
+                    );
+                  },
+                ),
+                onChanged: (value) => provider.setSearchQuery(value),
               ),
               Expanded(
                 child: NotificationListener<ScrollNotification>(
@@ -200,6 +200,7 @@ class _CommonOrderViewState extends State<CommonOrderView> {
                           padding: const EdgeInsets.only(
                             left: 0,
                             right: 0,
+                            bottom: 80,
                             top: 10,
                           ),
                           itemCount:

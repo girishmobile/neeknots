@@ -11,8 +11,8 @@ import '../../models/order_details_model.dart';
 
 Widget productInfo({required OrderData order}) {
   return Container(
-    decoration: commonBoxDecoration(borderColor: colorBorder, borderRadius: 8),
-    margin: const EdgeInsets.all(16),
+    decoration: commonBoxDecoration(borderColor: colorBorder, borderRadius: 8, color: colorBgNew),
+    margin: const EdgeInsets.symmetric(horizontal: 16,vertical: 8),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -186,8 +186,8 @@ Widget orderInfo({required OrderData order}) {
   );
   final provider = Provider.of<OrdersProvider>(navigatorKey.currentContext!);
   return Container(
-    decoration: commonBoxDecoration(borderColor: colorBorder, borderRadius: 8),
-    margin: const EdgeInsets.all(16),
+    decoration: commonBoxDecoration(borderColor: colorBorder, borderRadius: 8, color: colorBgNew),
+    margin: const EdgeInsets.symmetric(horizontal: 16,vertical: 10),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -240,8 +240,9 @@ Widget orderInfo({required OrderData order}) {
 
 Widget customerInfo({required OrderData order}) {
   return Container(
-    decoration: commonBoxDecoration(borderColor: colorBorder, borderRadius: 8),
-    margin: const EdgeInsets.all(16),
+    decoration: commonBoxDecoration(borderColor: colorBorder, borderRadius: 8, color: colorBgNew),
+    margin: const EdgeInsets.symmetric(horizontal: 16,vertical: 10),
+
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -341,8 +342,8 @@ Widget customerInfo({required OrderData order}) {
 
 Widget paymentSummery({required OrderData order}) {
   return Container(
-    decoration: commonBoxDecoration(borderColor: colorBorder, borderRadius: 8),
-    margin: const EdgeInsets.all(16),
+    decoration: commonBoxDecoration(borderColor: colorBorder, borderRadius: 8, color: colorBgNew),
+    margin: const EdgeInsets.symmetric(horizontal: 16,vertical: 10),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

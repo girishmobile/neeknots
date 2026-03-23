@@ -147,7 +147,7 @@ Widget homeTopView({
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: Colors.amber, // border color
+                              color: Colors.white, // border color
                               width: 1.5, // border width
                             ),
                           ),
@@ -157,9 +157,9 @@ Widget homeTopView({
                             backgroundColor: Colors.white,
                             child: Center(
                               child: commonAssetImage(
-                                icEmail,
-                                width: 24,
-                                height: 24,
+                                icNotification,
+                                width: 20,
+                                height: 20,
                                 color: Colors.amber,
                               ),
                             ),
@@ -225,6 +225,7 @@ Widget _commonDashboardView({
           Container(
             padding: EdgeInsets.all(2), // border thickness
             decoration: BoxDecoration(
+
               shape: BoxShape.circle,
               border: Border.all(
                 color: color ?? Colors.transparent, // border color

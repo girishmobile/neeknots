@@ -57,6 +57,7 @@ class _CustomerDetailPageState extends State<CustomerDetailPage> {
               child: Container(
                 decoration: commonBoxDecoration(
                   borderColor: colorBorder,
+                  color: colorBgNew,
                   borderRadius: 8,
                 ),
                 margin: EdgeInsets.only(left: 16, right: 16, top: 16),

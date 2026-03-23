@@ -118,9 +118,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           children: [
             commonScaffold(
               appBar: commonAppBar(
-                backgroundColor: themeProvider.isDark
-                    ? colorDarkBgColor
-                    : colorLogo,
+                backgroundColor: Colors.transparent,
 
                 centerTitle: true,
                 actions: [
@@ -159,7 +157,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         },
                         child: CircleAvatar(
                           radius: 100,
-                          backgroundColor: colorButton1.withValues(alpha: 0.09),
+                          backgroundColor: Colors.white.withValues(alpha: 1),
                           child: ClipOval(
                             child: CachedNetworkImage(
                               height: 45,
@@ -170,7 +168,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               errorWidget: (context, url, error) => Center(
                                 child: commonText(
                                   fontSize: 18,
-                                  color: colorButton1,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.w500,
                                   text:
                                       ((profileProvider.userData?['name'] ?? '')
@@ -191,52 +189,65 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
 
               body: getPage(provider.currentIndex),
+            ),
+            Positioned(
+              left: 16,
+              right: 16,
+              bottom: 16,
+              child: SafeArea(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.red, // 👈 change here
+                    boxShadow: [
+                      BoxShadow(blurRadius: 10, color: Colors.black12),
+                    ],
+                  ),
+                  child: CommonBottomNavBar(
+                    currentIndex: provider.currentIndex,
+                    onTap: (index) {
+                      provider.setIndex(index);
 
-              // 👈 only current page
-              bottomNavigationBar: CommonBottomNavBar(
-                currentIndex: provider.currentIndex,
-                onTap: (index) {
-                  provider.setIndex(index);
+                      switch (index) {
+                        case 0:
+                          context.read<OrdersProvider>().resetData();
+                          context.read<CustomerProvider>().reset();
+                          context.read<ProfileProvider>().resetState();
+                          break;
+                        case 1:
+                          context.read<ProductProvider>().reset();
+                          context.read<CustomerProvider>().reset();
+                          context.read<ProfileProvider>().resetState();
+                          break;
+                        case 2:
+                          context.read<ProductProvider>().reset();
+                          context.read<OrdersProvider>().resetData();
+                          context.read<CustomerProvider>().reset();
+                          context.read<ProfileProvider>().resetState();
+                          break;
+                        case 3:
+                          context.read<ProductProvider>().reset();
+                          context.read<OrdersProvider>().resetData();
+                          context.read<ProfileProvider>().resetState();
+                          break;
+                        case 4:
+                          context.read<ProductProvider>().reset();
+                          context.read<OrdersProvider>().resetData();
+                          context.read<CustomerProvider>().reset();
+                          break;
+                      }
 
-                  switch (index) {
-                    case 0: // Product
-                      context.read<OrdersProvider>().resetData();
-                      context.read<CustomerProvider>().reset();
-                      context.read<ProfileProvider>().resetState();
-                      break;
-                    case 1: // Order
-                      context.read<ProductProvider>().reset();
-                      context.read<CustomerProvider>().reset();
-                      context.read<ProfileProvider>().resetState();
-                      break;
-                    case 2: // Home
-                      context.read<ProductProvider>().reset();
-                      context.read<OrdersProvider>().resetData();
-                      context.read<CustomerProvider>().reset();
-                      context.read<ProfileProvider>().resetState();
-                      break;
-                    case 3: // Customer
-                      context.read<ProductProvider>().reset();
-                      context.read<OrdersProvider>().resetData();
-                      context.read<ProfileProvider>().resetState();
-                      break;
-                    case 4: // Account
-                      context.read<ProductProvider>().reset();
-                      context.read<OrdersProvider>().resetData();
-                      context.read<CustomerProvider>().reset();
-                      break;
-                  }
-
-                  if (index == 0) provider.setAppBarTitle("Products");
-                  if (index == 1) provider.setAppBarTitle("Orders");
-                  if (index == 2) provider.setAppBarTitle("Home");
-                  if (index == 3) provider.setAppBarTitle("Customers");
-                  if (index == 4) provider.setAppBarTitle("Account");
-                },
-                items: BottomNavItems.items,
+                      if (index == 0) provider.setAppBarTitle("Products");
+                      if (index == 1) provider.setAppBarTitle("Orders");
+                      if (index == 2) provider.setAppBarTitle("Home");
+                      if (index == 3) provider.setAppBarTitle("Customers");
+                      if (index == 4) provider.setAppBarTitle("Account");
+                    },
+                    items: BottomNavItems.items,
+                  ),
+                ),
               ),
             ),
-
             context.watch<ProductProvider>().isFetching ||
                     context.watch<OrdersProvider>().isFetching ||
                     context.watch<CustomerProvider>().isFetching

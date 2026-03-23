@@ -62,7 +62,7 @@ class _ActiveDraftViewState extends State<ActiveDraftView> {
               child: provider.filteredProducts.isNotEmpty
                   ? ListView.builder(
                       controller: _scrollController,
-                      padding: const EdgeInsets.only(left: 0, right: 0),
+                      padding: const EdgeInsets.only(left: 0, right: 0,bottom: 80),
                       itemCount:
                           provider.hasMore && provider.searchQuery.isEmpty
                           ? provider.filteredProducts.length + 1

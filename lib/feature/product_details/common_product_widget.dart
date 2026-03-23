@@ -279,7 +279,7 @@ Widget commonOtherVariants({
           return Consumer<ThemeProvider>(
             builder: (context, themeProvider, child) {
               return Container(
-                decoration: commonBoxDecoration(borderColor: colorBorder),
+                decoration: commonBoxDecoration(borderColor: colorBorder, color: colorBgNew),
                 margin: EdgeInsets.all(5),
                 padding: EdgeInsets.all(5),
                 child: commonListTile(
@@ -353,7 +353,7 @@ Widget commonVariants({
           return Consumer<ThemeProvider>(
             builder: (context, themeProvider, child) {
               return Container(
-                decoration: commonBoxDecoration(borderColor: colorBorder),
+                decoration: commonBoxDecoration(borderColor: colorBorder, color: colorBgNew),
                 margin: EdgeInsets.all(5),
                 padding: EdgeInsets.all(5),
                 child: commonListTile(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:neeknots/core/color/color_utils.dart';
 import 'package:neeknots/core/component/component.dart';
 import 'package:provider/provider.dart';
 
@@ -67,6 +68,7 @@ class _CommonAllStoreWidgetState extends State<CommonAllStoreWidget> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               decoration: BoxDecoration(
+                color: colorBgNew,
                 border: Border.all(color: Colors.grey.shade300),
                 borderRadius: BorderRadius.circular(10),
               ),

@@ -62,7 +62,8 @@ class CommonIntlPhoneField extends StatelessWidget {
 
           decoration: InputDecoration(
             hintText: hintText,
-
+            fillColor: Colors.white,
+            filled: true,
             hintStyle: const TextStyle(color: Colors.grey),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 16,

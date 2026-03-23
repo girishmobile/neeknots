@@ -21,20 +21,8 @@ class CommonBottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ThemeProvider>(
       builder: (context, themeProvider, child) {
-        return Container(
-          decoration: BoxDecoration(
-            color: themeProvider.isDark ? colorDarkBgColor : Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: themeProvider.isDark
-                    ? colorDarkBgColor
-                    : colorLogo.withValues(alpha: 0.5),
-                spreadRadius: 0,
-                blurRadius: 6,
-                offset: const Offset(0, -3),
-              ),
-            ],
-          ),
+        return ClipRRect(
+          borderRadius: BorderRadiusGeometry.circular(20),
           child: BottomNavigationBar(
             backgroundColor: themeProvider.isDark
                 ? colorDarkBgColor

@@ -23,7 +23,7 @@ Widget commonProductListView({
       return Container(
         width: width,
 
-        decoration: commonBoxDecoration(borderColor: colorBorder),
+        decoration: commonBoxDecoration(borderColor: colorBorder,color: colorBgNew),
         margin: margin??const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
         child: commonInkWell(
           onTap: onTap,

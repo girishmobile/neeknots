@@ -43,14 +43,17 @@ class _ProductPageState extends State<ProductPage>
         init();
       },
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.only(left: 16,right: 16,bottom: 0,top: 10),
         child: Column(
           children: [
+            SizedBox(height: 10),
             Consumer<ProductProvider>(
               builder: (context, provider, child) {
                 return Padding(
                   padding: const EdgeInsets.only(top: 0.0, left: 0, right: 0),
                   child: commonTextField(
+                    fillColor: colorBgNew,
+                    filled: true,
                     hintText: "Search products by name...",
                     prefixIcon: commonPrefixIcon(
                       image: icProductSearch,

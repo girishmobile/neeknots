@@ -24,6 +24,9 @@ Widget commonLoginView({
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
       commonTextField(
+
+        fillColor: Colors.white,
+        filled: true,
         keyboardType: TextInputType.emailAddress,
         validator: validateEmail,
         prefixIcon: commonPrefixIcon(image: icEmail),

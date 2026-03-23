@@ -84,6 +84,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     return commonScaffold(
       appBar: commonAppBar(
         title: "Product Details",
+        backgroundColor: Colors.transparent,
         context: context,
         centerTitle: true,
       ),
@@ -159,6 +160,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   Container(
                                     decoration: commonBoxDecoration(
                                       borderColor: colorBorder,
+                                      color: colorBgNew
                                     ),
                                     padding: const EdgeInsets.symmetric(
                                       horizontal: 8.0,
@@ -175,6 +177,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   Container(
                                     decoration: commonBoxDecoration(
                                       borderColor: colorBorder,
+                                        color: colorBgNew
                                     ),
                                     padding: const EdgeInsets.symmetric(
                                       horizontal: 8.0,

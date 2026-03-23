@@ -40,16 +40,19 @@ class _PendingRequestScreenState extends State<PendingRequestScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
     return commonScaffold(
+      backgroundColor: Colors.transparent,
       appBar: commonAppBar(
         title: "Pending Request",
         context: context,
         centerTitle: true,
       ),
       body: commonRefreshIndicator(
+
         onRefresh: ()async{
           init();
         },
         child: commonAppBackground(
+
           child: Consumer<ProductProvider>(
             builder: (context, provider, child) {
               if (provider.isLoading) {
@@ -73,6 +76,7 @@ class _PendingRequestScreenState extends State<PendingRequestScreen> {
                               clipBehavior: Clip.antiAliasWithSaveLayer,
                               decoration: commonBoxDecoration(
                                 borderColor: colorBorder,
+                                color: colorBgNew
                               ),
                               padding: const EdgeInsets.all(0.0),
                               margin: const EdgeInsets.all(8.0),
@@ -162,7 +166,7 @@ class _PendingRequestScreenState extends State<PendingRequestScreen> {
                                                   title: "Decline",
                                                   onPressed: () {
                                                     Navigator.pop(context);
-                                                    print('=======${ data['id']}');
+
                                                      provider.updateProductStatus(
                                                       uid: data['id'],
                                                       title: "disapproved_date",

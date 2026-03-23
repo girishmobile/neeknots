@@ -12,7 +12,7 @@ import '../../models/customer_model.dart';
 
 Widget customerDetailsInfo({required Customer customer}) {
   return Container(
-    decoration: commonBoxDecoration(borderColor: colorBorder, borderRadius: 8),
+    decoration: commonBoxDecoration(borderColor: colorBorder, borderRadius: 8,color: colorBgNew),
     margin: EdgeInsets.only(left: 16, right: 16, top: 16),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,6 +102,7 @@ Widget customerProductInfo({required Customer customer}) {
       return Container(
         decoration: commonBoxDecoration(
           borderColor: colorBorder,
+          color: colorBgNew,
           borderRadius: 8,
         ),
         margin: EdgeInsets.only(left: 16, right: 16, top: 16),

@@ -37,6 +37,7 @@ AppBar commonAppBar({
     iconTheme: iconTheme,
     title: Text(
       title.toUpperCase(),
+
       style: commonTextStyle(
         fontSize: 18,
         fontWeight: FontWeight.w600,
@@ -45,7 +46,7 @@ AppBar commonAppBar({
     ),
     centerTitle: centerTitle,
     //backgroundColor: backgroundColor,
-    backgroundColor: Colors.white,
+    backgroundColor: backgroundColor??Colors.transparent,
     // important
     elevation: 0,
     actions: actions,
@@ -59,7 +60,7 @@ AppBar commonAppBar({
         ),
     flexibleSpace: Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: backgroundColor??Colors.transparent,
         //color: themeProvider.isDark ? colorDarkBgColor : colorLogo,
         borderRadius: BorderRadius.circular(0),
       ),
@@ -307,8 +308,10 @@ Widget commonTextField({
           focusedBorder:
               enabledBorder ??
               commonTextFiledBorder(borderRadius: borderRadius),
-          filled: filled,
-          fillColor: fillColor,
+         /* filled: filled,
+          fillColor: fillColor,*/
+          fillColor: Colors.white,
+          filled: true,
         ),
       );
     },
@@ -410,13 +413,27 @@ Widget commonScaffold({
   bool resizeToAvoidBottomInset = true,
 }) {
   return Scaffold(
+    extendBodyBehindAppBar: true,
+
     appBar:
         appBar ??
         (title != null
-            ? AppBar(title: commonText(text: title), centerTitle: true)
+            ? AppBar(
+
+
+            title: commonText(text: title), centerTitle: true)
             : null),
-    body: Container(child: body),
-    backgroundColor: backgroundColor,
+    body: Container(
+      width: MediaQuery.sizeOf(navigatorKey.currentContext!).width,
+      height: MediaQuery.sizeOf(navigatorKey.currentContext!).height,
+        decoration: commonBoxDecoration(
+            image: DecorationImage(
+                fit: BoxFit.cover,
+                alignment: AlignmentGeometry.topCenter,
+                image: AssetImage(icBg1))
+        ),
+        child: SafeArea(child: body)),
+
     floatingActionButton: floatingActionButton,
     drawer: drawer,
     bottomNavigationBar: bottomNavigationBar,
@@ -484,21 +501,24 @@ PopScope<Object> commonPopScope({
 
 Center commonErrorView({String? text}) {
   return Center(
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      spacing: 20,
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        //commonAssetImage(icNoData, width: 100, height: 100),
-        commonText(
-          textAlign: TextAlign.center,
-          text: text ?? errorMsg,
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-          color: Colors.black.withValues(alpha: 0.5),
-        ),
-      ],
+    child: Container(
+
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        spacing: 20,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          //commonAssetImage(icNoData, width: 100, height: 100),
+          commonText(
+            textAlign: TextAlign.center,
+            text: text ?? errorMsg,
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            color: Colors.black.withValues(alpha: 0.5),
+          ),
+        ],
+      ),
     ),
   );
 }
@@ -688,7 +708,7 @@ Container commonAppBackground({required Widget child}) {
     height: size.height,
     decoration: commonBoxDecoration(
       borderRadius: 0,
-      color: themeProvider.isDark ? colorDarkBgColor : Colors.white,
+      color: themeProvider.isDark ? colorDarkBgColor : Colors.transparent,
       //image: DecorationImage(fit: BoxFit.fill, image: AssetImage(icSa)),
     ),
     child: child,
@@ -1017,7 +1037,7 @@ Widget commonNetworkImage(
 
 Widget commonBoxView({required Widget contentView, required String title}) {
   return Container(
-    decoration: commonBoxDecoration(borderColor: colorBorder, borderRadius: 8),
+    decoration: commonBoxDecoration(borderColor: colorBorder, borderRadius: 8,color: colorBgNew),
     margin: const EdgeInsets.all(0),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,

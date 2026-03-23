@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:neeknots/core/color/color_utils.dart';
 import 'package:neeknots/core/component/component.dart';
 import 'package:neeknots/core/component/context_extension.dart';
 import 'package:neeknots/core/component/date_utils.dart';
@@ -53,6 +54,8 @@ class _CustomerOrderPageState extends State<CustomerOrderPage> {
                         right: 12,
                       ),
                       child: commonTextField(
+                        filled: true,
+                        fillColor: colorBgNew,
                         hintText: "Search by Order ID",
                         prefixIcon: commonPrefixIcon(
                           image: icProductSearch,
