@@ -176,12 +176,24 @@ Widget homeTopView({
                     ),
                   ),
 
-                  commonText(
-                    text: '$totalPendingRequest',
-                    style: commonTextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: provider.isDark ? Colors.white : colorTextDesc1,
+                  Container(
+
+                    width: 40,
+                    height: 40,
+                    decoration: commonBoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                      borderColor: colorBorder
+                    ),
+                    child: Center(
+                      child: commonText(
+                        text: '$totalPendingRequest',
+                        style: commonTextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          color: provider.isDark ? Colors.white : colorTextDesc1,
+                        ),
+                      ),
                     ),
                   ),
                 ],

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:neeknots/core/color/color_utils.dart';
 import 'package:neeknots/core/component/component.dart';
 
 class CustomTabBar extends StatelessWidget {
