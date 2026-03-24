@@ -12,7 +12,7 @@ import '../../models/customer_model.dart';
 
 Widget customerDetailsInfo({required Customer customer}) {
   return Container(
-    decoration: commonBoxDecoration(borderColor: colorBorder, borderRadius: 8,color: colorBgNew),
+    decoration: commonBoxDecoration(borderColor: colorBorder, borderRadius: 8,color: Colors.blue.shade100.withValues(alpha: 0.2)),
     margin: EdgeInsets.only(left: 16, right: 16, top: 16),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,7 +102,7 @@ Widget customerProductInfo({required Customer customer}) {
       return Container(
         decoration: commonBoxDecoration(
           borderColor: colorBorder,
-          color: colorBgNew,
+          color: Colors.green.shade100.withValues(alpha: 0.2),
           borderRadius: 8,
         ),
         margin: EdgeInsets.only(left: 16, right: 16, top: 16),
@@ -393,14 +393,14 @@ Widget _buildRow({
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        commonText(text: title, fontWeight: FontWeight.w400, fontSize: 14),
+        commonText(text: title, fontWeight: FontWeight.w400, fontSize: 12),
         Container(
           padding: padding,
           decoration: decoration,
           child: commonText(
             text: value,
             fontWeight: fontWeight ?? FontWeight.w500,
-            fontSize: fontSize ?? 14,
+            fontSize: fontSize ?? 12,
             color: colorText,
           ),
         ),

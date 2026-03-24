@@ -60,13 +60,13 @@ class CommonPinCodeField extends StatelessWidget {
         errorColor: Colors.red,
 
         // Fill
-        fillColor: Colors.grey[100],
+        fillColor: Colors.transparent,
         focusedFillColor: Colors.black45,
         filledFillColor: Colors.black87,
 
         // Text
         textStyle: TextStyle(
-          fontSize: 24,
+          fontSize: 20,
           fontWeight: FontWeight.bold,
           color: Colors.white,
         ),

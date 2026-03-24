@@ -26,7 +26,7 @@ Widget commonLoginView({
       commonTextField(
 
         fillColor: Colors.white,
-        filled: true,
+        filled: false,
         keyboardType: TextInputType.emailAddress,
         validator: validateEmail,
         prefixIcon: commonPrefixIcon(image: icEmail),

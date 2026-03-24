@@ -54,6 +54,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
                   children: [
                     orderInfo(
+
                       order:
                           provider.orderDetailsModel?.orderData ?? OrderData(),
                     ),

@@ -11,6 +11,7 @@ Widget commonProductListView({
   double ? width,
   void Function()? onTap,
   String? price,
+  required int index,
   EdgeInsetsGeometry? imageMargin,
   Color? colorStatusColor,
   EdgeInsetsGeometry? margin,
@@ -23,7 +24,7 @@ Widget commonProductListView({
       return Container(
         width: width,
 
-        decoration: commonBoxDecoration(borderColor: colorBorder,color: colorBgNew),
+        decoration: commonBoxDecoration(borderColor: colorBorder,color: getRandomColor(index).withValues(alpha: 0.2)),
         margin: margin??const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
         child: commonInkWell(
           onTap: onTap,

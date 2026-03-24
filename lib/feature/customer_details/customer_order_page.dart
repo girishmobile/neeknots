@@ -54,8 +54,8 @@ class _CustomerOrderPageState extends State<CustomerOrderPage> {
                         right: 12,
                       ),
                       child: commonTextField(
+                        fillColor: Colors.pink.shade100.withValues(alpha: 0.2),
                         filled: true,
-                        fillColor: colorBgNew,
                         hintText: "Search by Order ID",
                         prefixIcon: commonPrefixIcon(
                           image: icProductSearch,
@@ -83,6 +83,7 @@ class _CustomerOrderPageState extends State<CustomerOrderPage> {
                                       provider.filterCustomerOrderList[index];
                                   return commonOrderView(
                                     invisibleCustomer: false,
+                                    index: index,
                                     margin: const EdgeInsets.symmetric(
                                       vertical: 6,
                                       horizontal: 12,

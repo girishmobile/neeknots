@@ -279,7 +279,7 @@ Widget commonOtherVariants({
           return Consumer<ThemeProvider>(
             builder: (context, themeProvider, child) {
               return Container(
-                decoration: commonBoxDecoration(borderColor: colorBorder, color: colorBgNew),
+                decoration: commonBoxDecoration(borderColor: colorBorder, color: getRandomColor(index).withValues(alpha: 0.2)),
                 margin: EdgeInsets.all(5),
                 padding: EdgeInsets.all(5),
                 child: commonListTile(
@@ -353,13 +353,15 @@ Widget commonVariants({
           return Consumer<ThemeProvider>(
             builder: (context, themeProvider, child) {
               return Container(
-                decoration: commonBoxDecoration(borderColor: colorBorder, color: colorBgNew),
+                decoration: commonBoxDecoration(borderColor: colorBorder, color: getRandomColor(index).withValues(alpha: 0.2)),
                 margin: EdgeInsets.all(5),
                 padding: EdgeInsets.all(5),
                 child: commonListTile(
                   textColor: themeProvider.isDark ? Colors.white : colorLogo,
                   contentPadding: EdgeInsetsGeometry.zero,
-                  leadingIcon: commonNetworkImage(data?.imageUrl ?? ''),
+                  leadingIcon: ClipRRect(
+                      borderRadius: BorderRadiusGeometry.circular(10),
+                      child: commonNetworkImage(data?.imageUrl ?? '')),
                   subtitleView: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
@@ -370,7 +372,7 @@ Widget commonVariants({
                         children: [
                           Container(
                             decoration: commonBoxDecoration(
-                              color: colorBorder.withValues(alpha: 0.1),
+                              color: Colors.white,
                               borderRadius: 5,
                             ),
                             child: Padding(
@@ -388,7 +390,7 @@ Widget commonVariants({
                           SizedBox(width: 24),
                           Container(
                             decoration: commonBoxDecoration(
-                              color: colorBorder.withValues(alpha: 0.1),
+                              color: Colors.white,
                               borderRadius: 5,
                             ),
                             child: Padding(

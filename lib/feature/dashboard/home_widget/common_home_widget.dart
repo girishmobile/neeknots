@@ -562,6 +562,7 @@ Widget commonTopProductListView({void Function()? onTap}) {
                         : 0;
 
                     return commonProductListView(
+                      index: index,
                       margin: EdgeInsetsGeometry.only(right: 10),
                       imageMargin: EdgeInsetsGeometry.only(left: 10),
 
@@ -649,6 +650,7 @@ Widget commonTopOrderListView({void Function()? onTap}) {
                   itemBuilder: (context, index, data) {
                     var data = provider.filterOrderList[index];
                     return commonOrderView(
+                      index: index,
                       margin: EdgeInsetsGeometry.only(right: 10),
 
                       width: provider.filterOrderList.length == 1

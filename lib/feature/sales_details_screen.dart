@@ -144,6 +144,7 @@ class _SalesDetailsScreenState extends State<SalesDetailsScreen> {
                       ),
 
                       commonBoxView(
+                        color: Colors.orange.shade100.withValues(alpha: 0.2),
                         title: "Today Sales",
                         contentView: SizedBox(
                           height: 320,
@@ -163,6 +164,7 @@ class _SalesDetailsScreenState extends State<SalesDetailsScreen> {
                           var data =
                               orderProvider.orderModelByDate?.orders?[index];
                           return commonOrderView(
+                            index: index,
                             errorImageView: Container(
                               margin: EdgeInsets.only(
                                 left: 5,

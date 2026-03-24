@@ -63,15 +63,15 @@ class CommonIntlPhoneField extends StatelessWidget {
           decoration: InputDecoration(
             hintText: hintText,
             fillColor: Colors.white,
-            filled: true,
+            filled: false,
             hintStyle: const TextStyle(color: Colors.grey),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 16,
               vertical: 14,
             ),
             border: commonTextFiledBorder(borderRadius: 12),
-            enabledBorder: commonTextFiledBorder(borderRadius: 12),
-            focusedBorder: commonTextFiledBorder(borderRadius: 12),
+            enabledBorder: commonTextFiledBorder(borderRadius: 12,borderColor: Colors.pinkAccent.withValues(alpha: 0.2)),
+            focusedBorder: commonTextFiledBorder(borderRadius: 12,borderColor: Colors.pinkAccent.withValues(alpha: 0.5)),
           ),
 
           onChanged: onChanged,

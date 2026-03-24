@@ -187,7 +187,7 @@ Widget commonButton({
             : MediaQuery.sizeOf(navigatorKey.currentContext!).width,
         child: DecoratedBox(
           decoration: BoxDecoration(
-            color: color ?? (provider.isDark ? Colors.white : colorLogo),
+            color: color ?? (provider.isDark ? Colors.white : colorMenu),
 
             borderRadius: BorderRadius.circular(radius ?? 15),
           ),
@@ -296,22 +296,23 @@ Widget commonTextField({
                     : Colors.black.withValues(alpha: 0.5),
               ),
           contentPadding: contentPadding,
-
+          filled: filled,
+          fillColor: fillColor,
           prefixIcon: prefixIcon,
           suffixIcon: suffixIcon,
           border:
               enabledBorder ??
-              commonTextFiledBorder(borderRadius: borderRadius),
+              commonTextFiledBorder(borderRadius: borderRadius,),
           enabledBorder:
               enabledBorder ??
-              commonTextFiledBorder(borderRadius: borderRadius),
+              commonTextFiledBorder(borderRadius: borderRadius,borderColor: Colors.pinkAccent.withValues(alpha: 0.2)),
           focusedBorder:
               enabledBorder ??
-              commonTextFiledBorder(borderRadius: borderRadius),
+              commonTextFiledBorder(borderRadius: borderRadius,borderColor: Colors.pinkAccent.withValues(alpha: 0.5)),
          /* filled: filled,
           fillColor: fillColor,*/
-          fillColor: Colors.white,
-          filled: true,
+          /*fillColor: Colors.white,
+          filled: true,*/
         ),
       );
     },
@@ -434,6 +435,7 @@ Widget commonScaffold({
         ),
         child: SafeArea(child: body)),
 
+  // body: body,
     floatingActionButton: floatingActionButton,
     drawer: drawer,
     bottomNavigationBar: bottomNavigationBar,
@@ -661,7 +663,7 @@ Widget showLoaderList() {
     child: Container(
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [colorLogo, colorLogo],
+          colors: [colorMenu, colorMenu],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -682,7 +684,7 @@ Widget showLoaderList11() {
     child: Container(
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [colorLogo, colorLogo],
+          colors: [colorMenu, colorMenu],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -706,11 +708,22 @@ Container commonAppBackground({required Widget child}) {
   return Container(
     width: size.width,
     height: size.height,
-    decoration: commonBoxDecoration(
+   /* decoration: commonBoxDecoration(
       borderRadius: 0,
-      color: themeProvider.isDark ? colorDarkBgColor : Colors.transparent,
+      color: themeProvider.isDark
+          ? colorDarkBgColor
+          : Colors.white,
+
+      // 👉 Light mode me image, Dark me null
+      image: themeProvider.isDark
+          ? null
+          : DecorationImage(
+        fit: BoxFit.fill,
+        image: AssetImage(icBg1),
+      ),
+     *//* color: themeProvider.isDark ? colorDarkBgColor : Colors.transparent,*//*
       //image: DecorationImage(fit: BoxFit.fill, image: AssetImage(icSa)),
-    ),
+    ),*/
     child: child,
   );
 }
@@ -1035,9 +1048,9 @@ Widget commonNetworkImage(
   );
 }
 
-Widget commonBoxView({required Widget contentView, required String title}) {
+Widget commonBoxView({required Widget contentView, required String title,Color ?color}) {
   return Container(
-    decoration: commonBoxDecoration(borderColor: colorBorder, borderRadius: 8,color: colorBgNew),
+    decoration: commonBoxDecoration(borderColor: colorBorder, borderRadius: 8,color: color??Colors.blue.shade100.withValues(alpha: 0.2)),
     margin: const EdgeInsets.all(0),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1212,4 +1225,18 @@ Widget infoRowBox({
           ),
     ],
   );
+}
+Color getRandomColor(int index) {
+  final colors = [
+    Colors.blue.shade100,
+    Colors.green.shade100,
+    Colors.orange.shade100,
+    Colors.purple.shade100,
+    Colors.red.shade100,
+    Colors.teal.shade100,
+    Colors.indigo.shade100,
+    Colors.pink.shade100,
+  ];
+
+  return colors[index % colors.length];
 }

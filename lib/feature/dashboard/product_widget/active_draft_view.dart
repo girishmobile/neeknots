@@ -81,6 +81,7 @@ class _ActiveDraftViewState extends State<ActiveDraftView> {
                               : 0;
 
                           return commonProductListView(
+                            index: index,
                             margin: const EdgeInsets.symmetric(
                               vertical: 6,
                               horizontal: 0,

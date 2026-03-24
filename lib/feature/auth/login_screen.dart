@@ -28,7 +28,7 @@ class LoginScreen extends StatelessWidget {
                 Center(
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: const EdgeInsets.all(20),
+                    padding: const EdgeInsets.symmetric(horizontal: 32),
                     child: Consumer<LoginProvider>(
                       builder: (context, provider, child) {
                         return commonPopScope(

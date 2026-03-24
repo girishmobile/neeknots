@@ -17,7 +17,7 @@ class CommonDateRangePicker {
       context,
 
       dismissible: true,
-      minimumDate: DateTime.now().subtract(const Duration(days: 30)),
+      minimumDate: DateTime(2020), // ✅ full past allowed
 
       maximumDate: DateTime.now(), // ✅ only till today
       startDate: provider.startDate,
@@ -25,7 +25,7 @@ class CommonDateRangePicker {
       fontFamily: fontPoppins,
 
       backgroundColor: Colors.white,
-      primaryColor: colorLogo,
+      primaryColor: colorMenu,
       onApplyClick: (start, end) {
         provider.setDateRange(start, end);
         onApplyClick(start, end); // ✅ callback to outside

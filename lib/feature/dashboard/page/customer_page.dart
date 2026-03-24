@@ -49,7 +49,7 @@ class _CustomersPageState extends State<CustomersPage> {
           SizedBox(height: 10),
           commonTextField(
             hintText: "Search customers...",
-            fillColor: colorBgNew,
+            fillColor: Colors.pink.shade100.withValues(alpha: 0.2),
             filled: true,
             prefixIcon: commonPrefixIcon(
               image: icProductSearch,
@@ -83,7 +83,7 @@ class _CustomersPageState extends State<CustomersPage> {
                     borderColor: colorBorder,
                         borderRadius: 8,
 
-                        color: colorBgNew,
+                        color: getRandomColor(index).withValues(alpha: 0.2),
 
                             ),
                     margin: EdgeInsets.only(bottom: 8),
@@ -143,7 +143,7 @@ class _CustomersPageState extends State<CustomersPage> {
                               valueView: Container(
                                 decoration: commonBoxDecoration(
                                   borderRadius: 8,
-                                  color: Colors.grey.withValues(
+                                  color: Colors.white.withValues(
                                     alpha: 0.5,
                                   ),
                                 ),

@@ -73,8 +73,8 @@ class _CommonOrderViewState extends State<CommonOrderView> {
 
 
               commonTextField(
+                fillColor: Colors.pink.shade100.withValues(alpha: 0.2),
                 filled: true,
-                fillColor: colorBgNew,
                 hintText: "Search by Order ID",
                 prefixIcon: commonPrefixIcon(
                   image: icProductSearch,
@@ -210,6 +210,7 @@ class _CommonOrderViewState extends State<CommonOrderView> {
                             if (index < provider.filterOrderList.length) {
                               final data = provider.filterOrderList[index];
                               return commonOrderView(
+                                index: index,
                                 margin: const EdgeInsets.symmetric(
                                   vertical: 6,
                                   horizontal: 0,

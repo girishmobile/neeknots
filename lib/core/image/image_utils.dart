@@ -34,7 +34,7 @@ const String icVersionCode="$iconDashboardPath/web-programming.png";
 const String icAccessToken="$iconDashboardPath/security-key.png";
 const String icAppLogoImage="$iconDashboardPath/logo-design.png";
 const String icContact="$iconDashboardPath/ic_contact.png";
-const String icBg1="$iconDashboardPath/ic_bg1.png";
+const String icBg1="$iconDashboardPath/ic_bg11.png";
 
 
 //==============================Product=============================

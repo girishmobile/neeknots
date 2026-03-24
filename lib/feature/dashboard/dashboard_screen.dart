@@ -200,7 +200,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     borderRadius: BorderRadius.circular(20),
                     color: Colors.red, // 👈 change here
                     boxShadow: [
-                      BoxShadow(blurRadius: 10, color: Colors.black12),
+                      BoxShadow(blurRadius: 2, color: colorMenu.withValues(alpha: 0.2)),
                     ],
                   ),
                   child: CommonBottomNavBar(

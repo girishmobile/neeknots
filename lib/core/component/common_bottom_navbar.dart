@@ -40,7 +40,7 @@ class CommonBottomNavBar extends StatelessWidget {
             ),
             iconSize: 20,
             type: BottomNavigationBarType.fixed,
-            selectedItemColor: themeProvider.isDark ? Colors.white : colorLogo,
+            selectedItemColor: themeProvider.isDark ? Colors.white : colorMenu,
             unselectedItemColor: Colors.grey,
             currentIndex: currentIndex,
             onTap: onTap,

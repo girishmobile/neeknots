@@ -52,7 +52,8 @@ class _ProductPageState extends State<ProductPage>
                 return Padding(
                   padding: const EdgeInsets.only(top: 0.0, left: 0, right: 0),
                   child: commonTextField(
-                    fillColor: colorBgNew,
+
+                    fillColor: Colors.pink.shade100.withValues(alpha: 0.2),
                     filled: true,
                     hintText: "Search products by name...",
                     prefixIcon: commonPrefixIcon(
@@ -70,7 +71,7 @@ class _ProductPageState extends State<ProductPage>
               child: CustomTabBar(
                 isScrollable: false,
                 tabAlignment: TabAlignment.fill,
-                selectedColor: colorLogo,
+                selectedColor: colorMenu.withValues(alpha: 0.7),
                 unselectedColor: Colors.grey[700]!,
                 tabController: _tabController,
                 tabTitles: ["Active", "Draft"],

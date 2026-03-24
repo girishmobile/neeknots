@@ -11,8 +11,12 @@ import '../../models/order_details_model.dart';
 
 Widget productInfo({required OrderData order}) {
   return Container(
-    decoration: commonBoxDecoration(borderColor: colorBorder, borderRadius: 8, color: colorBgNew),
-    margin: const EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+    decoration: commonBoxDecoration(
+      borderColor: colorBorder,
+      borderRadius: 8,
+      color: Colors.pink.shade100.withValues(alpha: 0.2),
+    ),
+    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -186,8 +190,12 @@ Widget orderInfo({required OrderData order}) {
   );
   final provider = Provider.of<OrdersProvider>(navigatorKey.currentContext!);
   return Container(
-    decoration: commonBoxDecoration(borderColor: colorBorder, borderRadius: 8, color: colorBgNew),
-    margin: const EdgeInsets.symmetric(horizontal: 16,vertical: 10),
+    decoration: commonBoxDecoration(
+      borderColor: colorBorder,
+      borderRadius: 8,
+      color: Colors.blue.shade100.withValues(alpha: 0.2),
+    ),
+    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -240,8 +248,12 @@ Widget orderInfo({required OrderData order}) {
 
 Widget customerInfo({required OrderData order}) {
   return Container(
-    decoration: commonBoxDecoration(borderColor: colorBorder, borderRadius: 8, color: colorBgNew),
-    margin: const EdgeInsets.symmetric(horizontal: 16,vertical: 10),
+    decoration: commonBoxDecoration(
+      borderColor: colorBorder,
+      borderRadius: 8,
+      color: Colors.green.shade100.withValues(alpha: 0.2),
+    ),
+    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
 
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -342,8 +354,12 @@ Widget customerInfo({required OrderData order}) {
 
 Widget paymentSummery({required OrderData order}) {
   return Container(
-    decoration: commonBoxDecoration(borderColor: colorBorder, borderRadius: 8, color: colorBgNew),
-    margin: const EdgeInsets.symmetric(horizontal: 16,vertical: 10),
+    decoration: commonBoxDecoration(
+      borderColor: colorBorder,
+      borderRadius: 8,
+      color: Colors.orange.shade100.withValues(alpha: 0.2),
+    ),
+    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -369,13 +385,13 @@ Widget paymentSummery({required OrderData order}) {
                 title: "Total",
                 fontWeight: FontWeight.w600,
                 amount: "$rupeeIcon${order.currentTotalPrice ?? "0"}",
-                fontSize: 14,
+                fontSize: 12,
               ),
               _buildRowPayment(
                 title: "Paid",
                 fontWeight: FontWeight.w400,
                 amount: "$rupeeIcon${order.currentTotalPrice ?? "0"}",
-                fontSize: 14,
+                fontSize: 12,
               ),
             ],
           ),
@@ -399,14 +415,14 @@ Widget _buildRow({
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        commonText(text: title, fontWeight: FontWeight.w400, fontSize: 14),
+        commonText(text: title, fontWeight: FontWeight.w400, fontSize: 12),
         Container(
           padding: padding,
           decoration: decoration,
           child: commonText(
             text: value,
             fontWeight: fontWeight ?? FontWeight.w500,
-            fontSize: fontSize ?? 14,
+            fontSize: fontSize ?? 12,
             color: colorText,
           ),
         ),

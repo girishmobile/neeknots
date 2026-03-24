@@ -44,147 +44,145 @@ class _SignupScreenState extends State<SignupScreen> {
               child: Stack(
                 children: [
                   SafeArea(
-                    child: commonAppBackground(
-                      child: SingleChildScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        padding: const EdgeInsets.all(20),
-                        child: Consumer<LoginProvider>(
-                          builder: (context, provider, child) {
-                            return commonPopScope(
-                              onBack: () {
-                                provider.resetState();
-                              },
-                              child: Form(
-                                key: formSignupKey,
-        
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SizedBox(height: size.height * 0.08),
-                                    Align(
-                                      alignment: AlignmentGeometry.center,
-                                      child: commonAssetImage(    icAppLogo,
-        
-        
-                                        width: size.width * 0.6,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 30),
-                                    Center(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          commonHeadingText(
-                                            text:
-                                                "Create your\nEcommerce manager account",
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w600,
-                                            color: themeProvider.isDark
-                                                ? Colors.white
-                                                : colorLogo,
-                                          ),
-                                          const SizedBox(height: 6),
-                                          commonDescriptionText(
-                                            textAlign: TextAlign.center,
-        
-                                            text:
-                                                "Fill in the details below to register your store and start using the app.",
-                                          ),
-                                          const SizedBox(height: 20),
-                                        ],
-                                      ),
-                                    ),
-        
-                                    const SizedBox(height: 5),
-        
-                                    SizedBox(height: 20,),
-                                    commonSignUpView(
-                                      provider: provider,
-                                      onPressSignUp: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          hideKeyboard(context);
-                                          context.read<LoginProvider>().resetState();
-                                          navigatorKey.currentState?.pushNamed(
-                                            RouteName.loginScreen,
-                                          );
-                                        },
-        
-                                      onPressed: () async {
-                                        hideKeyboard(context);
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.all(20),
+                      child: Consumer<LoginProvider>(
+                        builder: (context, provider, child) {
+                          return commonPopScope(
+                            onBack: () {
+                              provider.resetState();
+                            },
+                            child: Form(
+                              key: formSignupKey,
 
-                                        if (formSignupKey.currentState
-                                                ?.validate() ==
-                                            true) {
-                                          try {
-                                            await signUpProvider.signup(
-                                              appName: provider.tetAppName.text,
-                                              logoUrl:  provider
-                                                  .tetLogoUrl
-                                                  .text,
-                                              countryCode:   provider
-                                                  .tetCountryCodeController
-                                                  .text,
-                                              email: provider.tetEmail.text
-                                                  .trim(),
-        
-                                              storeName: provider
-                                                  .tetStoreName
-                                                  .text
-                                                  .trim(),
-                                              websiteUrl: provider
-                                                  .tetWebsiteUrl
-                                                  .text
-                                                  .trim(),
-                                              mobile: provider.tetPhone.text,
-                                              name: provider.tetFullName.text.trim(),
-                                             // photo: _pickedImage,
-                                            );
-        
-                                            showCommonDialog(
-                                              title: "Success",
-                                              onPressed: () {
-                                                Timer(
-                                                  const Duration(milliseconds: 500),
-                                                      () async {
-                                                    navigatorKey.currentState
-                                                        ?.pushNamedAndRemoveUntil(
-                                                      RouteName.loginScreen,
-                                                          (Route<dynamic> route) => false,
-                                                    );
-        
-        
-                                                    context.read<LoginProvider>().resetState();
-                                                  },
-                                                );
-                                              },
-                                              context: navigatorKey.currentContext!,
-                                              content:
-                                                  "Your account is successfully created. You can access it after 24 hours.",
-                                            );
-                                          } catch (e) {
-                                            String errorMessage = e
-                                                .toString()
-                                                .split(": ")
-                                                .last;
-        
-                                            showCommonDialog(
-                                              title: "Error",
-                                              context: navigatorKey.currentContext!,
-                                              confirmText: "Close",
-                                              showCancel: false,
-                                              content: errorMessage,
-                                            );
-                                          }
-                                        }
-                                      },
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(height: size.height * 0.08),
+                                  Align(
+                                    alignment: AlignmentGeometry.center,
+                                    child: commonAssetImage(    icAppLogo,
+
+
+                                      width: size.width * 0.6,
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                  const SizedBox(height: 30),
+                                  Center(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        commonHeadingText(
+                                          text:
+                                              "Create your\nEcommerce manager account",
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w600,
+                                          color: themeProvider.isDark
+                                              ? Colors.white
+                                              : colorLogo,
+                                        ),
+                                        const SizedBox(height: 6),
+                                        commonDescriptionText(
+                                          textAlign: TextAlign.center,
+
+                                          text:
+                                              "Fill in the details below to register your store and start using the app.",
+                                        ),
+                                        const SizedBox(height: 20),
+                                      ],
+                                    ),
+                                  ),
+
+                                  const SizedBox(height: 5),
+
+                                  SizedBox(height: 20,),
+                                  commonSignUpView(
+                                    provider: provider,
+                                    onPressSignUp: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        hideKeyboard(context);
+                                        context.read<LoginProvider>().resetState();
+                                        navigatorKey.currentState?.pushNamed(
+                                          RouteName.loginScreen,
+                                        );
+                                      },
+
+                                    onPressed: () async {
+                                      hideKeyboard(context);
+
+                                      if (formSignupKey.currentState
+                                              ?.validate() ==
+                                          true) {
+                                        try {
+                                          await signUpProvider.signup(
+                                            appName: provider.tetAppName.text,
+                                            logoUrl:  provider
+                                                .tetLogoUrl
+                                                .text,
+                                            countryCode:   provider
+                                                .tetCountryCodeController
+                                                .text,
+                                            email: provider.tetEmail.text
+                                                .trim(),
+
+                                            storeName: provider
+                                                .tetStoreName
+                                                .text
+                                                .trim(),
+                                            websiteUrl: provider
+                                                .tetWebsiteUrl
+                                                .text
+                                                .trim(),
+                                            mobile: provider.tetPhone.text,
+                                            name: provider.tetFullName.text.trim(),
+                                           // photo: _pickedImage,
+                                          );
+
+                                          showCommonDialog(
+                                            title: "Success",
+                                            onPressed: () {
+                                              Timer(
+                                                const Duration(milliseconds: 500),
+                                                    () async {
+                                                  navigatorKey.currentState
+                                                      ?.pushNamedAndRemoveUntil(
+                                                    RouteName.loginScreen,
+                                                        (Route<dynamic> route) => false,
+                                                  );
+
+
+                                                  context.read<LoginProvider>().resetState();
+                                                },
+                                              );
+                                            },
+                                            context: navigatorKey.currentContext!,
+                                            content:
+                                                "Your account is successfully created. You can access it after 24 hours.",
+                                          );
+                                        } catch (e) {
+                                          String errorMessage = e
+                                              .toString()
+                                              .split(": ")
+                                              .last;
+
+                                          showCommonDialog(
+                                            title: "Error",
+                                            context: navigatorKey.currentContext!,
+                                            confirmText: "Close",
+                                            showCancel: false,
+                                            content: errorMessage,
+                                          );
+                                        }
+                                      }
+                                    },
+                                  ),
+                                ],
                               ),
-                            );
-                          },
-                        ),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ),
