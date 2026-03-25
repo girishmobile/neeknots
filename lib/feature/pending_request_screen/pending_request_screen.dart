@@ -75,8 +75,8 @@ class _PendingRequestScreenState extends State<PendingRequestScreen> {
                             return Container(
                               clipBehavior: Clip.antiAliasWithSaveLayer,
                               decoration: commonBoxDecoration(
-                                borderColor: colorBorder,
-                                color: colorBgNew
+                                borderColor: getRandomColor(index),
+                                color: getRandomColor(index).withValues(alpha: 0.2)
                               ),
                               padding: const EdgeInsets.all(0.0),
                               margin: const EdgeInsets.all(8.0),

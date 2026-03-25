@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:neeknots/core/color/color_utils.dart';
 import 'package:neeknots/feature/auth/app_lock_services.dart';
 import 'package:neeknots/feature/auth/app_lock_storage.dart';
 
@@ -63,8 +64,10 @@ class _BioMetricViewState extends State<BioMetricView> {
         Switch(
           value: _enabled,
           onChanged: _toggle,
+
+
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          activeThumbColor: Colors.black87,
+          activeThumbColor:colorMenu,
         ),
       ],
     );

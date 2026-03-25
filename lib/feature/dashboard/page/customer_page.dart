@@ -80,7 +80,7 @@ class _CustomersPageState extends State<CustomersPage> {
                     return Container(
                       decoration: commonBoxDecoration(
 
-                    borderColor: colorBorder,
+                    borderColor: getRandomColor(index),
                         borderRadius: 8,
 
                         color: getRandomColor(index).withValues(alpha: 0.2),

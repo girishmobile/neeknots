@@ -55,7 +55,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 itemBuilder: (context, index, data) {
                   var data = provider.contacts[index];
                   return Container(
-                    decoration: commonBoxDecoration(borderColor: colorBorder),
+                    decoration: commonBoxDecoration(borderColor: getRandomColor(index),color: getRandomColor(index).withValues(alpha: 0.2)),
                     margin: EdgeInsets.all(8),
                     padding: EdgeInsets.all(12),
                     child: Column(

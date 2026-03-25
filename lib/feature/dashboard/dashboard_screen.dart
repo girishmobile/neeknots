@@ -165,18 +165,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               fit: BoxFit.cover,
                               imageUrl:
                                   profileProvider.userData?['logo_url'] ?? '',
-                              errorWidget: (context, url, error) => Center(
-                                child: commonText(
-                                  fontSize: 18,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                  text:
-                                      ((profileProvider.userData?['name'] ?? '')
-                                          .toString()
-                                          .isNotEmpty)
-                                      ? profileProvider.userData!['name'][0]
-                                            .toUpperCase()
-                                      : '',
+                              errorWidget: (context, url, error) => CircleAvatar(
+                                backgroundColor: colorMenu.withValues(alpha: 0.1),
+                                radius: 100,
+                                child: Center(
+                                  child: commonText(
+                                    fontSize: 20,
+                                    color: colorMenu,
+                                    fontWeight: FontWeight.w700,
+                                    text:
+                                        ((profileProvider.userData?['name'] ?? '')
+                                            .toString()
+                                            .isNotEmpty)
+                                        ? profileProvider.userData!['name'][0]
+                                              .toUpperCase()
+                                        : '',
+                                  ),
                                 ),
                               ),
                             ),

@@ -12,7 +12,7 @@ import '../../models/order_details_model.dart';
 Widget productInfo({required OrderData order}) {
   return Container(
     decoration: commonBoxDecoration(
-      borderColor: colorBorder,
+      borderColor: Colors.pink.shade100,
       borderRadius: 8,
       color: Colors.pink.shade100.withValues(alpha: 0.2),
     ),
@@ -191,7 +191,7 @@ Widget orderInfo({required OrderData order}) {
   final provider = Provider.of<OrdersProvider>(navigatorKey.currentContext!);
   return Container(
     decoration: commonBoxDecoration(
-      borderColor: colorBorder,
+      borderColor:  Colors.blue.shade100,
       borderRadius: 8,
       color: Colors.blue.shade100.withValues(alpha: 0.2),
     ),
@@ -249,7 +249,7 @@ Widget orderInfo({required OrderData order}) {
 Widget customerInfo({required OrderData order}) {
   return Container(
     decoration: commonBoxDecoration(
-      borderColor: colorBorder,
+      borderColor: Colors.green.shade100,
       borderRadius: 8,
       color: Colors.green.shade100.withValues(alpha: 0.2),
     ),
@@ -355,7 +355,7 @@ Widget customerInfo({required OrderData order}) {
 Widget paymentSummery({required OrderData order}) {
   return Container(
     decoration: commonBoxDecoration(
-      borderColor: colorBorder,
+      borderColor: Colors.orange.shade100,
       borderRadius: 8,
       color: Colors.orange.shade100.withValues(alpha: 0.2),
     ),

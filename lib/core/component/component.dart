@@ -39,9 +39,9 @@ AppBar commonAppBar({
       title.toUpperCase(),
 
       style: commonTextStyle(
-        fontSize: 18,
+        fontSize: 20,
         fontWeight: FontWeight.w600,
-        color: colorText,
+        color: colorMenu,
       ),
     ),
     centerTitle: centerTitle,
@@ -56,7 +56,7 @@ AppBar commonAppBar({
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: const Icon(Icons.arrow_back_ios_new_sharp, color: colorText),
+          icon: const Icon(Icons.arrow_back_ios_new_sharp, color: colorMenu),
         ),
     flexibleSpace: Container(
       decoration: BoxDecoration(
@@ -574,6 +574,12 @@ void appBottomSheetWithSafeArea({
     barrierColor: Colors.black.withValues(alpha: 0.2),
     builder: (context) {
       return Container(
+
+        decoration: commonBoxDecoration(
+          image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage(icBg1))
+        ),
         constraints: BoxConstraints(
           maxHeight:
               MediaQuery.of(context).size.height -

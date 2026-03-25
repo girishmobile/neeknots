@@ -161,7 +161,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                                         bottom: 30,
                                       ),
                                       child: commonText(
-                                        text: "Enter Email OTP",
+                                        text: "Enter Emails OTP",
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -171,11 +171,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                                       alignment: AlignmentGeometry.center,
                                       child: CommonPinCodeField(
                                         pinController: tetOTP,
-                                        activeFillColor: colorLogo,
-                                        inactiveFillColor: colorBorder,
-                                        selectedFillColor: colorLogo.withValues(
-                                          alpha: 0.2,
-                                        ),
+
                                         onCompleted: (code) {},
                                         onChanged: (val) {},
                                       ),

@@ -221,7 +221,7 @@ class _SettingPageState extends State<SettingPage> {
                 ),
 
                 const SizedBox(height: 18),
-                Column(
+                Row(
                   spacing: 16,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -237,16 +237,16 @@ class _SettingPageState extends State<SettingPage> {
                           horizontal: 60,
                         ),
                         decoration: commonBoxDecoration(
-                          color: themeProvider.isDark
+                          borderColor: themeProvider.isDark
                               ? Colors.white
-                              : colorLogo,
+                              : colorMenu,
                         ),
                         child: Center(
                           child: commonText(
                             text: "Logout".toUpperCase(),
                             color: themeProvider.isDark
                                 ? Colors.black
-                                : Colors.white,
+                                : colorMenu,
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
                           ),
@@ -275,14 +275,15 @@ class _SettingPageState extends State<SettingPage> {
                           horizontal: 30,
                         ),
                         decoration: commonBoxDecoration(
-                          color: themeProvider.isDark
+                          borderColor: Colors.black87
+                        /*  color: themeProvider.isDark
                               ? Colors.white
-                              : Colors.red,
+                              : Colors.red,*/
                         ),
                         child: Center(
                           child: commonText(
                             text: "Delete Account".toUpperCase(),
-                            color: Colors.white,
+                            color: Colors.black87,
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
                           ),

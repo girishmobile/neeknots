@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:neeknots/core/color/color_utils.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class CommonPinCodeField extends StatelessWidget {
@@ -28,7 +29,7 @@ class CommonPinCodeField extends StatelessWidget {
     this.inactiveFillColor = Colors.grey,
     this.selectedFillColor = Colors.blueGrey,
     this.inactiveBorderColor = Colors.grey,
-    this.selectedBorderColor = Colors.black,
+    this.selectedBorderColor = Colors.red,
     this.activeBorderColor = Colors.transparent,
     this.fieldHeight = 50,
     this.pinController,
@@ -55,14 +56,14 @@ class CommonPinCodeField extends StatelessWidget {
         borderWidth: 1.5,
         focusedBorderWidth: 2.0,
         borderColor: Colors.grey,
-        focusedBorderColor: Colors.black54,
-        filledBorderColor: Colors.black,
+        focusedBorderColor: colorMenu,
+        filledBorderColor: Colors.transparent,
         errorColor: Colors.red,
 
         // Fill
         fillColor: Colors.transparent,
-        focusedFillColor: Colors.black45,
-        filledFillColor: Colors.black87,
+        focusedFillColor: Colors.transparent,
+        filledFillColor: colorMenu,
 
         // Text
         textStyle: TextStyle(

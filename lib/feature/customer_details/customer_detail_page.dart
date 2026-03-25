@@ -56,7 +56,7 @@ class _CustomerDetailPageState extends State<CustomerDetailPage> {
               ),
               child: Container(
                 decoration: commonBoxDecoration(
-                  borderColor: colorBorder,
+                  borderColor: Colors.pink.shade100,
                   color: Colors.pink.shade100.withValues(alpha: 0.2),
                   borderRadius: 8,
                 ),
