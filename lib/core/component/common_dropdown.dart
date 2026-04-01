@@ -5,12 +5,13 @@ import 'package:neeknots/core/component/component.dart';
 import 'package:neeknots/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
 
-class CommonDropdown extends StatelessWidget {
+class CommonDropdown extends StatefulWidget {
   final String? initialValue;
   final List<String> items;
   final ValueChanged<String?> onChanged;
   final double? borderRadius;
   final bool enabled;
+
   const CommonDropdown({
     super.key,
 
@@ -22,35 +23,65 @@ class CommonDropdown extends StatelessWidget {
   });
 
   @override
+  State<CommonDropdown> createState() => _CommonDropdownState();
+}
+
+class _CommonDropdownState extends State<CommonDropdown> {
+  late ValueNotifier<String?> selectedValue;
+
+  @override
+  void initState() {
+    super.initState();
+
+    selectedValue = ValueNotifier(
+      widget.items.contains(widget.initialValue)
+          ? widget.initialValue
+          : (widget.items.isNotEmpty ? widget.items.first : null),
+    );
+  }
+
+  @override
+  void dispose() {
+    selectedValue.dispose();
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
     return Consumer<ThemeProvider>(
-      builder: (context,provider,child) {
+      builder: (context, provider, child) {
+
         return DropdownButtonFormField2<String>(
-          value: initialValue ?? (items.isNotEmpty ? items.first : null),
+          valueListenable: selectedValue,
           decoration: InputDecoration(
-            enabled: enabled,
-            border: commonTextFiledBorder(borderRadius: borderRadius),
-            enabledBorder: commonTextFiledBorder(borderRadius: borderRadius),
-            focusedBorder: commonTextFiledBorder(borderRadius: borderRadius),
-            contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 2),
+            enabled: widget.enabled,
+            border: commonTextFiledBorder(borderRadius: widget.borderRadius),
+            enabledBorder: commonTextFiledBorder(borderRadius: widget.borderRadius),
+            focusedBorder: commonTextFiledBorder(borderRadius: widget.borderRadius),
+            contentPadding: const EdgeInsets.symmetric(
+              vertical: 12,
+              horizontal: 2,
+            ),
           ),
           isExpanded: true,
-          items: items
+          items: widget.items
               .map(
-                (item) => DropdownMenuItem<String>(
-                  value: item,
-                  child: commonText(text: item, overflow: TextOverflow.ellipsis),
-                ),
-              )
+                (item) => DropdownItem<String>(
+              value: item,
+              child: commonText(
+                text: item,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          )
               .toList(),
-          onChanged: enabled ? onChanged : null, // 👈 अब disable होगा
-          buttonStyleData: const ButtonStyleData(
+          onChanged: widget.enabled ? widget.onChanged : null,
+          buttonStyleData: const FormFieldButtonStyleData(
             padding: EdgeInsets.only(right: 8),
           ),
           dropdownStyleData: DropdownStyleData(
             maxHeight: 300,
             decoration: BoxDecoration(
-              color: provider.isDark?colorDarkBgColor:Colors.white,
+              color: provider.isDark ? colorDarkBgColor : Colors.white,
               borderRadius: BorderRadius.circular(8),
             ),
           ),
@@ -58,7 +89,7 @@ class CommonDropdown extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 12),
           ),
         );
-      }
+      },
     );
   }
 }

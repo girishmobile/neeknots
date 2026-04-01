@@ -36,15 +36,15 @@ dependencies:
   cupertino_icons: ^1.0.8
   provider: ^6.1.5+1
   #flutter_svg: ^2.2.1
-  dropdown_button2: ^2.3.9
-  syncfusion_flutter_charts: ^32.2.5
+  dropdown_button2: ^3.0.0
+  syncfusion_flutter_charts: ^33.1.45
   cached_network_image: ^3.4.1
-  image_cropper: ^11.0.0
+  image_cropper: ^12.0.0
   image_picker: ^1.2.1
   permission_handler: ^12.0.1
   carousel_slider: ^5.1.1
   firebase_core: ^4.4.0
-  flutter_local_notifications: ^20.1.0
+  flutter_local_notifications: ^21.0.0
   firebase_messaging: ^16.1.1
   #connectivity_plus: ^6.1.5
   #cloud_functions: ^4.4.0z,

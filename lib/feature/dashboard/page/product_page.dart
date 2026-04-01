@@ -34,6 +34,12 @@ class _ProductPageState extends State<ProductPage>
 
   Future<void> init() async {
     _tabController = TabController(length: 2, vsync: this);
+    Future.microtask(() {
+      Provider.of<ProductProvider>(
+        context,
+        listen: false,
+      ).setSearchQuery(""); // 👈 clear search
+    });
   }
 
   @override
@@ -43,7 +49,7 @@ class _ProductPageState extends State<ProductPage>
         init();
       },
       child: Padding(
-        padding: EdgeInsets.only(left: 16,right: 16,bottom: 0,top: 10),
+        padding: EdgeInsets.only(left: 16, right: 16, bottom: 0, top: 10),
         child: Column(
           children: [
             SizedBox(height: 10),
@@ -52,7 +58,6 @@ class _ProductPageState extends State<ProductPage>
                 return Padding(
                   padding: const EdgeInsets.only(top: 0.0, left: 0, right: 0),
                   child: commonTextField(
-
                     fillColor: Colors.pink.shade100.withValues(alpha: 0.2),
                     filled: true,
                     hintText: "Search products by name...",
