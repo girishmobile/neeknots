@@ -33,6 +33,12 @@ class _CustomersPageState extends State<CustomersPage> {
       );
       await customerProvider.getCustomerList();
     });
+    Future.microtask(() {
+      Provider.of<CustomerProvider>(
+        context,
+        listen: false,
+      ).setSearchQuery(""); // 👈 clear search
+    });
   }
 
   @override

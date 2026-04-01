@@ -58,6 +58,12 @@ class _CommonOrderViewState extends State<CommonOrderView> {
     Future.microtask(
           () => Provider.of<OrdersProvider>(navigatorKey.currentContext!, listen: false).getAllFilterOrderList(),
     );
+    Future.microtask(() {
+      Provider.of<OrdersProvider>(
+        context,
+        listen: false,
+      ).setSearchQuery(""); // 👈 clear search
+    });
   }
 
   @override
