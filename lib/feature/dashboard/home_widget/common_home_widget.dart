@@ -177,13 +177,12 @@ Widget homeTopView({
                   ),
 
                   Container(
-
                     width: 40,
                     height: 40,
                     decoration: commonBoxDecoration(
                       color: Colors.white,
                       shape: BoxShape.circle,
-                      borderColor: colorBorder
+                      borderColor: colorBorder,
                     ),
                     child: Center(
                       child: commonText(
@@ -191,7 +190,9 @@ Widget homeTopView({
                         style: commonTextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w700,
-                          color: provider.isDark ? Colors.white : colorTextDesc1,
+                          color: provider.isDark
+                              ? Colors.white
+                              : colorTextDesc1,
                         ),
                       ),
                     ),
@@ -237,7 +238,6 @@ Widget _commonDashboardView({
           Container(
             padding: EdgeInsets.all(2), // border thickness
             decoration: BoxDecoration(
-
               shape: BoxShape.circle,
               border: Border.all(
                 color: color ?? Colors.transparent, // border color

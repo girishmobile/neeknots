@@ -46,7 +46,7 @@ AppBar commonAppBar({
     ),
     centerTitle: centerTitle,
     //backgroundColor: backgroundColor,
-    backgroundColor: backgroundColor??Colors.transparent,
+    backgroundColor: backgroundColor ?? Colors.transparent,
     // important
     elevation: 0,
     actions: actions,
@@ -60,7 +60,7 @@ AppBar commonAppBar({
         ),
     flexibleSpace: Container(
       decoration: BoxDecoration(
-        color: backgroundColor??Colors.transparent,
+        color: backgroundColor ?? Colors.transparent,
         //color: themeProvider.isDark ? colorDarkBgColor : colorLogo,
         borderRadius: BorderRadius.circular(0),
       ),
@@ -188,7 +188,14 @@ Widget commonButton({
         child: DecoratedBox(
           decoration: BoxDecoration(
             color: color ?? (provider.isDark ? Colors.white : colorMenu),
-
+            // gradient: LinearGradient(
+            //   colors: [
+            //     Color.fromRGBO(232, 55, 116, 1),
+            //     Color.fromRGBO(226, 55, 139, 1),
+            //   ],
+            //   begin: Alignment.topLeft,
+            //   end: Alignment.bottomRight,
+            // ),
             borderRadius: BorderRadius.circular(radius ?? 15),
           ),
           child: ElevatedButton(
@@ -302,14 +309,20 @@ Widget commonTextField({
           suffixIcon: suffixIcon,
           border:
               enabledBorder ??
-              commonTextFiledBorder(borderRadius: borderRadius,),
+              commonTextFiledBorder(borderRadius: borderRadius),
           enabledBorder:
               enabledBorder ??
-              commonTextFiledBorder(borderRadius: borderRadius,borderColor: Colors.pinkAccent.withValues(alpha: 0.2)),
+              commonTextFiledBorder(
+                borderRadius: borderRadius,
+                borderColor: Colors.pinkAccent.withValues(alpha: 0.2),
+              ),
           focusedBorder:
               enabledBorder ??
-              commonTextFiledBorder(borderRadius: borderRadius,borderColor: Colors.pinkAccent.withValues(alpha: 0.5)),
-         /* filled: filled,
+              commonTextFiledBorder(
+                borderRadius: borderRadius,
+                borderColor: Colors.pinkAccent.withValues(alpha: 0.5),
+              ),
+          /* filled: filled,
           fillColor: fillColor,*/
           /*fillColor: Colors.white,
           filled: true,*/
@@ -419,23 +432,22 @@ Widget commonScaffold({
     appBar:
         appBar ??
         (title != null
-            ? AppBar(
-
-
-            title: commonText(text: title), centerTitle: true)
+            ? AppBar(title: commonText(text: title), centerTitle: true)
             : null),
     body: Container(
       width: MediaQuery.sizeOf(navigatorKey.currentContext!).width,
       height: MediaQuery.sizeOf(navigatorKey.currentContext!).height,
-        decoration: commonBoxDecoration(
-            image: DecorationImage(
-                fit: BoxFit.cover,
-                alignment: AlignmentGeometry.topCenter,
-                image: AssetImage(icBg1))
+      decoration: commonBoxDecoration(
+        image: DecorationImage(
+          fit: BoxFit.cover,
+          alignment: AlignmentGeometry.topCenter,
+          image: AssetImage(icBg1),
         ),
-        child: SafeArea(child: body)),
+      ),
+      child: SafeArea(child: body),
+    ),
 
-  // body: body,
+    // body: body,
     floatingActionButton: floatingActionButton,
     drawer: drawer,
     bottomNavigationBar: bottomNavigationBar,
@@ -504,7 +516,6 @@ PopScope<Object> commonPopScope({
 Center commonErrorView({String? text}) {
   return Center(
     child: Container(
-
       child: Column(
         mainAxisSize: MainAxisSize.min,
         spacing: 20,
@@ -574,11 +585,8 @@ void appBottomSheetWithSafeArea({
     barrierColor: Colors.black.withValues(alpha: 0.2),
     builder: (context) {
       return Container(
-
         decoration: commonBoxDecoration(
-          image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage(icBg1))
+          image: DecorationImage(fit: BoxFit.cover, image: AssetImage(icBg1)),
         ),
         constraints: BoxConstraints(
           maxHeight:
@@ -714,7 +722,7 @@ Container commonAppBackground({required Widget child}) {
   return Container(
     width: size.width,
     height: size.height,
-   /* decoration: commonBoxDecoration(
+    /* decoration: commonBoxDecoration(
       borderRadius: 0,
       color: themeProvider.isDark
           ? colorDarkBgColor
@@ -727,7 +735,9 @@ Container commonAppBackground({required Widget child}) {
         fit: BoxFit.fill,
         image: AssetImage(icBg1),
       ),
-     *//* color: themeProvider.isDark ? colorDarkBgColor : Colors.transparent,*//*
+     */
+    /* color: themeProvider.isDark ? colorDarkBgColor : Colors.transparent,*/
+    /*
       //image: DecorationImage(fit: BoxFit.fill, image: AssetImage(icSa)),
     ),*/
     child: child,
@@ -1054,9 +1064,17 @@ Widget commonNetworkImage(
   );
 }
 
-Widget commonBoxView({required Widget contentView, required String title,Color ?color}) {
+Widget commonBoxView({
+  required Widget contentView,
+  required String title,
+  Color? color,
+}) {
   return Container(
-    decoration: commonBoxDecoration(borderColor: colorBorder, borderRadius: 8,color: color??Colors.blue.shade100.withValues(alpha: 0.2)),
+    decoration: commonBoxDecoration(
+      borderColor: colorBorder,
+      borderRadius: 8,
+      color: color ?? Colors.blue.shade100.withValues(alpha: 0.2),
+    ),
     margin: const EdgeInsets.all(0),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1192,9 +1210,7 @@ String getInitialCountryCode(String? dialCode) {
     // remove "+" if present
     final cleanDialCode = dialCode.replaceAll('+', '');
 
-    final country = countries.firstWhere(
-          (c) => c.dialCode == cleanDialCode,
-    );
+    final country = countries.firstWhere((c) => c.dialCode == cleanDialCode);
 
     return country.code; // ISO code like IN, US, AO
   } catch (e) {
@@ -1232,6 +1248,7 @@ Widget infoRowBox({
     ],
   );
 }
+
 Color getRandomColor(int index) {
   final colors = [
     Colors.blue.shade100,
