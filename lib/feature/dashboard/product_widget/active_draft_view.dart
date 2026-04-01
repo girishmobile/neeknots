@@ -56,97 +56,92 @@ class _ActiveDraftViewState extends State<ActiveDraftView> {
   Widget build(BuildContext context) {
     return Consumer<ProductProvider>(
       builder: (context, provider, child) {
-        return commonPopScope(
-          onBack: ()async{
-            provider.filteredProducts.clear();
-          },
-          child: Column(
-            children: [
-              Expanded(
-                child: provider.filteredProducts.isNotEmpty
-                    ? ListView.builder(
-                        controller: _scrollController,
-                        padding: const EdgeInsets.only(left: 0, right: 0,bottom: 80),
-                        itemCount:
-                            provider.hasMore && provider.searchQuery.isEmpty
-                            ? provider.filteredProducts.length + 1
-                            : provider.filteredProducts.length,
-                        itemBuilder: (context, index) {
-                          if (index < provider.filteredProducts.length) {
-                            final data = provider.filteredProducts[index];
-                            final totalVariants = data.variants?.length ?? 0;
-                            num? totalInventory =
-                                data.variants?.isNotEmpty == true
-                                ? data.variants?.fold(
-                                    0,
-                                    (sum, variant) =>
-                                        sum! + (variant.inventoryQuantity ?? 0),
-                                  )
-                                : 0;
+        return Column(
+          children: [
+            Expanded(
+              child: provider.filteredProducts.isNotEmpty
+                  ? ListView.builder(
+                      controller: _scrollController,
+                      padding: const EdgeInsets.only(left: 0, right: 0,bottom: 80),
+                      itemCount:
+                          provider.hasMore && provider.searchQuery.isEmpty
+                          ? provider.filteredProducts.length + 1
+                          : provider.filteredProducts.length,
+                      itemBuilder: (context, index) {
+                        if (index < provider.filteredProducts.length) {
+                          final data = provider.filteredProducts[index];
+                          final totalVariants = data.variants?.length ?? 0;
+                          num? totalInventory =
+                              data.variants?.isNotEmpty == true
+                              ? data.variants?.fold(
+                                  0,
+                                  (sum, variant) =>
+                                      sum! + (variant.inventoryQuantity ?? 0),
+                                )
+                              : 0;
 
-                            return commonProductListView(
-                              index: index,
-                              margin: const EdgeInsets.symmetric(
-                                vertical: 6,
-                                horizontal: 0,
-                              ),
-                              image: data.image?.src ?? '',
-                              onTap: () {
-                                if (data.id != null) {
-                                  navigatorKey.currentState?.pushNamed(
-                                    RouteName.productDetailsScreen,
-                                    arguments: data.id.toString(),
-                                  );
-                                }
-                              },
-                              price: data.variants?.isNotEmpty == true
-                                  ? '$rupeeIcon${data.variants?.first.price}'
-                                  : '$rupeeIcon 0',
-                              textInventory1: "$totalInventory in stock",
-                              textInventory2: ' for $totalVariants variants',
-                              productName: data.title ?? '',
-                              status: data.status.toString().toCapitalize(),
-                              colorStatusColor: data.status?.isNotEmpty == true
-                                  ? provider.getStatusColor(
-                                      data.status.toString().toCapitalize(),
-                                    )
-                                  : Colors.grey,
-                              decoration: commonBoxDecoration(
-                                borderRadius: 8,
-                                borderWidth: 0.5,
+                          return commonProductListView(
+                            index: index,
+                            margin: const EdgeInsets.symmetric(
+                              vertical: 6,
+                              horizontal: 0,
+                            ),
+                            image: data.image?.src ?? '',
+                            onTap: () {
+                              if (data.id != null) {
+                                navigatorKey.currentState?.pushNamed(
+                                  RouteName.productDetailsScreen,
+                                  arguments: data.id.toString(),
+                                );
+                              }
+                            },
+                            price: data.variants?.isNotEmpty == true
+                                ? '$rupeeIcon${data.variants?.first.price}'
+                                : '$rupeeIcon 0',
+                            textInventory1: "$totalInventory in stock",
+                            textInventory2: ' for $totalVariants variants',
+                            productName: data.title ?? '',
+                            status: data.status.toString().toCapitalize(),
+                            colorStatusColor: data.status?.isNotEmpty == true
+                                ? provider.getStatusColor(
+                                    data.status.toString().toCapitalize(),
+                                  )
+                                : Colors.grey,
+                            decoration: commonBoxDecoration(
+                              borderRadius: 8,
+                              borderWidth: 0.5,
+                            ),
+                          );
+                        } else {
+                          // 🔹 Bottom loader for infinite scroll only
+                          if (provider.searchQuery.isEmpty &&
+                              provider.hasMore) {
+                            // Trigger next page load
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              provider.getProductListPagination(
+                                context: context,
+                              );
+                            });
+
+                            return const Padding(
+                              padding: EdgeInsets.all(16),
+                              child: Center(
+                                child: CupertinoActivityIndicator(
+                                  color: Colors.black,
+                                ),
                               ),
                             );
                           } else {
-                            // 🔹 Bottom loader for infinite scroll only
-                            if (provider.searchQuery.isEmpty &&
-                                provider.hasMore) {
-                              // Trigger next page load
-                              WidgetsBinding.instance.addPostFrameCallback((_) {
-                                provider.getProductListPagination(
-                                  context: context,
-                                );
-                              });
-
-                              return const Padding(
-                                padding: EdgeInsets.all(16),
-                                child: Center(
-                                  child: CupertinoActivityIndicator(
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              );
-                            } else {
-                              return const SizedBox.shrink();
-                            }
+                            return const SizedBox.shrink();
                           }
-                        },
-                      )
-                    : provider.isFetching
-                    ? SizedBox.shrink()
-                    : commonErrorView(text: "Product Not Found."),
-              ),
-            ],
-          ),
+                        }
+                      },
+                    )
+                  : provider.isFetching
+                  ? SizedBox.shrink()
+                  : commonErrorView(text: "Product Not Found."),
+            ),
+          ],
         );
       },
     );
