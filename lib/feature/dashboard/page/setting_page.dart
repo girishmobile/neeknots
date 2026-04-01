@@ -54,7 +54,12 @@ class _SettingPageState extends State<SettingPage> {
         return Stack(
           children: [
             ListView(
-              padding: EdgeInsets.only(left: 16,right: 16,bottom: 80,top: 10),
+              padding: EdgeInsets.only(
+                left: 16,
+                right: 16,
+                bottom: 80,
+                top: 10,
+              ),
               physics: BouncingScrollPhysics(),
 
               children: [
@@ -67,15 +72,14 @@ class _SettingPageState extends State<SettingPage> {
                     border: Border.all(
                       color: themeProvider.isDark
                           ? Colors.white
-                          :  Colors.black54,
+                          : Colors.black54,
                       width: 3, // 👈 border width
                     ),
                   ),
                   child: CircleAvatar(
-
                     radius: 60,
-                   backgroundColor: Colors.white,
-                   // backgroundColor: colorButton1.withValues(alpha: 0.09),
+                    backgroundColor: Colors.white,
+                    // backgroundColor: colorButton1.withValues(alpha: 0.09),
                     child: ClipOval(
                       child: CachedNetworkImage(
                         height: 120,
@@ -85,7 +89,7 @@ class _SettingPageState extends State<SettingPage> {
                         errorWidget: (context, url, error) => Center(
                           child: commonText(
                             fontSize: 45,
-                            color:  Colors.black,
+                            color: Colors.black,
                             fontWeight: FontWeight.w600,
                             text:
                                 ((provider.userData?['name'] ?? '')
@@ -133,7 +137,7 @@ class _SettingPageState extends State<SettingPage> {
                   ),
                   decoration: BoxDecoration(
                     color: Colors.white.withValues(alpha: 0.3),
-                //    color: const Color(0xffF4F6F8),
+                    //    color: const Color(0xffF4F6F8),
                     border: Border.all(color: colorBorder),
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -196,9 +200,7 @@ class _SettingPageState extends State<SettingPage> {
                                   child: commonText(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
-                                    color: isActive
-                                        ? Colors.green
-                                        : Colors.red,
+                                    color: isActive ? Colors.green : Colors.red,
                                     text: isActive ? "Active" : "Inactive",
                                   ),
                                 ),
@@ -225,74 +227,71 @@ class _SettingPageState extends State<SettingPage> {
                   spacing: 16,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
+
                   children: [
-                    commonInkWell(
-                      onTap: () {
-                        _handleLogout();
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 12,
-                          horizontal: 60,
-                        ),
-                        decoration: commonBoxDecoration(
-                          borderColor: themeProvider.isDark
-                              ? Colors.white
-                              : colorMenu,
-                        ),
-                        child: Center(
-                          child: commonText(
-                            text: "Logout".toUpperCase(),
-                            color: themeProvider.isDark
-                                ? Colors.black
+                    Expanded(
+                      child: commonInkWell(
+                        onTap: () {
+                          _handleLogout();
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          decoration: commonBoxDecoration(
+                            borderColor: themeProvider.isDark
+                                ? Colors.white
                                 : colorMenu,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
+                          ),
+                          child: Center(
+                            child: commonText(
+                              text: "Logout".toUpperCase(),
+                              color: themeProvider.isDark
+                                  ? Colors.black
+                                  : colorMenu,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                    commonInkWell(
-                      onTap: () {
-                        showCommonDialog(
-                          title: "Delete",
-                          context: context,
-                          content: "Are you sure want to delete account",
-                          onPressed: () async {
-                            final authService = AuthService();
-                            await authService.deleteCurrentUser(
-                              context: context,
-                              uid: provider.userData?['uid'] ?? '',
-                            );
-                            await _clearAppState();
-                          },
-                        );
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 12,
-                          horizontal: 30,
-                        ),
-                        decoration: commonBoxDecoration(
-                          borderColor: Colors.black87
-                        /*  color: themeProvider.isDark
-                              ? Colors.white
-                              : Colors.red,*/
-                        ),
-                        child: Center(
-                          child: commonText(
-                            text: "Delete Account".toUpperCase(),
-                            color: Colors.black87,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
+                    Expanded(
+                      child: commonInkWell(
+                        onTap: () {
+                          showCommonDialog(
+                            title: "Delete",
+                            context: context,
+                            content: "Are you sure want to delete account",
+                            onPressed: () async {
+                              final authService = AuthService();
+                              await authService.deleteCurrentUser(
+                                context: context,
+                                uid: provider.userData?['uid'] ?? '',
+                              );
+                              await _clearAppState();
+                            },
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          decoration: commonBoxDecoration(
+                            borderColor: Colors.black87,
+                            /*  color: themeProvider.isDark
+                                ? Colors.white
+                                : Colors.red,*/
+                          ),
+                          child: Center(
+                            child: commonText(
+                              text: "Delete Account".toUpperCase(),
+                              color: Colors.black87,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ],
                 ),
-
 
                 SizedBox(height: 16),
               ],
