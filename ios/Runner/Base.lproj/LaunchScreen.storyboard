@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24128" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -19,6 +19,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="appBg" translatesAutoresizingMaskIntoConstraints="NO" id="6lg-yb-Xta">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                            </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="yXN-I6-26a">
                                 <rect key="frame" x="46.666666666666657" y="396" width="300" height="60"/>
                                 <constraints>
@@ -31,6 +34,10 @@
                         <constraints>
                             <constraint firstItem="yXN-I6-26a" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="7EO-DH-chv"/>
                             <constraint firstItem="yXN-I6-26a" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Scp-of-PdF"/>
+                            <constraint firstItem="6lg-yb-Xta" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="djT-Yj-O4E"/>
+                            <constraint firstAttribute="bottom" secondItem="6lg-yb-Xta" secondAttribute="bottom" id="ioc-B8-XnX"/>
+                            <constraint firstAttribute="trailing" secondItem="6lg-yb-Xta" secondAttribute="trailing" id="sOy-sd-SiO"/>
+                            <constraint firstItem="6lg-yb-Xta" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="zSQ-yi-C8n"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -40,6 +47,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="appBg" width="1572" height="3408"/>
         <image name="logo" width="1201" height="251"/>
     </resources>
 </document>

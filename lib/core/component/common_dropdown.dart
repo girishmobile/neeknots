@@ -49,14 +49,17 @@ class _CommonDropdownState extends State<CommonDropdown> {
   Widget build(BuildContext context) {
     return Consumer<ThemeProvider>(
       builder: (context, provider, child) {
-
         return DropdownButtonFormField2<String>(
           valueListenable: selectedValue,
           decoration: InputDecoration(
             enabled: widget.enabled,
             border: commonTextFiledBorder(borderRadius: widget.borderRadius),
-            enabledBorder: commonTextFiledBorder(borderRadius: widget.borderRadius),
-            focusedBorder: commonTextFiledBorder(borderRadius: widget.borderRadius),
+            enabledBorder: commonTextFiledBorder(
+              borderRadius: widget.borderRadius,
+            ),
+            focusedBorder: commonTextFiledBorder(
+              borderRadius: widget.borderRadius,
+            ),
             contentPadding: const EdgeInsets.symmetric(
               vertical: 12,
               horizontal: 2,
@@ -66,15 +69,20 @@ class _CommonDropdownState extends State<CommonDropdown> {
           items: widget.items
               .map(
                 (item) => DropdownItem<String>(
-              value: item,
-              child: commonText(
-                text: item,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          )
+                  value: item,
+                  child: commonText(
+                    text: item,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              )
               .toList(),
-          onChanged: widget.enabled ? widget.onChanged : null,
+          onChanged: widget.enabled
+              ? (val) {
+                  selectedValue.value = val; // ✅ update UI
+                  widget.onChanged(val); // ✅ callback
+                }
+              : null,
           buttonStyleData: const FormFieldButtonStyleData(
             padding: EdgeInsets.only(right: 8),
           ),
